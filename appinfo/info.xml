@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<info>
+	<id>files_markdown</id>
+	<name>Markdown Editor</name>
+	<description>Markdown Editor with live preview.</description>
+	<licence>AGPL</licence>
+	<author>Robin Appelman</author>
+	<require>5.0</require>
+</info>

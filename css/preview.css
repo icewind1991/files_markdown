@@ -1,0 +1,109 @@
+#preview {
+	right: 0;
+	position: fixed;
+	top: 6.8em;
+	overflow: auto;
+}
+
+/*
+Copyright (c) 2008, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.net/yui/license.txt
+version: 2.6.0
+*/
+/* base.css, part of YUI's CSS Foundation */
+#preview h1 {
+	/*18px via YUI Fonts CSS foundation*/
+	font-size: 138.5%;
+}
+
+#preview h2 {
+	/*16px via YUI Fonts CSS foundation*/
+	font-size: 123.1%;
+}
+
+#preview h3 {
+	/*14px via YUI Fonts CSS foundation*/
+	font-size: 108%;
+}
+
+#preview h1, #preview h2, #preview h3 {
+	/* top & bottom margin based on font size */
+	margin: 1em 0;
+}
+
+#preview h1, #preview h2, #preview h3, #preview h4, #preview h5, #preview h6, #preview strong {
+	/*bringing boldness back to headers and the strong element*/
+	font-weight: bold;
+}
+
+#preview abbr, #preview acronym {
+	/*indicating to users that more info is available */
+	border-bottom: 1px dotted #000;
+	cursor: help;
+}
+
+#preview em {
+	/*bringing italics back to the em element*/
+	font-style: italic;
+}
+
+#preview del {
+	text-decoration: line-through;
+}
+
+#preview blockquote, #preview ul, #preview ol, #preview dl {
+	/*giving blockquotes and lists room to breath*/
+	margin: 1em;
+}
+
+#preview ol,#preview  ul, #preview dl {
+	/*bringing lists on to the page with breathing room */
+	margin-left: 2em;
+}
+
+#preview ol li {
+	/*giving OL's LIs generated numbers*/
+	list-style: decimal outside;
+}
+
+#preview ul li {
+	/*giving UL's LIs generated disc markers*/
+	list-style: disc outside;
+}
+
+#preview dl dd {
+	/*giving UL's LIs generated numbers*/
+	margin-left: 1em;
+}
+
+#preview th, #preview td {
+	/*borders and padding to make the table readable*/
+	border: 1px solid #000;
+	padding: .5em;
+}
+
+#preview th {
+	/*distinguishing table headers from data cells*/
+	font-weight: bold;
+	text-align: center;
+}
+
+#preview caption {
+	/*coordinated margin to match cell's padding*/
+	margin-bottom: .5em;
+	/*centered so it doesn't blend in to other content*/
+	text-align: center;
+}
+
+#preview p, #preview fieldset, #preview table, #preview pre {
+	/*so things don't run into each other*/
+	margin-bottom: 1em;
+}
+
+/* setting a consistent width, 160px;
+   control of type=file still not possible */
+#preview input[type=text],#preview  input[type=password], #preview textarea {
+	width: 12.25em;
+	*width: 11.9em;
+}
