@@ -12,14 +12,32 @@ $(document).ready(function () {
 				editor.parent().append(preview);
 				editor.width(halfWidth);
 				OC.addScript('files_markdown', 'marked').then(function () {
+					if (!mathJaxLoaded) {
+						var script = document.createElement("script");
+						script.type = "text/x-mathjax-config";
+						script[(window.opera ? "innerHTML" : "text")] =
+							"MathJax.Hub.Config({\n" +
+								"  tex2jax: { inlineMath: [['$','$'], ['\\\\(','\\\\)']] }\n" +
+								"});"
+						$('head')[0].appendChild(script);
+
+						var path = OC.filePath('files_markdown', 'js', 'mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML');
+						//insert using native dom to prevent jquery from removing the script tag
+						$('head')[0].appendChild($('<script/>').attr('src', path)[0]);
+						mathJaxLoaded = true;
+					}
 					var render = function () {
 						var text = window.aceEditor.getSession().getValue(),
 							html = marked(text);
 						preview.html(html);
+						if (window.MathJax) {
+							MathJax.Hub.Queue(["Typeset", MathJax.Hub, preview[0]]);
+						}
 					};
 					render();
 					window.aceEditor.getSession().on('change', render);
 					$(window).resize(function () {
+						fillWindow($('#editor'));
 						var editor = $('#editor'),
 							preview = $('#preview'),
 							halfWidth = editor.width() / 2;
@@ -53,3 +71,5 @@ $(document).ready(function () {
 		$('#preview').show();
 	}
 });
+
+var mathJaxLoaded = false;

@@ -5,6 +5,11 @@ Extends the texteditor in ownCloud with a live preview for markdown files
 
 ![Markdown Editor](http://i.imgur.com/Iot1pBd.png)
 
+The editor also supports LaTeX math using MathJax.  
+Math should be surrounded by a '$' for inline math or '$$' for a math block.
+
+![LaTeX math](http://i.imgur.com/0otA99U.png)
+
 Requirements
 ---
 
@@ -20,6 +25,6 @@ Installation
 
 - Link the app ownCloud's apps folder as 'files_markdown':
 
-  ``ln -s /var/www/owncloud-markdown /var/www/owncloud/apps/files_markdown``
+	``ln -s /var/www/owncloud-markdown /var/www/owncloud/apps/files_markdown``
 
 - Activate the App.
