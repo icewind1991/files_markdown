@@ -10,7 +10,7 @@ $(document).ready(function () {
 				preview.width(halfWidth);
 				preview.height(editor.height());
 				editor.parent().append(preview);
-				editor.width(halfWidth);
+				editor.width(halfWidth - 10);
 				OC.addScript('files_markdown', 'marked').then(function () {
 					if (!mathJaxLoaded) {
 						var script = document.createElement("script");
@@ -42,7 +42,7 @@ $(document).ready(function () {
 							preview = $('#preview'),
 							halfWidth = editor.width() / 2;
 						preview.width(halfWidth);
-						editor.width(halfWidth);
+						editor.width(halfWidth - 10);
 						preview.height(editor.height());
 					});
 				})
