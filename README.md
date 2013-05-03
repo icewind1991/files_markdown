@@ -3,7 +3,7 @@ ownCloud Markdown Editor
 
 Extends the texteditor in ownCloud with a live preview for markdown files
 
-![Markdown Editor](http://i.imgur.com/Iot1pBd.png)
+![Markdown Editor](http://i.imgur.com/47qLGrH.png)
 
 The editor also supports LaTeX math using MathJax.  
 Math should be surrounded by a '$' for inline math or '$$' for a math block.
