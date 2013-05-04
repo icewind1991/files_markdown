@@ -45,7 +45,15 @@ $(document).ready(function () {
 						editor.width(halfWidth - 10);
 						preview.height(editor.height());
 					});
-				})
+				});
+				$.get(OC.filePath('files_markdown', 'ajax', 'checkconvert.php')).then(function (result) {
+					if (result) {
+						var downloadButton = $('<button/>');
+						downloadButton.click(downloadPDF);
+						downloadButton.text(t('files_markdown', 'Download PDF'));
+						$('#editorcontrols').append(downloadButton);
+					}
+				});
 			});
 		});
 		FileActions.setDefault('text/markdown', 'Edit');
@@ -71,5 +79,35 @@ $(document).ready(function () {
 		$('#preview').show();
 	}
 });
+
+function downloadPDF() {
+	var html = $('#preview').html(),
+		form = $('<form/>'),
+		textfield = $('<textarea/>'),
+		input = $('<input/>');
+
+	form.attr('action', OC.filePath('files_markdown', 'ajax', 'download.php')).attr('method', 'post');
+	input.attr('name', 'name');
+	input.val($('div.crumb.last').text())
+	form.append(input);
+
+	textfield.attr('name', 'html');
+	textfield.val(html);
+	form.append(textfield);
+
+	input = $('<input/>')
+	input.attr('name', 'requesttoken');
+	input.val(oc_requesttoken);
+	form.append(input);
+
+	input = $('<input/>')
+	input.attr('name', 'mathjaxcss');//we need the css mathjax inserts for fonts and such
+	input.val($('head style').last().text());
+	form.append(input);
+
+	form.hide();
+	$('body').append(form);
+	form.submit();
+}
 
 var mathJaxLoaded = false;
