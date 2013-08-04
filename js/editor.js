@@ -1,16 +1,15 @@
 $(document).ready(function () {
 	if (typeof FileActions !== 'undefined') {
 		FileActions.register('text/markdown', 'Edit', OC.PERMISSION_READ, '', function (filename) {
-			console.log('markdown');
 			showFileEditor($('#dir').val(), filename).then(function () {
 				var editor = $('#editor'),
 					preview = $('<div/>'),
-					halfWidth = editor.width() / 2;
+					wrapper = $('<div/>');
 				preview.attr('id', 'preview');
-				preview.width(halfWidth);
-				preview.height(editor.height());
-				editor.parent().append(preview);
-				editor.width(halfWidth - 10);
+				wrapper.attr('id', 'preview_wrapper');
+				wrapper.append(preview);
+				editor.parent().append(wrapper);
+				editor.css('width', '50%');
 				OC.addScript('files_markdown', 'marked').then(function () {
 					if (!mathJaxLoaded) {
 						var script = document.createElement("script");
@@ -36,15 +35,6 @@ $(document).ready(function () {
 					};
 					render();
 					window.aceEditor.getSession().on('change', render);
-					$(window).resize(function () {
-						fillWindow($('#editor'));
-						var editor = $('#editor'),
-							preview = $('#preview'),
-							halfWidth = editor.width() / 2;
-						preview.width(halfWidth);
-						editor.width(halfWidth - 10);
-						preview.height(editor.height());
-					});
 				})
 			});
 		});
