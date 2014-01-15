@@ -43,8 +43,10 @@ $(document).ready(function () {
 
 	//overwrite these functions from the text editor so we can hide/show the preview
 
-	var hideFileEditorOriginal = hideFileEditor;
-	var reopenEditorOriginal = reopenEditor;
+	if (window.hideFileEditor) {
+		var hideFileEditorOriginal = hideFileEditor;
+		var reopenEditorOriginal = reopenEditor;
+	}
 	// Fades out the editor.
 	hideFileEditor = function () {
 		hideFileEditorOriginal()
