@@ -9,7 +9,7 @@
 	box-sizing: border-box;
 }
 
-#preview {
+#md_preview {
 	overflow: auto;
 	box-sizing: border-box;
 	font-family: Helvetica, arial, sans-serif;
@@ -25,23 +25,23 @@
 	box-sizing: border-box;
 }
 
-#preview > *:first-child {
+#md_preview > *:first-child {
 	margin-top: 0 !important;
 }
 
-#preview > *:last-child {
+#md_preview > *:last-child {
 	margin-bottom: 0 !important;
 }
 
-#preview a {
+#md_preview a {
 	color: #4183C4;
 }
 
-#preview a.absent {
+#md_preview a.absent {
 	color: #cc0000;
 }
 
-#preview a.anchor {
+#md_preview a.anchor {
 	display: block;
 	padding-left: 30px;
 	margin-left: -30px;
@@ -52,7 +52,7 @@
 	bottom: 0;
 }
 
-#preview h1, #preview h2, #preview h3, #preview h4, #preview h5, #preview h6 {
+#md_preview h1, #md_preview h2, #md_preview h3, #md_preview h4, #md_preview h5, #md_preview h6 {
 	margin: 20px 0 10px;
 	padding: 0;
 	font-weight: bold;
@@ -61,70 +61,70 @@
 	position: relative;
 }
 
-#preview h1:hover a.anchor, #preview h2:hover a.anchor,
-#preview h3:hover a.anchor, #preview h4:hover a.anchor,
-#preview h5:hover a.anchor, #preview h6:hover a.anchor {
+#md_preview h1:hover a.anchor, #md_preview h2:hover a.anchor,
+#md_preview h3:hover a.anchor, #md_preview h4:hover a.anchor,
+#md_preview h5:hover a.anchor, #md_preview h6:hover a.anchor {
 	background: url("../../images/modules/styleguide/para.png") no-repeat 10px center;
 	text-decoration: none;
 }
 
-#preview h1 tt, #preview h1 code {
+#md_preview h1 tt, #md_preview h1 code {
 	font-size: inherit;
 }
 
-#preview h2 tt, #preview h2 code {
+#md_preview h2 tt, #md_preview h2 code {
 	font-size: inherit;
 }
 
-#preview h3 tt, #preview h3 code {
+#md_preview h3 tt, #md_preview h3 code {
 	font-size: inherit;
 }
 
-#preview h4 tt, #preview h4 code {
+#md_preview h4 tt, #md_preview h4 code {
 	font-size: inherit;
 }
 
-#preview h5 tt, #preview h5 code {
+#md_preview h5 tt, #md_preview h5 code {
 	font-size: inherit;
 }
 
-#preview h6 tt, #preview h6 code {
+#md_preview h6 tt, #md_preview h6 code {
 	font-size: inherit;
 }
 
-#preview h1 {
+#md_preview h1 {
 	font-size: 28px;
 	color: black;
 }
 
-#preview h2 {
+#md_preview h2 {
 	font-size: 24px;
 	border-bottom: 1px solid #cccccc;
 	color: black;
 }
 
-#preview h3 {
+#md_preview h3 {
 	font-size: 18px;
 }
 
-#preview h4 {
+#md_preview h4 {
 	font-size: 16px;
 }
 
-#preview h5 {
+#md_preview h5 {
 	font-size: 14px;
 }
 
-#preview h6 {
+#md_preview h6 {
 	color: #777777;
 	font-size: 14px;
 }
 
-#preview p, #preview blockquote, #preview ul, #preview ol, #preview dl, #preview li, #preview table, #preview pre {
+#md_preview p, #md_preview blockquote, #md_preview ul, #md_preview ol, #md_preview dl, #md_preview li, #md_preview table, #md_preview pre {
 	margin: 15px 0;
 }
 
-#preview hr {
+#md_preview hr {
 	background: transparent url("../../images/modules/pulls/dirty-shade.png") repeat-x 0 0;
 	border: 0 none;
 	color: #cccccc;
@@ -132,57 +132,57 @@
 	padding: 0;
 }
 
-#preview > h2:first-child {
+#md_preview > h2:first-child {
 	margin-top: 0;
 	padding-top: 0;
 }
 
-#preview > h1:first-child {
+#md_preview > h1:first-child {
 	margin-top: 0;
 	padding-top: 0;
 }
 
-#preview > h1:first-child + h2 {
+#md_preview > h1:first-child + h2 {
 	margin-top: 0;
 	padding-top: 0;
 }
 
-#preview > h3:first-child, #preview > h4:first-child, #preview > h5:first-child, #preview > h6:first-child {
+#md_preview > h3:first-child, #md_preview > h4:first-child, #md_preview > h5:first-child, #md_preview > h6:first-child {
 	margin-top: 0;
 	padding-top: 0;
 }
 
-#preview a:first-child h1, #preview a:first-child h2, #preview a:first-child h3, #preview a:first-child h4, #preview a:first-child h5, #preview a:first-child h6 {
+#md_preview a:first-child h1, #md_preview a:first-child h2, #md_preview a:first-child h3, #md_preview a:first-child h4, #md_preview a:first-child h5, #md_preview a:first-child h6 {
 	margin-top: 0;
 	padding-top: 0;
 }
 
-#preview h1 p, #preview h2 p, #preview h3 p, #preview h4 p, #preview h5 p, #preview h6 p {
+#md_preview h1 p, #md_preview h2 p, #md_preview h3 p, #md_preview h4 p, #md_preview h5 p, #md_preview h6 p {
 	margin-top: 0;
 }
 
-#preview li p.first {
+#md_preview li p.first {
 	display: inline-block;
 }
 
-#preview ul, #preview ol {
+#md_preview ul, #md_preview ol {
 	padding-left: 30px;
 	list-style: disc;
 }
 
-#preview ul :first-child, #preview ol :first-child {
+#md_preview ul :first-child, #md_preview ol :first-child {
 	margin-top: 0;
 }
 
-#preview ul :last-child, #preview ol :last-child {
+#md_preview ul :last-child, #md_preview ol :last-child {
 	margin-bottom: 0;
 }
 
-#preview dl {
+#md_preview dl {
 	padding: 0;
 }
 
-#preview dl dt {
+#md_preview dl dt {
 	font-size: 14px;
 	font-weight: bold;
 	font-style: italic;
@@ -190,66 +190,66 @@
 	margin: 15px 0 5px;
 }
 
-#preview dl dt:first-child {
+#md_preview dl dt:first-child {
 	padding: 0;
 }
 
-#preview dl dt > :first-child {
+#md_preview dl dt > :first-child {
 	margin-top: 0;
 }
 
-#preview dl dt > :last-child {
+#md_preview dl dt > :last-child {
 	margin-bottom: 0;
 }
 
-#preview dl dd {
+#md_preview dl dd {
 	margin: 0 0 15px;
 	padding: 0 15px;
 }
 
-#preview dl dd > :first-child {
+#md_preview dl dd > :first-child {
 	margin-top: 0;
 }
 
-#preview dl dd > :last-child {
+#md_preview dl dd > :last-child {
 	margin-bottom: 0;
 }
 
-#preview hr {
+#md_preview hr {
 	border: 1px inset;
 	height: auto;
 }
 
-#preview blockquote {
+#md_preview blockquote {
 	border-left: 4px solid #dddddd;
 	padding: 0 15px;
 	color: #777777;
 }
 
-#preview blockquote > :first-child {
+#md_preview blockquote > :first-child {
 	margin-top: 0;
 }
 
-#preview blockquote > :last-child {
+#md_preview blockquote > :last-child {
 	margin-bottom: 0;
 }
 
-#preview table {
+#md_preview table {
 	padding: 0;
 }
 
-#preview table tr {
+#md_preview table tr {
 	border-top: 1px solid #cccccc;
 	background-color: white;
 	margin: 0;
 	padding: 0;
 }
 
-#preview table tr:nth-child(2n) {
+#md_preview table tr:nth-child(2n) {
 	background-color: #f8f8f8;
 }
 
-#preview table tr th {
+#md_preview table tr th {
 	font-weight: bold;
 	border: 1px solid #cccccc;
 	text-align: left;
@@ -257,31 +257,31 @@
 	padding: 6px 13px;
 }
 
-#preview table tr td {
+#md_preview table tr td {
 	border: 1px solid #cccccc;
 	text-align: left;
 	margin: 0;
 	padding: 6px 13px;
 }
 
-#preview table tr th :first-child, #preview table tr td :first-child {
+#md_preview table tr th :first-child, #md_preview table tr td :first-child {
 	margin-top: 0;
 }
 
-#preview table tr th :last-child, #preview table tr td :last-child {
+#md_preview table tr th :last-child, #md_preview table tr td :last-child {
 	margin-bottom: 0;
 }
 
-#preview img {
+#md_preview img {
 	max-width: 100%;
 }
 
-#preview span.frame {
+#md_preview span.frame {
 	display: block;
 	overflow: hidden;
 }
 
-#preview span.frame > span {
+#md_preview span.frame > span {
 	border: 1px solid #dddddd;
 	display: block;
 	float: left;
@@ -291,80 +291,80 @@
 	width: auto;
 }
 
-#preview span.frame span img {
+#md_preview span.frame span img {
 	display: block;
 	float: left;
 }
 
-#preview span.frame span span {
+#md_preview span.frame span span {
 	clear: both;
 	color: #333333;
 	display: block;
 	padding: 5px 0 0;
 }
 
-#preview span.align-center {
+#md_preview span.align-center {
 	display: block;
 	overflow: hidden;
 	clear: both;
 }
 
-#preview span.align-center > span {
+#md_preview span.align-center > span {
 	display: block;
 	overflow: hidden;
 	margin: 13px auto 0;
 	text-align: center;
 }
 
-#preview span.align-center span img {
+#md_preview span.align-center span img {
 	margin: 0 auto;
 	text-align: center;
 }
 
-#preview span.align-right {
+#md_preview span.align-right {
 	display: block;
 	overflow: hidden;
 	clear: both;
 }
 
-#preview span.align-right > span {
+#md_preview span.align-right > span {
 	display: block;
 	overflow: hidden;
 	margin: 13px 0 0;
 	text-align: right;
 }
 
-#preview span.align-right span img {
+#md_preview span.align-right span img {
 	margin: 0;
 	text-align: right;
 }
 
-#preview span.float-left {
+#md_preview span.float-left {
 	display: block;
 	margin-right: 13px;
 	overflow: hidden;
 	float: left;
 }
 
-#preview span.float-left span {
+#md_preview span.float-left span {
 	margin: 13px 0 0;
 }
 
-#preview span.float-right {
+#md_preview span.float-right {
 	display: block;
 	margin-left: 13px;
 	overflow: hidden;
 	float: right;
 }
 
-#preview span.float-right > span {
+#md_preview span.float-right > span {
 	display: block;
 	overflow: hidden;
 	margin: 13px auto 0;
 	text-align: right;
 }
 
-#preview code, #preview tt {
+#md_preview code, #md_preview tt {
 	margin: 0 2px;
 	padding: 0 5px;
 	white-space: nowrap;
@@ -373,7 +373,7 @@
 	border-radius: 3px;
 }
 
-#preview pre code {
+#md_preview pre code {
 	margin: 0;
 	padding: 0;
 	white-space: pre;
@@ -381,7 +381,7 @@
 	background: transparent;
 }
 
-#preview .highlight pre {
+#md_preview .highlight pre {
 	background-color: #f8f8f8;
 	border: 1px solid #cccccc;
 	font-size: 13px;
@@ -391,7 +391,7 @@
 	border-radius: 3px;
 }
 
-#preview pre {
+#md_preview pre {
 	background-color: #f8f8f8;
 	border: 1px solid #cccccc;
 	font-size: 13px;
@@ -401,7 +401,7 @@
 	border-radius: 3px;
 }
 
-#preview pre code, #preview pre tt {
+#md_preview pre code, #md_preview pre tt {
 	background-color: transparent;
 	border: none;
 }

@@ -5,7 +5,7 @@ $(document).ready(function () {
 				var editor = $('#editor'),
 					preview = $('<div/>'),
 					wrapper = $('<div/>');
-				preview.attr('id', 'preview');
+				preview.attr('id', 'md_preview');
 				wrapper.attr('id', 'preview_wrapper');
 				wrapper.append(preview);
 				editor.parent().append(wrapper);
@@ -48,17 +48,17 @@ $(document).ready(function () {
 	// Fades out the editor.
 	hideFileEditor = function () {
 		hideFileEditorOriginal()
-		if ($('#editor').attr('data-edited') == 'true') {
-			$('#preview').hide();
+		if ($('#editor').attr('data-edited') === 'true') {
+			$('#md_preview').hide();
 		} else {
-			$('#preview').remove();
+			$('#md_preview').remove();
 		}
 	}
 
 	// Reopens the last document
 	reopenEditor = function () {
 		reopenEditorOriginal();
-		$('#preview').show();
+		$('#md_preview').show();
 	}
 });
 
