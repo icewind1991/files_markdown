@@ -5,21 +5,19 @@
 	padding-top: 6.3em;
 	height: 100%;
 	width: 50%;
-	padding-left: 20px;
 	box-sizing: border-box;
 }
 
 #md_preview {
 	overflow: auto;
 	box-sizing: border-box;
-	font-family: Helvetica, arial, sans-serif;
 	font-size: 14px;
+	color: #252525;
 	line-height: 1.6;
 	padding-bottom: 10px;
-	padding-left: 10px;
-	padding-right: 20px;
-	background-color: white;
-	border-left: 1px solid #eee;
+	padding-left: 30px;
+	padding-right: 40px;
+	background-color: #f9f9f9;
 	width: 100%;
 	height: 100%;
 	box-sizing: border-box;
@@ -53,9 +51,8 @@
 }
 
 #md_preview h1, #md_preview h2, #md_preview h3, #md_preview h4, #md_preview h5, #md_preview h6 {
-	margin: 20px 0 10px;
+	margin: 30px 0 10px;
 	padding: 0;
-	font-weight: bold;
 	-webkit-font-smoothing: antialiased;
 	cursor: text;
 	position: relative;
@@ -93,34 +90,31 @@
 }
 
 #md_preview h1 {
-	font-size: 28px;
-	color: black;
+	font-size: 34px;
+	margin: 40px 0 20px;
 }
 
 #md_preview h2 {
-	font-size: 24px;
-	border-bottom: 1px solid #cccccc;
-	color: black;
+	font-size: 28px;
 }
 
 #md_preview h3 {
-	font-size: 18px;
+	font-size: 24px;
 }
 
 #md_preview h4 {
-	font-size: 16px;
+	font-size: 20px;
 }
 
 #md_preview h5 {
-	font-size: 14px;
+	font-size: 18px;
 }
 
 #md_preview h6 {
-	color: #777777;
 	font-size: 14px;
 }
 
-#md_preview p, #md_preview blockquote, #md_preview ul, #md_preview ol, #md_preview dl, #md_preview li, #md_preview table, #md_preview pre {
+#md_preview p, #md_preview blockquote, #md_preview ul, #md_preview ol, #md_preview dl, #md_preview table, #md_preview pre {
 	margin: 15px 0;
 }
 
@@ -167,7 +161,14 @@
 
 #md_preview ul, #md_preview ol {
 	padding-left: 30px;
+}
+
+#md_preview ul {
 	list-style: disc;
+}
+
+#md_preview ol {
+	list-style: decimal;
 }
 
 #md_preview ul :first-child, #md_preview ol :first-child {
