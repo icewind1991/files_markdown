@@ -8,7 +8,7 @@ Extends the texteditor in ownCloud with a live preview for markdown files
 The editor also supports LaTeX math using MathJax.  
 Math should be surrounded by a '$' for inline math or '$$' for a math block.
 
-![LaTeX math](http://i.imgur.com/0otA99U.png)
+![LaTeX math](https://i.imgur.com/5SpOaoc.png)
 
 Requirements
 ---
