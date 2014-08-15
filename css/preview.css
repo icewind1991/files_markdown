@@ -161,6 +161,7 @@
 
 #md_preview ul, #md_preview ol {
 	padding-left: 30px;
+	margin: 0px;
 }
 
 #md_preview ul {
@@ -176,7 +177,7 @@
 }
 
 #md_preview ul :last-child, #md_preview ol :last-child {
-	margin-bottom: 0;
+	margin-bottom: 15px;
 }
 
 #md_preview dl {
