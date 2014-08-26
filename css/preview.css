@@ -266,6 +266,14 @@
 	padding: 6px 13px;
 }
 
+#md_preview table tr td[align="right"] {
+	text-align: right;
+}
+
+#md_preview table tr td[align="center"] {
+	text-align: center;
+}
+
 #md_preview table tr th :first-child, #md_preview table tr td :first-child {
 	margin-top: 0;
 }
