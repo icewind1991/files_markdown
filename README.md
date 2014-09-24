@@ -6,9 +6,13 @@ Extends the texteditor in ownCloud with a live preview for markdown files
 ![Markdown Editor](https://i.imgur.com/UAIocNZ.png)
 
 The editor also supports LaTeX math using MathJax.  
-Math should be surrounded by a '$' for inline math or '$$' for a math block.
+Math should be surrounded by a `$` for inline math or `$$` for a math block.
 
 ![LaTeX math](https://i.imgur.com/5SpOaoc.png)
+
+Besides embedding images from the web, you can also embed images stored on your ownCloud
+
+![Embed Images](https://i.imgur.com/OfRnjcN.png)
 
 Requirements
 ---

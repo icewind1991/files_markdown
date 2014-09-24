@@ -28,9 +28,10 @@ OCA.Files_Markdown.mathJaxLoaded = false;
 OCA.Files_Markdown.markedLoadPromise = null;
 OCA.Files_Markdown.highlightLoaded = null;
 
-OCA.Files_Markdown.Editor = function (editor, head) {
+OCA.Files_Markdown.Editor = function (editor, head, dir) {
 	this.editor = editor;
 	this.head = head;
+	this.dir = dir;
 	this.preview = $('<div/>');
 	this.wrapper = $('<div/>');
 };
@@ -42,6 +43,7 @@ OCA.Files_Markdown.Editor.prototype.init = function (editorSession) {
 	this.editor.parent().append(this.wrapper);
 	this.editor.css('width', '50%');
 	var onChange = this._onChange.bind(this, editorSession);
+	var getUrl = this.getUrl.bind(this);
 
 	$.when(
 		this.loadMarked(),
@@ -50,14 +52,42 @@ OCA.Files_Markdown.Editor.prototype.init = function (editorSession) {
 			editorSession.on('change', onChange);
 			onChange();
 
+			var renderer = new marked.Renderer();
+			renderer.image = function (href, title, text) {
+				var out = '<img src="' + getUrl(href) + '" alt="' + text + '"';
+				if (title) {
+					out += ' title="' + title + '"';
+				}
+				out += this.options.xhtml ? '/>' : '>';
+				return out;
+			};
+
 			marked.setOptions({
 				highlight: function (code) {
 					return hljs.highlightAuto(code).value;
-				}
+				},
+				renderer: renderer
 			});
 			onChange();
 		});
 	this.loadMathJax();
+};
+
+OCA.Files_Markdown.Editor.prototype.getUrl = function (path) {
+	if (!path) {
+		return path;
+	}
+	if (path.substr(0, 7) === 'http://' || path.substr(0, 8) === 'https://' || path.substr(0, 3) === '://') {
+		return path;
+	} else {
+		if (path.substr(0, 1) !== '/') {
+			path = this.dir + '/' + path;
+		}
+		return OC.generateUrl('apps/files/ajax/download.php?dir={dir}&files={file}', {
+			dir: OC.dirname(path),
+			file: OC.basename(path)
+		});
+	}
 };
 
 OCA.Files_Markdown.Editor.prototype._onChange = function (editorSession) {
@@ -108,7 +138,7 @@ $(document).ready(function () {
 	if (OCA.Files) {
 		OCA.Files.fileActions.register('text/markdown', 'Edit', OC.PERMISSION_READ, '', function (filename, context) {
 			window.showFileEditor(context.dir, filename).then(function () {
-				var editor = new OCA.Files_Markdown.Editor($('#editor'), $('head')[0]);
+				var editor = new OCA.Files_Markdown.Editor($('#editor'), $('head')[0], context.dir);
 				editor.init(window.aceEditor.getSession());
 			});
 		});
