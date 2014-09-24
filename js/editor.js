@@ -1,3 +1,5 @@
+/* global OCA, marked, hljs, MathJax */
+
 OCA.Files_Markdown = {};
 
 OCA.Files_Markdown.overWriteEditor = function () {
@@ -41,21 +43,20 @@ OCA.Files_Markdown.Editor.prototype.init = function (editorSession) {
 	this.editor.css('width', '50%');
 	var onChange = this._onChange.bind(this, editorSession);
 
-	var self = this;
-	this.loadMarked().then(function () {
-		editorSession.on('change', onChange);
-		onChange();
+	$.when(
+		this.loadMarked(),
+		this.loadHighlight()
+	).then(function () {
+			editorSession.on('change', onChange);
+			onChange();
 
-		self.loadHighlight().then(function() {
 			marked.setOptions({
-				highlight: function(code) {
+				highlight: function (code) {
 					return hljs.highlightAuto(code).value;
 				}
 			});
 			onChange();
 		});
-	});
-	this.loadHighlight();
 	this.loadMathJax();
 };
 
@@ -76,10 +77,10 @@ OCA.Files_Markdown.Editor.prototype.loadMarked = function () {
 };
 
 OCA.Files_Markdown.Editor.prototype.loadHighlight = function () {
-        if (!OCA.Files_Markdown.highlightLoadPromise) {
+	if (!OCA.Files_Markdown.highlightLoadPromise) {
 		OCA.Files_Markdown.highlightLoadPromise = OC.addScript('files_markdown', 'highlight.pack');
-        }
-	return OC.addScript('files_markdown', 'highlight.pack');
+	}
+	return OCA.Files_Markdown.highlightLoadPromise;
 };
 
 OCA.Files_Markdown.Editor.prototype.loadMathJax = function () {
@@ -91,8 +92,8 @@ OCA.Files_Markdown.Editor.prototype.loadMathJax = function () {
 	script.type = "text/x-mathjax-config";
 	script[(window.opera ? "innerHTML" : "text")] =
 		"MathJax.Hub.Config({\n" +
-			"  tex2jax: { inlineMath: [['$','$'], ['\\\\(','\\\\)']] }\n" +
-			"});";
+		"  tex2jax: { inlineMath: [['$','$'], ['\\\\(','\\\\)']] }\n" +
+		"});";
 	this.head.appendChild(script);
 
 	var path = OC.filePath('files_markdown', 'js', 'mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML');
