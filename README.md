@@ -13,7 +13,7 @@ Math should be surrounded by a '$' for inline math or '$$' for a math block.
 Requirements
 ---
 
-Currently this requires ownCloud and the texteditor app to be installed from git master or git stable5 or any future release (after 2013-04-24) of oC 5 or higher.
+This requires ownCloud and the text editor app to be installed from ownCloud 7 or higher.
 
 Installation
 ---
