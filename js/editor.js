@@ -24,6 +24,7 @@ OCA.Files_Markdown.overWriteEditor = function () {
 
 OCA.Files_Markdown.mathJaxLoaded = false;
 OCA.Files_Markdown.markedLoadPromise = null;
+OCA.Files_Markdown.highlightLoaded = null;
 
 OCA.Files_Markdown.Editor = function (editor, head) {
 	this.editor = editor;
@@ -39,10 +40,22 @@ OCA.Files_Markdown.Editor.prototype.init = function (editorSession) {
 	this.editor.parent().append(this.wrapper);
 	this.editor.css('width', '50%');
 	var onChange = this._onChange.bind(this, editorSession);
+
+	var self = this;
 	this.loadMarked().then(function () {
 		editorSession.on('change', onChange);
 		onChange();
+
+		self.loadHighlight().then(function() {
+			marked.setOptions({
+				highlight: function(code) {
+					return hljs.highlightAuto(code).value;
+				}
+			});
+			onChange();
+		});
 	});
+	this.loadHighlight();
 	this.loadMathJax();
 };
 
@@ -60,6 +73,13 @@ OCA.Files_Markdown.Editor.prototype.loadMarked = function () {
 		OCA.Files_Markdown.markedLoadPromise = OC.addScript('files_markdown', 'marked');
 	}
 	return OCA.Files_Markdown.markedLoadPromise;
+};
+
+OCA.Files_Markdown.Editor.prototype.loadHighlight = function () {
+        if (!OCA.Files_Markdown.highlightLoadPromise) {
+		OCA.Files_Markdown.highlightLoadPromise = OC.addScript('files_markdown', 'highlight.pack');
+        }
+	return OC.addScript('files_markdown', 'highlight.pack');
 };
 
 OCA.Files_Markdown.Editor.prototype.loadMathJax = function () {
