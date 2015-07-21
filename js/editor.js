@@ -135,12 +135,15 @@ OCA.Files_Markdown.Editor.prototype.loadMathJax = function () {
 };
 
 $(document).ready(function () {
+	var originalGiveFocus = giveEditorFocus;
 	if (OCA.Files) {
 		OCA.Files.fileActions.register('text/markdown', 'Edit', OC.PERMISSION_READ, '', function (filename, context) {
-			window.showFileEditor(context.dir, filename).then(function () {
+			giveEditorFocus = function () {
 				var editor = new OCA.Files_Markdown.Editor($('#editor'), $('head')[0], context.dir);
 				editor.init(window.aceEditor.getSession());
-			});
+				originalGiveFocus();
+			};
+			window.showFileEditor(context.dir, filename);
 		});
 		OCA.Files.fileActions.setDefault('text/markdown', 'Edit');
 
