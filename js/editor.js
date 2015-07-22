@@ -135,6 +135,9 @@ OCA.Files_Markdown.Editor.prototype.loadMathJax = function () {
 };
 
 $(document).ready(function () {
+	if (!window.giveEditorFocus) {
+		return;
+	}
 	var originalGiveFocus = giveEditorFocus;
 	if (OCA.Files) {
 		OCA.Files.fileActions.register('text/markdown', 'Edit', OC.PERMISSION_READ, '', function (filename, context) {
