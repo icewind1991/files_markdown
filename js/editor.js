@@ -100,5 +100,7 @@ OCA.Files_Markdown.Preview.prototype.loadMathJax = function () {
 };
 
 $(document).ready(function () {
-	OCA.Files_Texteditor.registerPreviewPlugin('text/markdown', new OCA.Files_Markdown.Preview());
+	if (OCA.Files_Texteditor && OCA.Files_Texteditor.registerPreviewPlugin) {
+		OCA.Files_Texteditor.registerPreviewPlugin('text/markdown', new OCA.Files_Markdown.Preview());
+	}
 });
