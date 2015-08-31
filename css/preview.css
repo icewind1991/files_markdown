@@ -1,4 +1,4 @@
-#preview_wrapper {
+#preview.text-markdown_wrapper {
 	right: 0;
 	position: fixed;
 	top: 0;
@@ -8,38 +8,33 @@
 	box-sizing: border-box;
 }
 
-#md_preview {
+#preview.text-markdown {
+	padding: 15px;
+	padding-top: 61px;
 	overflow: auto;
 	box-sizing: border-box;
 	font-size: 14px;
 	color: #252525;
-	line-height: 1.6;
-	padding-bottom: 10px;
-	padding-left: 30px;
-	padding-right: 40px;
 	background-color: #f9f9f9;
-	width: 100%;
-	height: 100%;
-	box-sizing: border-box;
 }
 
-#md_preview > *:first-child {
+#preview.text-markdown > *:first-child {
 	margin-top: 0 !important;
 }
 
-#md_preview > *:last-child {
+#preview.text-markdown > *:last-child {
 	margin-bottom: 0 !important;
 }
 
-#md_preview a {
+#preview.text-markdown a {
 	color: #4183C4;
 }
 
-#md_preview a.absent {
+#preview.text-markdown a.absent {
 	color: #cc0000;
 }
 
-#md_preview a.anchor {
+#preview.text-markdown a.anchor {
 	display: block;
 	padding-left: 30px;
 	margin-left: -30px;
@@ -50,7 +45,7 @@
 	bottom: 0;
 }
 
-#md_preview h1, #md_preview h2, #md_preview h3, #md_preview h4, #md_preview h5, #md_preview h6 {
+#preview.text-markdown h1, #preview.text-markdown h2, #preview.text-markdown h3, #preview.text-markdown h4, #preview.text-markdown h5, #preview.text-markdown h6 {
 	margin: 30px 0 10px;
 	padding: 0;
 	-webkit-font-smoothing: antialiased;
@@ -58,67 +53,67 @@
 	position: relative;
 }
 
-#md_preview h1:hover a.anchor, #md_preview h2:hover a.anchor,
-#md_preview h3:hover a.anchor, #md_preview h4:hover a.anchor,
-#md_preview h5:hover a.anchor, #md_preview h6:hover a.anchor {
+#preview.text-markdown h1:hover a.anchor, #preview.text-markdown h2:hover a.anchor,
+#preview.text-markdown h3:hover a.anchor, #preview.text-markdown h4:hover a.anchor,
+#preview.text-markdown h5:hover a.anchor, #preview.text-markdown h6:hover a.anchor {
 	background: url("../../images/modules/styleguide/para.png") no-repeat 10px center;
 	text-decoration: none;
 }
 
-#md_preview h1 tt, #md_preview h1 code {
+#preview.text-markdown h1 tt, #preview.text-markdown h1 code {
 	font-size: inherit;
 }
 
-#md_preview h2 tt, #md_preview h2 code {
+#preview.text-markdown h2 tt, #preview.text-markdown h2 code {
 	font-size: inherit;
 }
 
-#md_preview h3 tt, #md_preview h3 code {
+#preview.text-markdown h3 tt, #preview.text-markdown h3 code {
 	font-size: inherit;
 }
 
-#md_preview h4 tt, #md_preview h4 code {
+#preview.text-markdown h4 tt, #preview.text-markdown h4 code {
 	font-size: inherit;
 }
 
-#md_preview h5 tt, #md_preview h5 code {
+#preview.text-markdown h5 tt, #preview.text-markdown h5 code {
 	font-size: inherit;
 }
 
-#md_preview h6 tt, #md_preview h6 code {
+#preview.text-markdown h6 tt, #preview.text-markdown h6 code {
 	font-size: inherit;
 }
 
-#md_preview h1 {
+#preview.text-markdown h1 {
 	font-size: 34px;
 	margin: 40px 0 20px;
 }
 
-#md_preview h2 {
+#preview.text-markdown h2 {
 	font-size: 28px;
 }
 
-#md_preview h3 {
+#preview.text-markdown h3 {
 	font-size: 24px;
 }
 
-#md_preview h4 {
+#preview.text-markdown h4 {
 	font-size: 20px;
 }
 
-#md_preview h5 {
+#preview.text-markdown h5 {
 	font-size: 18px;
 }
 
-#md_preview h6 {
+#preview.text-markdown h6 {
 	font-size: 14px;
 }
 
-#md_preview p, #md_preview blockquote, #md_preview ul, #md_preview ol, #md_preview dl, #md_preview table, #md_preview pre {
+#preview.text-markdown p, #preview.text-markdown blockquote, #preview.text-markdown ul, #preview.text-markdown ol, #preview.text-markdown dl, #preview.text-markdown table, #preview.text-markdown pre {
 	margin: 15px 0;
 }
 
-#md_preview hr {
+#preview.text-markdown hr {
 	background: transparent url("../../images/modules/pulls/dirty-shade.png") repeat-x 0 0;
 	border: 0 none;
 	color: #cccccc;
@@ -126,65 +121,65 @@
 	padding: 0;
 }
 
-#md_preview > h2:first-child {
+#preview.text-markdown > h2:first-child {
 	margin-top: 0;
 	padding-top: 0;
 }
 
-#md_preview > h1:first-child {
+#preview.text-markdown > h1:first-child {
 	margin-top: 0;
 	padding-top: 0;
 }
 
-#md_preview > h1:first-child + h2 {
+#preview.text-markdown > h1:first-child + h2 {
 	margin-top: 0;
 	padding-top: 0;
 }
 
-#md_preview > h3:first-child, #md_preview > h4:first-child, #md_preview > h5:first-child, #md_preview > h6:first-child {
+#preview.text-markdown > h3:first-child, #preview.text-markdown > h4:first-child, #preview.text-markdown > h5:first-child, #preview.text-markdown > h6:first-child {
 	margin-top: 0;
 	padding-top: 0;
 }
 
-#md_preview a:first-child h1, #md_preview a:first-child h2, #md_preview a:first-child h3, #md_preview a:first-child h4, #md_preview a:first-child h5, #md_preview a:first-child h6 {
+#preview.text-markdown a:first-child h1, #preview.text-markdown a:first-child h2, #preview.text-markdown a:first-child h3, #preview.text-markdown a:first-child h4, #preview.text-markdown a:first-child h5, #preview.text-markdown a:first-child h6 {
 	margin-top: 0;
 	padding-top: 0;
 }
 
-#md_preview h1 p, #md_preview h2 p, #md_preview h3 p, #md_preview h4 p, #md_preview h5 p, #md_preview h6 p {
+#preview.text-markdown h1 p, #preview.text-markdown h2 p, #preview.text-markdown h3 p, #preview.text-markdown h4 p, #preview.text-markdown h5 p, #preview.text-markdown h6 p {
 	margin-top: 0;
 }
 
-#md_preview li p.first {
+#preview.text-markdown li p.first {
 	display: inline-block;
 }
 
-#md_preview ul, #md_preview ol {
+#preview.text-markdown ul, #preview.text-markdown ol {
 	padding-left: 30px;
 	margin: 0px;
 }
 
-#md_preview ul {
+#preview.text-markdown ul {
 	list-style: disc;
 }
 
-#md_preview ol {
+#preview.text-markdown ol {
 	list-style: decimal;
 }
 
-#md_preview ul :first-child, #md_preview ol :first-child {
+#preview.text-markdown ul :first-child, #preview.text-markdown ol :first-child {
 	margin-top: 0;
 }
 
-#md_preview ul :last-child, #md_preview ol :last-child {
+#preview.text-markdown ul :last-child, #preview.text-markdown ol :last-child {
 	margin-bottom: 15px;
 }
 
-#md_preview dl {
+#preview.text-markdown dl {
 	padding: 0;
 }
 
-#md_preview dl dt {
+#preview.text-markdown dl dt {
 	font-size: 14px;
 	font-weight: bold;
 	font-style: italic;
@@ -192,66 +187,66 @@
 	margin: 15px 0 5px;
 }
 
-#md_preview dl dt:first-child {
+#preview.text-markdown dl dt:first-child {
 	padding: 0;
 }
 
-#md_preview dl dt > :first-child {
+#preview.text-markdown dl dt > :first-child {
 	margin-top: 0;
 }
 
-#md_preview dl dt > :last-child {
+#preview.text-markdown dl dt > :last-child {
 	margin-bottom: 0;
 }
 
-#md_preview dl dd {
+#preview.text-markdown dl dd {
 	margin: 0 0 15px;
 	padding: 0 15px;
 }
 
-#md_preview dl dd > :first-child {
+#preview.text-markdown dl dd > :first-child {
 	margin-top: 0;
 }
 
-#md_preview dl dd > :last-child {
+#preview.text-markdown dl dd > :last-child {
 	margin-bottom: 0;
 }
 
-#md_preview hr {
+#preview.text-markdown hr {
 	border: 1px inset;
 	height: auto;
 }
 
-#md_preview blockquote {
+#preview.text-markdown blockquote {
 	border-left: 4px solid #dddddd;
 	padding: 0 15px;
 	color: #777777;
 }
 
-#md_preview blockquote > :first-child {
+#preview.text-markdown blockquote > :first-child {
 	margin-top: 0;
 }
 
-#md_preview blockquote > :last-child {
+#preview.text-markdown blockquote > :last-child {
 	margin-bottom: 0;
 }
 
-#md_preview table {
+#preview.text-markdown table {
 	padding: 0;
 }
 
-#md_preview table tr {
+#preview.text-markdown table tr {
 	border-top: 1px solid #cccccc;
 	background-color: white;
 	margin: 0;
 	padding: 0;
 }
 
-#md_preview table tr:nth-child(2n) {
+#preview.text-markdown table tr:nth-child(2n) {
 	background-color: #f8f8f8;
 }
 
-#md_preview table tr th {
+#preview.text-markdown table tr th {
 	font-weight: bold;
 	border: 1px solid #cccccc;
 	text-align: left;
@@ -259,39 +254,39 @@
 	padding: 6px 13px;
 }
 
-#md_preview table tr td {
+#preview.text-markdown table tr td {
 	border: 1px solid #cccccc;
 	text-align: left;
 	margin: 0;
 	padding: 6px 13px;
 }
 
-#md_preview table tr td[align="right"] {
+#preview.text-markdown table tr td[align="right"] {
 	text-align: right;
 }
 
-#md_preview table tr td[align="center"] {
+#preview.text-markdown table tr td[align="center"] {
 	text-align: center;
 }
 
-#md_preview table tr th :first-child, #md_preview table tr td :first-child {
+#preview.text-markdown table tr th :first-child, #preview.text-markdown table tr td :first-child {
 	margin-top: 0;
 }
 
-#md_preview table tr th :last-child, #md_preview table tr td :last-child {
+#preview.text-markdown table tr th :last-child, #preview.text-markdown table tr td :last-child {
 	margin-bottom: 0;
 }
 
-#md_preview img {
+#preview.text-markdown img {
 	max-width: 100%;
 }
 
-#md_preview span.frame {
+#preview.text-markdown span.frame {
 	display: block;
 	overflow: hidden;
 }
 
-#md_preview span.frame > span {
+#preview.text-markdown span.frame > span {
 	border: 1px solid #dddddd;
 	display: block;
 	float: left;
@@ -301,80 +296,80 @@
 	width: auto;
 }
 
-#md_preview span.frame span img {
+#preview.text-markdown span.frame span img {
 	display: block;
 	float: left;
 }
 
-#md_preview span.frame span span {
+#preview.text-markdown span.frame span span {
 	clear: both;
 	color: #333333;
 	display: block;
 	padding: 5px 0 0;
 }
 
-#md_preview span.align-center {
+#preview.text-markdown span.align-center {
 	display: block;
 	overflow: hidden;
 	clear: both;
 }
 
-#md_preview span.align-center > span {
+#preview.text-markdown span.align-center > span {
 	display: block;
 	overflow: hidden;
 	margin: 13px auto 0;
 	text-align: center;
 }
 
-#md_preview span.align-center span img {
+#preview.text-markdown span.align-center span img {
 	margin: 0 auto;
 	text-align: center;
 }
 
-#md_preview span.align-right {
+#preview.text-markdown span.align-right {
 	display: block;
 	overflow: hidden;
 	clear: both;
 }
 
-#md_preview span.align-right > span {
+#preview.text-markdown span.align-right > span {
 	display: block;
 	overflow: hidden;
 	margin: 13px 0 0;
 	text-align: right;
 }
 
-#md_preview span.align-right span img {
+#preview.text-markdown span.align-right span img {
 	margin: 0;
 	text-align: right;
 }
 
-#md_preview span.float-left {
+#preview.text-markdown span.float-left {
 	display: block;
 	margin-right: 13px;
 	overflow: hidden;
 	float: left;
 }
 
-#md_preview span.float-left span {
+#preview.text-markdown span.float-left span {
 	margin: 13px 0 0;
 }
 
-#md_preview span.float-right {
+#preview.text-markdown span.float-right {
 	display: block;
 	margin-left: 13px;
 	overflow: hidden;
 	float: right;
 }
 
-#md_preview span.float-right > span {
+#preview.text-markdown span.float-right > span {
 	display: block;
 	overflow: hidden;
 	margin: 13px auto 0;
 	text-align: right;
 }
 
-#md_preview code, #md_preview tt {
+#preview.text-markdown code, #preview.text-markdown tt {
 	margin: 0 2px;
 	padding: 0 5px;
 	white-space: nowrap;
@@ -383,7 +378,7 @@
 	border-radius: 3px;
 }
 
-#md_preview pre code {
+#preview.text-markdown pre code {
 	margin: 0;
 	padding: 0;
 	white-space: pre;
@@ -391,7 +386,7 @@
 	background: transparent;
 }
 
-#md_preview .highlight pre {
+#preview.text-markdown .highlight pre {
 	background-color: #f8f8f8;
 	border: 1px solid #cccccc;
 	font-size: 13px;
@@ -401,7 +396,7 @@
 	border-radius: 3px;
 }
 
-#md_preview pre {
+#preview.text-markdown pre {
 	background-color: #f8f8f8;
 	border: 1px solid #cccccc;
 	font-size: 13px;
@@ -411,7 +406,7 @@
 	border-radius: 3px;
 }
 
-#md_preview pre code, #md_preview pre tt {
+#preview.text-markdown pre code, #preview.text-markdown pre tt {
 	background-color: transparent;
 	border: none;
 }

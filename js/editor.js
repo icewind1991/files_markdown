@@ -2,58 +2,24 @@
 
 OCA.Files_Markdown = {};
 
-OCA.Files_Markdown.overWriteEditor = function () {
-	if (window.hideFileEditor) {
-		var hideFileEditorOriginal = window.hideFileEditor;
-		var reopenEditorOriginal = window.reopenEditor;
-	}
-	// Fades out the editor.
-	window.hideFileEditor = function () {
-		hideFileEditorOriginal();
-		if ($('#editor').attr('data-edited') === 'true') {
-			$('#md_preview').hide();
-		} else {
-			$('#md_preview').remove();
-		}
-	};
-
-	// Reopens the last document
-	window.reopenEditor = function () {
-		reopenEditorOriginal();
-		$('#md_preview').show();
-	};
-};
-
 OCA.Files_Markdown.mathJaxLoaded = false;
 OCA.Files_Markdown.markedLoadPromise = null;
 OCA.Files_Markdown.highlightLoaded = null;
 
-OCA.Files_Markdown.Editor = function (editor, head, dir) {
-	this.editor = editor;
-	this.head = head;
-	this.dir = dir;
-	this.preview = $('<div/>');
-	this.wrapper = $('<div/>');
+OCA.Files_Markdown.Preview = function () {
+	this.renderer = null;
+	this.head = document.head;
 };
 
-OCA.Files_Markdown.Editor.prototype.init = function (editorSession) {
-	this.preview.attr('id', 'md_preview');
-	this.wrapper.attr('id', 'preview_wrapper');
-	this.wrapper.append(this.preview);
-	this.editor.parent().append(this.wrapper);
-	this.editor.css('width', '50%');
-	var onChange = this._onChange.bind(this, editorSession);
+OCA.Files_Markdown.Preview.prototype.init = function () {
 	var getUrl = this.getUrl.bind(this);
 
 	$.when(
 		this.loadMarked(),
 		this.loadHighlight()
 	).then(function () {
-			editorSession.on('change', onChange);
-			onChange();
-
-			var renderer = new marked.Renderer();
-			renderer.image = function (href, title, text) {
+			this.renderer = new marked.Renderer();
+			this.renderer.image = function (href, title, text) {
 				var out = '<img src="' + getUrl(href) + '" alt="' + text + '"';
 				if (title) {
 					out += ' title="' + title + '"';
@@ -66,14 +32,13 @@ OCA.Files_Markdown.Editor.prototype.init = function (editorSession) {
 				highlight: function (code) {
 					return hljs.highlightAuto(code).value;
 				},
-				renderer: renderer
+				renderer: this.renderer
 			});
-			onChange();
-		});
+		}.bind(this));
 	this.loadMathJax();
 };
 
-OCA.Files_Markdown.Editor.prototype.getUrl = function (path) {
+OCA.Files_Markdown.Preview.prototype.getUrl = function (path) {
 	if (!path) {
 		return path;
 	}
@@ -90,30 +55,30 @@ OCA.Files_Markdown.Editor.prototype.getUrl = function (path) {
 	}
 };
 
-OCA.Files_Markdown.Editor.prototype._onChange = function (editorSession) {
-	var text = editorSession.getValue();
+OCA.Files_Markdown.Preview.prototype.preview = function (text, element) {
+	console.log(text);
 	var html = marked(text);
-	this.preview.html(html);
+	element.html(html);
 	if (window.MathJax) {
-		MathJax.Hub.Queue(["Typeset", MathJax.Hub, this.preview[0]]);
-	}
+		MathJax.Hub.Queue(["Typeset", MathJax.Hub, element[0]]);
+	};
 };
 
-OCA.Files_Markdown.Editor.prototype.loadMarked = function () {
+OCA.Files_Markdown.Preview.prototype.loadMarked = function () {
 	if (!OCA.Files_Markdown.markedLoadPromise) {
 		OCA.Files_Markdown.markedLoadPromise = OC.addScript('files_markdown', 'marked');
 	}
 	return OCA.Files_Markdown.markedLoadPromise;
 };
 
-OCA.Files_Markdown.Editor.prototype.loadHighlight = function () {
+OCA.Files_Markdown.Preview.prototype.loadHighlight = function () {
 	if (!OCA.Files_Markdown.highlightLoadPromise) {
 		OCA.Files_Markdown.highlightLoadPromise = OC.addScript('files_markdown', 'highlight.pack');
 	}
 	return OCA.Files_Markdown.highlightLoadPromise;
 };
 
-OCA.Files_Markdown.Editor.prototype.loadMathJax = function () {
+OCA.Files_Markdown.Preview.prototype.loadMathJax = function () {
 	if (OCA.Files_Markdown.mathJaxLoaded) {
 		return;
 	}
@@ -135,21 +100,5 @@ OCA.Files_Markdown.Editor.prototype.loadMathJax = function () {
 };
 
 $(document).ready(function () {
-	if (!window.giveEditorFocus) {
-		return;
-	}
-	var originalGiveFocus = giveEditorFocus;
-	if (OCA.Files) {
-		OCA.Files.fileActions.register('text/markdown', 'Edit', OC.PERMISSION_READ, '', function (filename, context) {
-			giveEditorFocus = function () {
-				var editor = new OCA.Files_Markdown.Editor($('#editor'), $('head')[0], context.dir);
-				editor.init(window.aceEditor.getSession());
-				originalGiveFocus();
-			};
-			window.showFileEditor(context.dir, filename);
-		});
-		OCA.Files.fileActions.setDefault('text/markdown', 'Edit');
-
-		OCA.Files_Markdown.overWriteEditor();
-	}
+	OCA.Files_Texteditor.registerPreviewPlugin('text/markdown', new OCA.Files_Markdown.Preview());
 });
