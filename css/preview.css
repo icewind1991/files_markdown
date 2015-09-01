@@ -410,3 +410,11 @@
 	background-color: transparent;
 	border: none;
 }
+
+#preview.text-markdown strong {
+	font-weight: bold;
+}
+
+#preview.text-markdown em {
+	font-style: italic;
+}
