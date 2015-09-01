@@ -1,21 +1,5 @@
-#preview.text-markdown_wrapper {
-	right: 0;
-	position: fixed;
-	top: 0;
-	padding-top: 88px;
-	height: 100%;
-	width: 50%;
-	box-sizing: border-box;
-}
-
 #preview.text-markdown {
-	padding: 15px;
-	padding-top: 61px;
-	overflow: auto;
-	box-sizing: border-box;
 	font-size: 14px;
-	color: #252525;
-	background-color: #f9f9f9;
 }
 
 #preview.text-markdown > *:first-child {
