@@ -32,7 +32,8 @@ OCA.Files_Markdown.Preview.prototype.init = function () {
 				highlight: function (code) {
 					return hljs.highlightAuto(code).value;
 				},
-				renderer: this.renderer
+				renderer: this.renderer,
+				headerPrefix: 'md-'
 			});
 		}.bind(this));
 	this.loadMathJax();
