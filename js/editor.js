@@ -56,12 +56,11 @@ OCA.Files_Markdown.Preview.prototype.getUrl = function (path) {
 };
 
 OCA.Files_Markdown.Preview.prototype.preview = function (text, element) {
-	console.log(text);
 	var html = marked(text);
 	element.html(html);
 	if (window.MathJax) {
 		MathJax.Hub.Queue(["Typeset", MathJax.Hub, element[0]]);
-	};
+	}
 };
 
 OCA.Files_Markdown.Preview.prototype.loadMarked = function () {
