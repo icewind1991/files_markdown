@@ -5,5 +5,7 @@
 	<description>Markdown Editor with live preview.</description>
 	<licence>AGPL</licence>
 	<author>Robin Appelman</author>
-	<require>5.0</require>
+	<dependencies>
+		<owncloud min-version="8.2" max-version="9.0"/>
+	</dependencies>
 </info>
