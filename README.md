@@ -22,13 +22,10 @@ This requires ownCloud and the text editor app to be installed from ownCloud 7 o
 Installation
 ---
 
-- Clone the app into the **/var/www** directory:
+- Clone the app into the owncloud apps directory:
 
-    ``git clone https://github.com/icewind1991/owncloud-markdown.git``
-
-
-- Link the app ownCloud's apps folder as 'files_markdown':
-
-	``ln -s /var/www/owncloud-markdown /var/www/owncloud/apps/files_markdown``
+    ``git clone https://github.com/icewind1991/files_markdown.git``
 
 - Activate the App.
+
+    ``occ app:enable files_markdown``
