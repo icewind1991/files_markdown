@@ -9,6 +9,7 @@ OCA.Files_Markdown.highlightLoaded = null;
 OCA.Files_Markdown.Preview = function () {
 	this.renderer = null;
 	this.head = document.head;
+	this.preview = _.throttle(this.previewText, 500);
 };
 
 OCA.Files_Markdown.Preview.prototype.init = function () {
@@ -18,24 +19,24 @@ OCA.Files_Markdown.Preview.prototype.init = function () {
 		this.loadMarked(),
 		this.loadHighlight()
 	).then(function () {
-			this.renderer = new marked.Renderer();
-			this.renderer.image = function (href, title, text) {
-				var out = '<img src="' + getUrl(href) + '" alt="' + text + '"';
-				if (title) {
-					out += ' title="' + title + '"';
-				}
-				out += this.options.xhtml ? '/>' : '>';
-				return out;
-			};
+		this.renderer = new marked.Renderer();
+		this.renderer.image = function (href, title, text) {
+			var out = '<img src="' + getUrl(href) + '" alt="' + text + '"';
+			if (title) {
+				out += ' title="' + title + '"';
+			}
+			out += this.options.xhtml ? '/>' : '>';
+			return out;
+		};
 
-			marked.setOptions({
-				highlight: function (code) {
-					return hljs.highlightAuto(code).value;
-				},
-				renderer: this.renderer,
-				headerPrefix: 'md-'
-			});
-		}.bind(this));
+		marked.setOptions({
+			highlight: function (code) {
+				return hljs.highlightAuto(code).value;
+			},
+			renderer: this.renderer,
+			headerPrefix: 'md-'
+		});
+	}.bind(this));
 	this.loadMathJax();
 };
 
@@ -47,7 +48,7 @@ OCA.Files_Markdown.Preview.prototype.getUrl = function (path) {
 		return path;
 	} else {
 		if (path.substr(0, 1) !== '/') {
-			path = this.dir + '/' + path;
+			path = OCA.Files_Texteditor.file.dir + '/' + path;
 		}
 		return OC.generateUrl('apps/files/ajax/download.php?dir={dir}&files={file}', {
 			dir: OC.dirname(path),
@@ -56,12 +57,22 @@ OCA.Files_Markdown.Preview.prototype.getUrl = function (path) {
 	}
 };
 
-OCA.Files_Markdown.Preview.prototype.preview = function (text, element) {
-	var html = marked(text);
+OCA.Files_Markdown.Preview.prototype.previewText = function (text, element) {
+	var html = marked(prepareText(text));
 	element.html(html);
 	if (window.MathJax) {
 		MathJax.Hub.Queue(["Typeset", MathJax.Hub, element[0]]);
 	}
+};
+
+var prepareText = function (text) {
+	text = text.trim();
+	if (text.substr(0, 3) === '+++') {
+		text = text.substr(3);
+		text = text.substr(text.indexOf('+++') + 3);
+	}
+
+	return text;
 };
 
 OCA.Files_Markdown.Preview.prototype.loadMarked = function () {
