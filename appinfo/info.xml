@@ -6,6 +6,6 @@
 	<licence>AGPL</licence>
 	<author>Robin Appelman</author>
 	<dependencies>
-		<owncloud min-version="8.2" max-version="9.1"/>
+		<nextcloud min-version="9" max-version="11"/>
 	</dependencies>
 </info>
