@@ -29,10 +29,17 @@ OCA.Files_Markdown.Preview.prototype.init = function () {
 			return out;
 		};
 
+		this.renderer.code = function(code, language) {
+			// Check whether the given language is valid for highlight.js.
+			const validLang = !!(language && hljs.getLanguage(language));
+			// Highlight only if the language is valid.
+			const highlighted = validLang ? hljs.highlight(language, code).value : code;
+			// Render the highlighted code with `hljs` class.
+			return '<pre><code class="hljs ' + language + '">' + highlighted + '</code></pre>';
+		};
+
+
 		marked.setOptions({
-			highlight: function (code) {
-				return hljs.highlightAuto(code).value;
-			},
 			renderer: this.renderer,
 			headerPrefix: 'md-'
 		});
@@ -77,14 +84,15 @@ var prepareText = function (text) {
 
 OCA.Files_Markdown.Preview.prototype.loadMarked = function () {
 	if (!OCA.Files_Markdown.markedLoadPromise) {
-		OCA.Files_Markdown.markedLoadPromise = OC.addScript('files_markdown', 'marked');
+		OCA.Files_Markdown.markedLoadPromise = OC.addScript('files_markdown', 'core/vendor/marked/marked.min');
 	}
 	return OCA.Files_Markdown.markedLoadPromise;
 };
 
 OCA.Files_Markdown.Preview.prototype.loadHighlight = function () {
 	if (!OCA.Files_Markdown.highlightLoadPromise) {
-		OCA.Files_Markdown.highlightLoadPromise = OC.addScript('files_markdown', 'highlight.pack');
+		OC.addStyle('files_markdown', '../js/core/vendor/highlightjs/styles/github');
+		OCA.Files_Markdown.highlightLoadPromise = OC.addScript('files_markdown', 'core/vendor/highlightjs/highlight.pack.min');
 	}
 	return OCA.Files_Markdown.highlightLoadPromise;
 };
