@@ -9,7 +9,7 @@ OCA.Files_Markdown.highlightLoaded = null;
 OCA.Files_Markdown.Preview = function () {
 	this.renderer = null;
 	this.head = document.head;
-	this.preview = _.throttle(this.previewText, 500);
+	this.preview = _.throttle(this.previewText.bind(this), 500);
 };
 
 OCA.Files_Markdown.Preview.prototype.init = function () {
@@ -110,12 +110,7 @@ OCA.Files_Markdown.Preview.prototype.loadMathJax = function () {
 		"});";
 	this.head.appendChild(script);
 
-	var path = OC.filePath('files_markdown', 'js', 'mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML');
-
-	//insert using native dom to prevent jquery from removing the script tag
-	script = document.createElement("script");
-	script.src = path;
-	this.head.appendChild(script);
+	OC.addScript('files_markdown', 'MathJax-TeXSVG');
 };
 
 $(document).ready(function () {
