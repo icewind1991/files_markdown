@@ -5,6 +5,7 @@ OCA.Files_Markdown = {};
 OCA.Files_Markdown.mathJaxLoaded = false;
 OCA.Files_Markdown.markedLoadPromise = null;
 OCA.Files_Markdown.highlightLoaded = null;
+OCA.Files_Markdown.katexLoadPromise = null;
 
 OCA.Files_Markdown.Preview = function () {
 	this.renderer = null;
@@ -17,7 +18,8 @@ OCA.Files_Markdown.Preview.prototype.init = function () {
 
 	$.when(
 		this.loadMarked(),
-		this.loadHighlight()
+		this.loadHighlight(),
+		this.loadKaTeX()
 	).then(function () {
 		this.renderer = new marked.Renderer();
 		this.renderer.image = function (href, title, text) {
@@ -44,7 +46,6 @@ OCA.Files_Markdown.Preview.prototype.init = function () {
 			headerPrefix: 'md-'
 		});
 	}.bind(this));
-	this.loadMathJax();
 };
 
 OCA.Files_Markdown.Preview.prototype.getUrl = function (path) {
@@ -67,9 +68,12 @@ OCA.Files_Markdown.Preview.prototype.getUrl = function (path) {
 OCA.Files_Markdown.Preview.prototype.previewText = function (text, element) {
 	var html = marked(prepareText(text));
 	element.html(html);
-	if (window.MathJax) {
-		MathJax.Hub.Queue(["Typeset", MathJax.Hub, element[0]]);
-	}
+	renderMathInElement(element.get(0), {
+		delimiters: [
+			{left: "$$", right: "$$", display: true},
+			{left: "$", right: "$", display: false}
+		]
+	})
 };
 
 var prepareText = function (text) {
@@ -97,20 +101,15 @@ OCA.Files_Markdown.Preview.prototype.loadHighlight = function () {
 	return OCA.Files_Markdown.highlightLoadPromise;
 };
 
-OCA.Files_Markdown.Preview.prototype.loadMathJax = function () {
-	if (OCA.Files_Markdown.mathJaxLoaded) {
-		return;
+OCA.Files_Markdown.Preview.prototype.loadKaTeX = function () {
+	if (!OCA.Files_Markdown.katexLoadPromise) {
+		OC.addStyle('files_markdown', '../js/core/vendor/KaTeX/dist/katex.min');
+		OCA.Files_Markdown.katexLoadPromise = $.when(
+			OC.addScript('files_markdown', 'core/vendor/KaTeX/dist/katex.min'),
+			OC.addScript('files_markdown', 'core/vendor/KaTeX/dist/contrib/auto-render.min')
+		);
 	}
-	OCA.Files_Markdown.mathJaxLoaded = true;
-	var script = document.createElement("script");
-	script.type = "text/x-mathjax-config";
-	script[(window.opera ? "innerHTML" : "text")] =
-		"MathJax.Hub.Config({\n" +
-		"  tex2jax: { inlineMath: [['$','$'], ['\\\\(','\\\\)']] }\n" +
-		"});";
-	this.head.appendChild(script);
-
-	OC.addScript('files_markdown', 'MathJax-TeXSVG');
+	return OCA.Files_Markdown.katexLoadPromise;
 };
 
 $(document).ready(function () {

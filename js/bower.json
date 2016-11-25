@@ -10,6 +10,7 @@
   "private": true,
   "dependencies": {
     "highlightjs": "^9.8.0",
-    "marked": "^0.3.6"
+    "marked": "^0.3.6",
+    "KaTeX": "katex#^0.6.0"
   }
 }
