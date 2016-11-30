@@ -10,6 +10,7 @@ A full list of features can be found [in the README](https://github.com/nicewind
 	<licence>AGPL</licence>
 	<author>Robin Appelman</author>
 	<dependencies>
+		<owncloud min-version="9.1" max-version="9.1"/>
 		<nextcloud min-version="10" max-version="11"/>
 	</dependencies>
 
