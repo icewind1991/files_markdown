@@ -31,7 +31,7 @@ OCA.Files_Markdown.Preview.prototype.init = function () {
 			return out;
 		};
 
-		this.renderer.code = function(code, language) {
+		this.renderer.code = function (code, language) {
 			// Check whether the given language is valid for highlight.js.
 			const validLang = !!(language && hljs.getLanguage(language));
 			// Highlight only if the language is valid.
@@ -56,12 +56,13 @@ OCA.Files_Markdown.Preview.prototype.getUrl = function (path) {
 		return path;
 	} else {
 		if (path.substr(0, 1) !== '/') {
-			path = OCA.Files_Texteditor.file.dir + '/' + path;
+			if (OCA.Files_Texteditor.file && OCA.Files_Texteditor.file.dir) {
+				path = OCA.Files_Texteditor.file.dir + '/' + path;
+			} else if (OCA.Files.App && OCA.Files.App.fileList._currentDirectory) {
+				path = OCA.Files.App.fileList._currentDirectory + '/' + path;
+			}
 		}
-		return OC.generateUrl('apps/files/ajax/download.php?dir={dir}&files={file}', {
-			dir: OC.dirname(path),
-			file: OC.basename(path)
-		});
+		return OC.generateUrl('remote.php/files/' + path);
 	}
 };
 
