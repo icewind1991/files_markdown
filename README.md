@@ -1,28 +1,34 @@
-ownCloud Markdown Editor
+Nextcloud Markdown Editor
 =================
 
-Extends the texteditor in ownCloud with a live preview for markdown files
+Extends the texteditor in Nextcloud with a live preview for markdown files
 
-![Markdown Editor](https://i.imgur.com/UAIocNZ.png)
+![Markdown Editor](screenshots/editor.png)
 
-The editor also supports LaTeX math using MathJax.  
-Math should be surrounded by a `$` for inline math or `$$` for a math block.
+Features
+---
 
-![LaTeX math](https://i.imgur.com/5SpOaoc.png)
+### Embed images stored on your Nextcloud
 
-Besides embedding images from the web, you can also embed images stored on your ownCloud
+![Embed Images](screenshots/embed.png)
 
-![Embed Images](https://i.imgur.com/OfRnjcN.png)
+### Use LaTeX to add math to your documents
+
+![LaTeX math](screenshots/math.png)
+
+### Fully rendered previews in the sidebar
+ 
+ ![Sidebar previews](screenshots/preview.png)
 
 Requirements
 ---
 
-This requires ownCloud and the text editor app to be installed from ownCloud 7 or higher.
+This requires Nextcloud and the Text Editor app to be installed from Nextcloud 10 or higher.
 
 Installation
 ---
 
-- Clone the app into the owncloud apps directory:
+- Clone the app into the Nextcloud apps directory:
 
     ``git clone https://github.com/icewind1991/files_markdown.git``
 
