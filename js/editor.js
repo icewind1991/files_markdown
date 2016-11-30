@@ -17,9 +17,9 @@ OCA.Files_Markdown.Preview.prototype.init = function () {
 	var getUrl = this.getUrl.bind(this);
 
 	$.when(
-		this.loadMarked(),
-		this.loadHighlight(),
-		this.loadKaTeX()
+		OCA.Files_Markdown.Preview.loadMarked(),
+		OCA.Files_Markdown.Preview.loadHighlight(),
+		OCA.Files_Markdown.Preview.loadKaTeX()
 	).then(function () {
 		this.renderer = new marked.Renderer();
 		this.renderer.image = function (href, title, text) {
@@ -86,14 +86,14 @@ var prepareText = function (text) {
 	return text;
 };
 
-OCA.Files_Markdown.Preview.prototype.loadMarked = function () {
+OCA.Files_Markdown.Preview.loadMarked = function () {
 	if (!OCA.Files_Markdown.markedLoadPromise) {
 		OCA.Files_Markdown.markedLoadPromise = OC.addScript('files_markdown', 'core/vendor/marked/marked.min');
 	}
 	return OCA.Files_Markdown.markedLoadPromise;
 };
 
-OCA.Files_Markdown.Preview.prototype.loadHighlight = function () {
+OCA.Files_Markdown.Preview.loadHighlight = function () {
 	if (!OCA.Files_Markdown.highlightLoadPromise) {
 		OC.addStyle('files_markdown', '../js/core/vendor/highlightjs/styles/github');
 		OCA.Files_Markdown.highlightLoadPromise = OC.addScript('files_markdown', 'core/vendor/highlightjs/highlight.pack.min');
@@ -101,7 +101,7 @@ OCA.Files_Markdown.Preview.prototype.loadHighlight = function () {
 	return OCA.Files_Markdown.highlightLoadPromise;
 };
 
-OCA.Files_Markdown.Preview.prototype.loadKaTeX = function () {
+OCA.Files_Markdown.Preview.loadKaTeX = function () {
 	if (!OCA.Files_Markdown.katexLoadPromise) {
 		OC.addStyle('files_markdown', '../js/core/vendor/KaTeX/dist/katex.min');
 		OCA.Files_Markdown.katexLoadPromise = $.when(
@@ -117,3 +117,55 @@ $(document).ready(function () {
 		OCA.Files_Texteditor.registerPreviewPlugin('text/markdown', new OCA.Files_Markdown.Preview());
 	}
 });
+
+/*
+ * Copyright (c) 2016
+ *
+ * This file is licensed under the Affero General Public License version 3
+ * or later.
+ *
+ * See the COPYING-README file.
+ *
+ */
+
+(function () {
+
+	var SidebarPreview = function () {
+		this.preview = new OCA.Files_Markdown.Preview();
+		this.preview.init();
+	};
+
+	SidebarPreview.prototype = {
+		attach: function (manager) {
+			manager.addPreviewHandler('text/markdown', this.handlePreview.bind(this));
+		},
+
+		handlePreview: function (model, $thumbnailDiv, $thumbnailContainer, fallback) {
+			var previewWidth = $thumbnailContainer.parent().width() + 50;  // 50px for negative margins
+			var previewHeight = previewWidth / (16 / 9);
+
+			$.when(
+				OCA.Files_Markdown.Preview.loadMarked(),
+				this.getFileContent(model.getFullPath())
+			).then(function (_, content) {
+				$thumbnailDiv.removeClass('icon-loading icon-32');
+				$thumbnailContainer.addClass('large');
+				$thumbnailContainer.addClass('text');
+				var $textPreview = $('<div id="preview" class="text-markdown"/>');
+				this.preview.previewText(content[0], $textPreview);
+				$thumbnailDiv.children('.stretcher').remove();
+				$thumbnailDiv.append($textPreview);
+				$thumbnailContainer.css("max-height", previewHeight);
+			}.bind(this), function () {
+				fallback();
+			});
+		},
+
+		getFileContent: function (path) {
+			var url = OC.linkToRemoteBase('files' + path);
+			return $.get(url);
+		}
+	};
+
+	OC.Plugins.register('OCA.Files.SidebarPreviewManager', new SidebarPreview());
+})();

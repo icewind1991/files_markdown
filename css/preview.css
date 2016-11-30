@@ -1,3 +1,8 @@
+/** sidebar preview */
+.thumbnail > #preview.text-markdown {
+	zoom: 0.8;
+}
+
 #preview.text-markdown {
 	font-size: 14px;
 }
