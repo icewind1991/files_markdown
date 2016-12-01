@@ -6,7 +6,7 @@
 	<summary>A Markdown Editor with live preview</summary>
 	<description><![CDATA[Markdown Editor extends the Nextcloud text editor with a live preview for markdown files.
 
-A full list of features can be found [in the README](https://github.com/nicewind1991/files_markdown)]]></description>
+A full list of features can be found [in the README](https://github.com/icewind1991/files_markdown)]]></description>
 	<licence>AGPL</licence>
 	<author>Robin Appelman</author>
 	<dependencies>
