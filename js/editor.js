@@ -22,6 +22,7 @@ OCA.Files_Markdown.Preview.prototype.init = function () {
 		OCA.Files_Markdown.Preview.loadKaTeX()
 	).then(function () {
 		this.renderer = new marked.Renderer();
+		var linkRenderer = this.renderer.link.bind(this.renderer);
 		this.renderer.image = function (href, title, text) {
 			var out = '<img src="' + getUrl(href) + '" alt="' + text + '"';
 			if (title) {
@@ -29,6 +30,17 @@ OCA.Files_Markdown.Preview.prototype.init = function () {
 			}
 			out += this.options.xhtml ? '/>' : '>';
 			return out;
+		};
+		this.renderer.link = function(href, title, text) {
+			var rendered = linkRenderer(href, title, text);
+			var parser = document.createElement('a');
+			parser.href = href;
+			console.log(parser.hostname);
+			if (parser.hostname !== window.location.hostname) {
+				return rendered.replace("href=","target='_blank' rel='noopener' href=");
+			} else {
+				return rendered;
+			}
 		};
 
 		this.renderer.code = function (code, language) {
