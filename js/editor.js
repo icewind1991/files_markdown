@@ -78,7 +78,6 @@ OCA.Files_Markdown.Preview.prototype.previewText = function (text, element) {
 };
 
 var prepareText = function (text) {
-	text = text.trim();
 	if (text.substr(0, 3) === '+++') {
 		text = text.substr(3);
 		text = text.substr(text.indexOf('+++') + 3);
