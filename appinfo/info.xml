@@ -14,7 +14,7 @@ A full list of features can be found [in the README](https://github.com/icewind1
 		<nextcloud min-version="10" max-version="12"/>
 	</dependencies>
 
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<category>office</category>
 	<website>https://github.com/icewind1991/files_markdown</website>
 	<bugs>https://github.com/icewind1991/files_markdown/issues</bugs>
