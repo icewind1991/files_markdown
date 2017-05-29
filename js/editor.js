@@ -74,7 +74,7 @@ OCA.Files_Markdown.Preview.prototype.getUrl = function (path) {
 				path = OCA.Files.App.fileList._currentDirectory + '/' + path;
 			}
 		}
-		return OC.generateUrl('remote.php/files/' + path);
+		return OC.linkToRemote('files' + path.replace(/\/\/+/g, '/'));
 	}
 };
 
