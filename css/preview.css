@@ -75,6 +75,7 @@
 
 #preview.text-markdown h1 {
 	font-size: 34px;
+	line-height: 40px;
 	margin: 40px 0 20px;
 }
 
@@ -84,6 +85,7 @@
 
 #preview.text-markdown h3 {
 	font-size: 24px;
+	line-height: 30px;
 }
 
 #preview.text-markdown h4 {
