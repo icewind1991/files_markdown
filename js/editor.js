@@ -84,7 +84,8 @@ OCA.Files_Markdown.Preview.prototype.previewText = function (text, element) {
 	renderMathInElement(element.get(0), {
 		delimiters: [
 			{left: "$$", right: "$$", display: true},
-			{left: "$", right: "$", display: false}
+			{left: "$", right: "$", display: false},
+			{left: "\[", right: "\]", display: true},
 		]
 	})
 };
