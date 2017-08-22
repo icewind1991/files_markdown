@@ -9,7 +9,10 @@ all: appstore
 clean:
 	rm -rf $(build_dir)
 
-appstore: clean
+js/node_modules: js/package.json
+	cd js && npm install
+
+appstore: clean js/node_modules
 	mkdir -p $(sign_dir)
 	rsync -a \
 	--exclude=.git \

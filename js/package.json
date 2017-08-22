@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "highlightjs": "^9.10.0",
+    "katex": "^0.8.2",
+    "marked": "^0.3.6"
+  }
+}

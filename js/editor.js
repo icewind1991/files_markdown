@@ -100,25 +100,25 @@ var prepareText = function (text) {
 
 OCA.Files_Markdown.Preview.loadMarked = function () {
 	if (!OCA.Files_Markdown.markedLoadPromise) {
-		OCA.Files_Markdown.markedLoadPromise = OC.addScript('files_markdown', 'core/vendor/marked/marked.min');
+		OCA.Files_Markdown.markedLoadPromise = OC.addScript('files_markdown', 'node_modules/marked/marked.min');
 	}
 	return OCA.Files_Markdown.markedLoadPromise;
 };
 
 OCA.Files_Markdown.Preview.loadHighlight = function () {
 	if (!OCA.Files_Markdown.highlightLoadPromise) {
-		OC.addStyle('files_markdown', '../js/core/vendor/highlightjs/styles/github');
-		OCA.Files_Markdown.highlightLoadPromise = OC.addScript('files_markdown', 'core/vendor/highlightjs/highlight.pack.min');
+		OC.addStyle('files_markdown', '../js/node_modules/highlightjs/styles/github');
+		OCA.Files_Markdown.highlightLoadPromise = OC.addScript('files_markdown', 'node_modules/highlightjs/highlight.pack.min');
 	}
 	return OCA.Files_Markdown.highlightLoadPromise;
 };
 
 OCA.Files_Markdown.Preview.loadKaTeX = function () {
 	if (!OCA.Files_Markdown.katexLoadPromise) {
-		OC.addStyle('files_markdown', '../js/core/vendor/KaTeX/dist/katex.min');
+		OC.addStyle('files_markdown', '../js/node_modules/katex/dist/katex.min');
 		OCA.Files_Markdown.katexLoadPromise = $.when(
-			OC.addScript('files_markdown', 'core/vendor/KaTeX/dist/katex.min'),
-			OC.addScript('files_markdown', 'core/vendor/KaTeX/dist/contrib/auto-render.min')
+			OC.addScript('files_markdown', 'node_modules/katex/dist/katex.min'),
+			OC.addScript('files_markdown', 'node_modules/katex/dist/contrib/auto-render.min')
 		);
 	}
 	return OCA.Files_Markdown.katexLoadPromise;
