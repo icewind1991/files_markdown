@@ -2,10 +2,7 @@
 
 OCA.Files_Markdown = {};
 
-OCA.Files_Markdown.mathJaxLoaded = false;
-OCA.Files_Markdown.markedLoadPromise = null;
-OCA.Files_Markdown.highlightLoaded = null;
-OCA.Files_Markdown.katexLoadPromise = null;
+OCA.Files_Markdown.vendorPromises = {};
 
 OCA.Files_Markdown.Preview = function () {
 	this.renderer = null;
@@ -17,9 +14,20 @@ OCA.Files_Markdown.Preview.prototype.init = function () {
 	var getUrl = this.getUrl.bind(this);
 
 	$.when(
-		OCA.Files_Markdown.Preview.loadMarked(),
-		OCA.Files_Markdown.Preview.loadHighlight(),
-		OCA.Files_Markdown.Preview.loadKaTeX()
+		OCA.Files_Markdown.Preview.loadVendor('marked', [
+			'node_modules/marked/marked.min'
+		]),
+		OCA.Files_Markdown.Preview.loadVendor('highlight', [
+			'node_modules/highlightjs/highlight.pack.min'
+		], [
+			'../js/node_modules/highlightjs/styles/github'
+		]),
+		OCA.Files_Markdown.Preview.loadVendor('katex', [
+			'node_modules/katex/dist/katex.min',
+			'node_modules/katex/dist/contrib/auto-render.min'
+		], [
+			'../js/node_modules/katex/dist/katex.min'
+		])
 	).then(function () {
 		this.renderer = new marked.Renderer();
 		var linkRenderer = this.renderer.link.bind(this.renderer);
@@ -98,30 +106,19 @@ var prepareText = function (text) {
 	return text;
 };
 
-OCA.Files_Markdown.Preview.loadMarked = function () {
-	if (!OCA.Files_Markdown.markedLoadPromise) {
-		OCA.Files_Markdown.markedLoadPromise = OC.addScript('files_markdown', 'node_modules/marked/marked.min');
+OCA.Files_Markdown.Preview.loadVendor = function(name, scripts, styles) {
+	if (!OCA.Files_Markdown.vendorPromises[name]) {
+		if (styles) {
+			for (var i = 0; i < styles.length; i++) {
+				OC.addStyle('files_markdown', styles[i]);
+			}
+		}
+		OCA.Files_Markdown.vendorPromises[name] = $.when(scripts.map(function(script) {
+			return OC.addScript('files_markdown', script)
+		}));
 	}
-	return OCA.Files_Markdown.markedLoadPromise;
-};
 
-OCA.Files_Markdown.Preview.loadHighlight = function () {
-	if (!OCA.Files_Markdown.highlightLoadPromise) {
-		OC.addStyle('files_markdown', '../js/node_modules/highlightjs/styles/github');
-		OCA.Files_Markdown.highlightLoadPromise = OC.addScript('files_markdown', 'node_modules/highlightjs/highlight.pack.min');
-	}
-	return OCA.Files_Markdown.highlightLoadPromise;
-};
-
-OCA.Files_Markdown.Preview.loadKaTeX = function () {
-	if (!OCA.Files_Markdown.katexLoadPromise) {
-		OC.addStyle('files_markdown', '../js/node_modules/katex/dist/katex.min');
-		OCA.Files_Markdown.katexLoadPromise = $.when(
-			OC.addScript('files_markdown', 'node_modules/katex/dist/katex.min'),
-			OC.addScript('files_markdown', 'node_modules/katex/dist/contrib/auto-render.min')
-		);
-	}
-	return OCA.Files_Markdown.katexLoadPromise;
+	return OCA.Files_Markdown.vendorPromises[name];
 };
 
 $(document).ready(function () {
@@ -129,16 +126,6 @@ $(document).ready(function () {
 		OCA.Files_Texteditor.registerPreviewPlugin('text/markdown', new OCA.Files_Markdown.Preview());
 	}
 });
-
-/*
- * Copyright (c) 2016
- *
- * This file is licensed under the Affero General Public License version 3
- * or later.
- *
- * See the COPYING-README file.
- *
- */
 
 (function () {
 
@@ -157,7 +144,9 @@ $(document).ready(function () {
 			var previewHeight = previewWidth / (16 / 9);
 
 			$.when(
-				OCA.Files_Markdown.Preview.loadMarked(),
+				OCA.Files_Markdown.Preview.loadVendor('marked', [
+					'node_modules/marked/marked.min'
+				]),
 				this.getFileContent(model.getFullPath())
 			).then(function (_, content) {
 				$thumbnailDiv.removeClass('icon-loading icon-32');
