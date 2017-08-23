@@ -4,13 +4,22 @@ build_dir=$(CURDIR)/build/artifacts
 sign_dir=$(build_dir)/sign
 cert_dir=$(HOME)/.nextcloud/certificates
 
-all: appstore
+all: js/editor.js
+
+sources=$(wildcard js/*.ts) $(wildcard js/*/*.ts) js/tsconfig.json
+
+.PHONY: watch
+watch: js/node_modules
+	cd js && node_modules/.bin/watchify --debug editor.ts -p tsify -o editor.js
 
 clean:
 	rm -rf $(build_dir)
 
 js/node_modules: js/package.json
 	cd js && npm install
+
+js/editor.js: $(sources) js/node_modules
+	cd js && node_modules/.bin/browserify editor.ts -p tsify -o editor.js
 
 appstore: clean js/node_modules
 	mkdir -p $(sign_dir)

@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "dom",
+      "es2015.promise",
+      "es6",
+      "es2015.iterable"
+    ],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "ES5",
+    "declaration": true,
+    "strictNullChecks": true,
+    "sourceMap": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "files": [
+    "editor.ts",
+    "Nextcloud.d.ts"
+  ]
+}

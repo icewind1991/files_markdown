@@ -3,6 +3,10 @@
 	zoom: 0.8;
 }
 
+.thumbnail > #preview.text-markdown .mermaid {
+	zoom: 0.7;
+}
+
 #preview.text-markdown {
 	font-size: 14px;
 }
