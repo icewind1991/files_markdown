@@ -1,4 +1,7 @@
+// based on https://github.com/mcecot/markdown-it-checkbox
+
 import * as MarkdownIt from "markdown-it";
+import {Token} from "markdown-it";
 
 export interface CheckboxPluginOptions {
     divWrap: boolean;
@@ -8,8 +11,11 @@ export interface CheckboxPluginOptions {
     checkboxClass: string;
 }
 
-export function CheckBoxReplacer(md: MarkdownIt.MarkdownIt, userOptions: Partial<CheckboxPluginOptions>, Token?: MarkdownIt.Token) {
-    const arrayReplaceAt = md.utils.arrayReplaceAt;
+interface TokenConstructor {
+    new (name: string, tagName: string, someNumber: number): Token;
+}
+
+export function CheckBoxReplacer(md: MarkdownIt.MarkdownIt, userOptions: Partial<CheckboxPluginOptions>): MarkdownIt.Rule {
     let lastId = 0;
     const defaults: CheckboxPluginOptions = {
         divWrap: false,
@@ -20,9 +26,9 @@ export function CheckBoxReplacer(md: MarkdownIt.MarkdownIt, userOptions: Partial
     };
     const options: CheckboxPluginOptions = $.extend(defaults, userOptions);
     const pattern = /\[(X|\s|\_|\-)\]\s(.*)/i;
-    const createTokens = function (checked, label, Token) {
-        var id, nodes, token;
-        nodes = [];
+    const createTokens = function (checked: boolean, label: string, Token: TokenConstructor): Token[] {
+        const nodes: Token[] = [];
+        let token: Token;
 
         /**
          * <div class="checkbox">
@@ -36,7 +42,7 @@ export function CheckBoxReplacer(md: MarkdownIt.MarkdownIt, userOptions: Partial
         /**
          * <input type="checkbox" id="checkbox{n}" checked="true">
          */
-        id = options.idPrefix + lastId;
+        const id = options.idPrefix + lastId;
         lastId += 1;
         token = new Token("checkbox_input", "input", 0);
         token.attrs = [["type", "checkbox"], ["id", id]];
@@ -74,39 +80,27 @@ export function CheckBoxReplacer(md: MarkdownIt.MarkdownIt, userOptions: Partial
         }
         return nodes;
     };
-    const splitTextToken = function (original, Token) {
-        var checked, label, matches, text, value;
-        text = original.content;
-        matches = text.match(pattern);
+
+    const splitTextToken = function (original: Token, Token: TokenConstructor): Token[] {
+        const text = original.content;
+        const matches = text.match(pattern);
         if (matches === null) {
-            return original;
+            return [original];
         }
-        checked = false;
-        value = matches[1];
-        label = matches[2];
-        if (value === "X" || value === "x") {
-            checked = true;
-        }
+        const value = matches[1];
+        const label = matches[2];
+        const checked = (value === "X" || value === "x");
         return createTokens(checked, label, Token);
     };
+
     return function (state) {
-        var blockTokens, i, j, l, token, tokens;
-        blockTokens = state.tokens;
-        j = 0;
-        l = blockTokens.length;
-        while (j < l) {
-            if (blockTokens[j].type !== "inline") {
-                j++;
-                continue;
+        const blockTokens: Token[] = state.tokens;
+        for (const token of blockTokens) {
+            if (token.type === "inline") {
+                token.children = ([] as Token[]).concat.apply(this,
+                    token.children.map(childToken => splitTextToken(childToken, state.Token))
+                );
             }
-            tokens = blockTokens[j].children;
-            i = tokens.length - 1;
-            while (i >= 0) {
-                token = tokens[i];
-                blockTokens[j].children = tokens = arrayReplaceAt(tokens, i, splitTextToken(token, state.Token));
-                i--;
-            }
-            j++;
         }
     };
 }
