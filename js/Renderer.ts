@@ -3,6 +3,7 @@ import * as KaTeXPlugin from 'markdown-it-katex';
 import * as HighlightPlugin from 'markdown-it-highlightjs';
 import {MermaidPlugin} from './MermaidPlugin'
 import * as iterator from 'markdown-it-for-inline';
+import {CheckboxPlugin} from './CheckboxPlugin';
 
 OC.addStyle('files_markdown', '../js/node_modules/katex/dist/katex.min');
 OC.addStyle('files_markdown', '../js/node_modules/highlight.js/styles/github');
@@ -17,6 +18,9 @@ export class Renderer {
         this.md.use(KaTeXPlugin);
         this.md.use(HighlightPlugin);
         this.md.use(MermaidPlugin);
+        this.md.use(CheckboxPlugin, {
+            checkboxClass: 'checkbox'
+        });
         this.md.use(iterator, 'url_new_win', 'link_open', (tokens: MarkdownIt.Token[], idx: number) => {
             tokens[idx].attrPush(['target', '_blank']);
             tokens[idx].attrPush(['rel', 'noopener']);

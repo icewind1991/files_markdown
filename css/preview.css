@@ -11,6 +11,10 @@
 	font-size: 14px;
 }
 
+#preview.text-markdown input[type="checkbox"].checkbox {
+	display: none;
+}
+
 #preview.text-markdown > *:first-child {
 	margin-top: 0 !important;
 }
