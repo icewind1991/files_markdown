@@ -27,8 +27,15 @@ OCA.Files_Markdown.Preview.prototype.init = function () {
 			'node_modules/katex/dist/contrib/auto-render.min'
 		], [
 			'../js/node_modules/katex/dist/katex.min'
+		]),
+		OCA.Files_Markdown.Preview.loadVendor('mermaid', [
+			'node_modules/mermaid/dist/mermaid.min'
+		], [
+			'../js/node_modules/mermaid/dist/mermaid.min'
 		])
 	).then(function () {
+		mermaid.initialize({startOnLoad: false});
+
 		this.renderer = new marked.Renderer();
 		var linkRenderer = this.renderer.link.bind(this.renderer);
 		this.renderer.image = function (href, title, text) {
@@ -39,25 +46,29 @@ OCA.Files_Markdown.Preview.prototype.init = function () {
 			out += this.options.xhtml ? '/>' : '>';
 			return out;
 		};
-		this.renderer.link = function(href, title, text) {
+		this.renderer.link = function (href, title, text) {
 			var rendered = linkRenderer(href, title, text);
 			var parser = document.createElement('a');
 			parser.href = href;
-			console.log(parser.hostname);
 			if (parser.hostname !== window.location.hostname) {
-				return rendered.replace("href=","target='_blank' rel='noopener' href=");
+				return rendered.replace("href=", "target='_blank' rel='noopener' href=");
 			} else {
 				return rendered;
 			}
 		};
 
 		this.renderer.code = function (code, language) {
-			// Check whether the given language is valid for highlight.js.
-			const validLang = !!(language && hljs.getLanguage(language));
-			// Highlight only if the language is valid.
-			const highlighted = validLang ? hljs.highlight(language, code).value : code;
-			// Render the highlighted code with `hljs` class.
-			return '<pre><code class="hljs ' + language + '">' + highlighted + '</code></pre>';
+			console.log(code);
+			if (code.match(/^sequenceDiagram/) || code.match(/^graph/) || code.match(/^gantt/)) {
+				return '<div class="mermaid">' + code + '</div>';
+			} else {
+				// Check whether the given language is valid for highlight.js.
+				const validLang = !!(language && hljs.getLanguage(language));
+				// Highlight only if the language is valid.
+				const highlighted = validLang ? hljs.highlight(language, code).value : code;
+				// Render the highlighted code with `hljs` class.
+				return '<pre><code class="hljs ' + language + '">' + highlighted + '</code></pre>';
+			}
 		};
 
 
@@ -94,7 +105,8 @@ OCA.Files_Markdown.Preview.prototype.previewText = function (text, element) {
 			{left: "$$", right: "$$", display: true},
 			{left: "$", right: "$", display: false}
 		]
-	})
+	});
+	mermaid.init();
 };
 
 var prepareText = function (text) {
@@ -106,14 +118,14 @@ var prepareText = function (text) {
 	return text;
 };
 
-OCA.Files_Markdown.Preview.loadVendor = function(name, scripts, styles) {
+OCA.Files_Markdown.Preview.loadVendor = function (name, scripts, styles) {
 	if (!OCA.Files_Markdown.vendorPromises[name]) {
 		if (styles) {
 			for (var i = 0; i < styles.length; i++) {
 				OC.addStyle('files_markdown', styles[i]);
 			}
 		}
-		OCA.Files_Markdown.vendorPromises[name] = $.when(scripts.map(function(script) {
+		OCA.Files_Markdown.vendorPromises[name] = $.when(scripts.map(function (script) {
 			return OC.addScript('files_markdown', script)
 		}));
 	}
