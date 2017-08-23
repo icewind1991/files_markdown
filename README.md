@@ -35,3 +35,13 @@ Installation
 - Activate the App.
 
     ``occ app:enable files_markdown``
+
+Development
+---
+
+This app is written in typescript and requires nodejs and npm to build.
+
+To build the project run `make` from the app directory.
+
+For development you can automatically build the project every time
+the source changes by running `make watch`.
