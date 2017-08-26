@@ -19,7 +19,7 @@ js/node_modules: js/package.json
 	cd js && npm install
 
 js/editor.js: $(sources) js/node_modules
-	cd js && node_modules/.bin/browserify editor.ts -p tsify -o editor.js
+	cd js && NODE_ENV=production node_modules/.bin/browserify editor.ts -t uglifyify -p tsify -o editor.js
 
 appstore: clean js/node_modules
 	mkdir -p $(sign_dir)

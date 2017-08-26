@@ -20,6 +20,7 @@
     "browserify": "^14.4.0",
     "tsify": "^3.0.1",
     "typescript": "^2.4.2",
+    "uglifyify": "^4.0.3",
     "watchify": "^3.9.0"
   }
 }
