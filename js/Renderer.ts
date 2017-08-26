@@ -4,11 +4,16 @@ import * as HighlightPlugin from 'markdown-it-highlightjs';
 import {MermaidPlugin} from './MermaidPlugin'
 import * as iterator from 'markdown-it-for-inline';
 import {CheckboxPlugin} from './CheckboxPlugin';
+import * as AnchorPlugin from 'markdown-it-anchor';
+import * as slugify from 'slugify';
+import * as TOCPlugin from 'markdown-it-table-of-contents';
 
 OC.addStyle('files_markdown', '../js/node_modules/katex/dist/katex.min');
 OC.addStyle('files_markdown', '../js/node_modules/highlight.js/styles/github');
 // OC.addStyle('files_markdown', '../js/node_modules/mermaid/dist/mermaid.min');
 OC.addStyle('files_markdown', '../js/node_modules/mermaid/dist/mermaid.forest.min');
+
+const slugifyHeading = name => 'editor/' + slugify(name).toLowerCase();
 
 export class Renderer {
     md: MarkdownIt.MarkdownIt;
@@ -20,6 +25,12 @@ export class Renderer {
         this.md.use(MermaidPlugin);
         this.md.use(CheckboxPlugin, {
             checkboxClass: 'checkbox'
+        });
+        this.md.use(AnchorPlugin, {
+            slugify: slugifyHeading
+        });
+        this.md.use(TOCPlugin, {
+            slugify: slugifyHeading
         });
         this.md.use(iterator, 'url_new_win', 'link_open', (tokens: MarkdownIt.Token[], idx: number) => {
             tokens[idx].attrPush(['target', '_blank']);
