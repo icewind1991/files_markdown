@@ -52,6 +52,8 @@ declare namespace OC {
 
     function addStyle(app: string, stylesheet: string): void;
 
+    function addScript(app: string, script: string, callback?: Function): JQueryPromise<void>
+
     const PERMISSION_CREATE = 4;
     const PERMISSION_READ = 1;
     const PERMISSION_UPDATE = 2;

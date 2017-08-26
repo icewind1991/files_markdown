@@ -8,10 +8,9 @@ import * as AnchorPlugin from 'markdown-it-anchor';
 import * as slugify from 'slugify';
 import * as TOCPlugin from 'markdown-it-table-of-contents';
 
-OC.addStyle('files_markdown', '../js/node_modules/katex/dist/katex.min');
-OC.addStyle('files_markdown', '../js/node_modules/highlight.js/styles/github');
-// OC.addStyle('files_markdown', '../js/node_modules/mermaid/dist/mermaid.min');
-OC.addStyle('files_markdown', '../js/node_modules/mermaid/dist/mermaid.forest.min');
+import 'katex/dist/katex.min.css';
+import 'highlight.js/styles/github.css';
+import 'mermaid/dist/mermaid.forest.min.css';
 
 const slugifyHeading = name => 'editor/' + slugify(name).toLowerCase();
 

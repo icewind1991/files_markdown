@@ -1,18 +1,21 @@
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
 	entry: "./js/editor.ts",
 	output: {
-		filename: "build/editor.js"
+		filename: "build/editor.js",
+		path: path.resolve(__dirname, "build")
 	},
 	resolve: {
 		extensions: [".ts", ".js"]
 	},
 	plugins: [
 		new UglifyJSPlugin(),
-		new webpack.NamedModulesPlugin()
+		new webpack.NamedModulesPlugin(),
+		new ExtractTextPlugin("styles.css")
 	],
 	module: {
 		loaders: [
@@ -30,6 +33,22 @@ module.exports = {
 				use: {
 					loader: 'babel-loader'
 				}
+			},
+			{
+				test: /\.css$/,
+				use: ExtractTextPlugin.extract({
+					fallback: "style-loader",
+					use: "css-loader"
+				})
+			},
+			{
+				test: /\.(png|jpg|gif|svg|woff|woff2|ttf|eot)$/,
+				use: [
+					{
+						loader: 'file-loader',
+						options: {}
+					}
+				]
 			}
 		]
 	},

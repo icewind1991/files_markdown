@@ -9,5 +9,6 @@ $eventDispatcher->addListener(
 		
 		//load the required files
 		OCP\Util::addscript('files_markdown', '../build/editor');
+		OCP\Util::addStyle('files_markdown', '../build/styles');
 		OCP\Util::addStyle('files_markdown', 'preview');
 	});
