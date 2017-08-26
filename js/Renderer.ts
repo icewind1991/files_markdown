@@ -1,7 +1,6 @@
 import * as MarkdownIt from 'markdown-it';
 import * as KaTeXPlugin from 'markdown-it-katex';
 import * as HighlightPlugin from 'markdown-it-highlightjs';
-import {MermaidPlugin} from './MermaidPlugin'
 import * as iterator from 'markdown-it-for-inline';
 import {CheckboxPlugin} from './CheckboxPlugin';
 import * as AnchorPlugin from 'markdown-it-anchor';
@@ -16,12 +15,12 @@ const slugifyHeading = name => 'editor/' + slugify(name).toLowerCase();
 
 export class Renderer {
     md: MarkdownIt.MarkdownIt;
+    mermaidLoaded: boolean = false;
 
     constructor() {
         this.md = new MarkdownIt();
         this.md.use(KaTeXPlugin);
         this.md.use(HighlightPlugin);
-        this.md.use(MermaidPlugin);
         this.md.use(CheckboxPlugin, {
             checkboxClass: 'checkbox'
         });
@@ -67,7 +66,22 @@ export class Renderer {
         }
     }
 
+    requiresMermaid(text: string): boolean {
+        return text.match(/(gantt|sequenceDiagram|graph (?:TB|BT|RL|LR|TD))/) !== null;
+    }
+
     renderText(text: string, element): void {
+        if (this.requiresMermaid(text) && !this.mermaidLoaded) {
+            // coerce webpack into loading scripts properly
+            __webpack_require__.p = OC.filePath('files_markdown', 'js', '../build/');
+            __webpack_require__.nc = $('script')[0].getAttribute('nonce');
+            this.mermaidLoaded = true;
+            require.ensure(['./MermaidPlugin'], () => {
+                const {MermaidPlugin} = require('./MermaidPlugin');
+                this.md.use(MermaidPlugin);
+                this.renderText(text, element);
+            });
+        }
         const html = this.md.render(this.prepareText(text));
         element.html(html);
     }

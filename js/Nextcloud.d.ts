@@ -50,6 +50,8 @@ declare namespace OC {
 
     function linkToRemoteBase(service: string): string;
 
+    function filePath(app: string, type: string, path: string): string;
+
     function addStyle(app: string, stylesheet: string): void;
 
     function addScript(app: string, script: string, callback?: Function): JQueryPromise<void>

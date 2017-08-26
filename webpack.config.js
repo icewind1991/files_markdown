@@ -6,16 +6,16 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
 	entry: "./js/editor.ts",
 	output: {
-		filename: "build/editor.js",
+		filename: "editor.js",
 		path: path.resolve(__dirname, "build")
 	},
 	resolve: {
 		extensions: [".ts", ".js"]
 	},
 	plugins: [
-		new UglifyJSPlugin(),
 		new webpack.NamedModulesPlugin(),
-		new ExtractTextPlugin("styles.css")
+		new ExtractTextPlugin("styles.css"),
+		new UglifyJSPlugin()
 	],
 	module: {
 		loaders: [
