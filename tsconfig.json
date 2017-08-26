@@ -15,7 +15,7 @@
     "allowSyntheticDefaultImports": true
   },
   "files": [
-    "editor.ts",
-    "Nextcloud.d.ts"
+    "js/editor.ts",
+    "js/Nextcloud.d.ts"
   ]
 }

@@ -8,6 +8,6 @@ $eventDispatcher->addListener(
 		\OC::$server->getContentSecurityPolicyManager()->addDefaultPolicy($policy);
 		
 		//load the required files
-		OCP\Util::addscript('files_markdown', 'editor');
+		OCP\Util::addscript('files_markdown', '../build/editor');
 		OCP\Util::addStyle('files_markdown', 'preview');
 	});

@@ -6,20 +6,20 @@ cert_dir=$(HOME)/.nextcloud/certificates
 
 all: js/editor.js
 
-sources=$(wildcard js/*.ts) $(wildcard js/*/*.ts) js/tsconfig.json
+sources=$(wildcard js/*.ts) $(wildcard js/*/*.ts) tsconfig.json .babelrc webpack.config.js
 
 .PHONY: watch
-watch: js/node_modules
-	cd js && node_modules/.bin/watchify --debug editor.ts -p tsify -o editor.js
+watch: node_modules
+	node_modules/.bin/webpack --watch
 
 clean:
 	rm -rf $(build_dir)
 
-js/node_modules: js/package.json
-	cd js && npm install
+node_modules: package.json
+	npm install
 
-js/editor.js: $(sources) js/node_modules
-	cd js && NODE_ENV=production node_modules/.bin/browserify editor.ts -t uglifyify -p tsify -o editor.js
+js/editor.js: $(sources) node_modules
+	NODE_ENV=production node_modules/.bin/webpack
 
 appstore: clean js/node_modules
 	mkdir -p $(sign_dir)
