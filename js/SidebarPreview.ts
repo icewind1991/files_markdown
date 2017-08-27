@@ -15,7 +15,11 @@ export class SidebarPreview implements SidebarPreviewPlugin {
         const previewWidth = ($thumbnailContainer.parent().width() as number) + 50;  // 50px for negative margins
         const previewHeight = previewWidth / (16 / 9);
 
-        this.getFileContent(model.getFullPath()).then(content => {
+        $.when(
+            this.getFileContent(model.getFullPath()),
+            this.previewPlugin.init()
+        ).then(([content]) => {
+            console.log(content);
             $thumbnailDiv.removeClass('icon-loading icon-32');
             $thumbnailContainer.addClass('large');
             $thumbnailContainer.addClass('text');

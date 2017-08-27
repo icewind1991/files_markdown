@@ -4,11 +4,24 @@ import {UnderscoreStatic} from "underscore";
 declare const _: UnderscoreStatic;
 
 export class PreviewPlugin {
-    renderer: Renderer = new Renderer();
+    renderer: Renderer;
+
+    initPromise: JQueryPromise<void> | null = null;
 
     init() {
-
+        if (!this.initPromise) {
+            const deferred = $.Deferred();
+            require.ensure(['./Renderer'], () => {
+                const {Renderer} = require('./Renderer');
+                this.renderer = new Renderer();
+                deferred.resolve();
+            });
+            this.initPromise = deferred.promise();
+        }
+        return this.initPromise;
     }
 
-    preview = _.throttle(this.renderer.renderText.bind(this.renderer), 500);
+    preview = _.throttle((text: string, element) => {
+        this.renderer.renderText(text, element);
+    }, 500);
 }
