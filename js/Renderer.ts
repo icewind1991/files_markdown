@@ -1,5 +1,6 @@
 import * as MarkdownIt from 'markdown-it';
-import * as KaTeXPlugin from 'markdown-it-katex';
+import * as MathPlugin from 'markdown-it-texmath';
+import * as KaTeX from 'katex';
 import * as HighlightPlugin from 'markdown-it-highlightjs';
 import * as iterator from 'markdown-it-for-inline';
 import {CheckboxPlugin} from './CheckboxPlugin';
@@ -19,7 +20,7 @@ export class Renderer {
 
     constructor() {
         this.md = new MarkdownIt();
-        this.md.use(KaTeXPlugin);
+        this.md.use(MathPlugin.use(KaTeX));
         this.md.use(HighlightPlugin);
         this.md.use(CheckboxPlugin, {
             checkboxClass: 'checkbox'
@@ -72,9 +73,6 @@ export class Renderer {
 
     renderText(text: string, element): void {
         if (this.requiresMermaid(text) && !this.mermaidLoaded) {
-            // coerce webpack into loading scripts properly
-            __webpack_require__.p = OC.filePath('files_markdown', 'js', '../build/');
-            __webpack_require__.nc = $('script')[0].getAttribute('nonce');
             this.mermaidLoaded = true;
             require.ensure(['./MermaidPlugin'], () => {
                 const {MermaidPlugin} = require('./MermaidPlugin');

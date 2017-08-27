@@ -28,6 +28,7 @@ appstore: clean js/node_modules
 	--exclude=build \
 	--exclude=.gitignore \
 	--exclude=Makefile \
+	--exclude=node_modules \
 	--exclude=screenshots \
 	--exclude=phpunit*xml \
 	$(project_dir) $(sign_dir)

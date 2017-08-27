@@ -2,6 +2,7 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
 	devtool: 'source-map',
@@ -14,9 +15,10 @@ module.exports = {
 		extensions: [".ts", ".js"]
 	},
 	plugins: [
+		new CleanWebpackPlugin(['build']),
 		new webpack.NamedModulesPlugin(),
 		new ExtractTextPlugin("styles.css"),
-		new UglifyJSPlugin()
+		// new UglifyJSPlugin()
 	],
 	module: {
 		loaders: [
@@ -29,6 +31,7 @@ module.exports = {
 				include: [
 					path.resolve(__dirname, "js"),
 					path.resolve(__dirname, "node_modules/markdown-it-anchor"),
+					path.resolve(__dirname, "node_modules/markdown-it-texmath"),
 					path.resolve(__dirname, "node_modules/markdown-it-highlightjs")
 				],
 				use: {
