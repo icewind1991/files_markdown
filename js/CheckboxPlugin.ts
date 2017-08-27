@@ -15,6 +15,11 @@ interface TokenConstructor {
     new (name: string, tagName: string, someNumber: number): Token;
 }
 
+interface CheckboxReplacerState {
+    tokens: Token[];
+    Token: TokenConstructor;
+}
+
 export function CheckBoxReplacer(md: MarkdownIt.MarkdownIt, userOptions: Partial<CheckboxPluginOptions>): MarkdownIt.Rule {
     let lastId = 0;
     const defaults: CheckboxPluginOptions = {
@@ -24,7 +29,7 @@ export function CheckBoxReplacer(md: MarkdownIt.MarkdownIt, userOptions: Partial
         readonly: true,
         checkboxClass: ''
     };
-    const options: CheckboxPluginOptions = $.extend(defaults, userOptions);
+    const options = $.extend(defaults, userOptions);
     const pattern = /\[(X|\s|\_|\-)\]\s(.*)/i;
     const createTokens = function (checked: boolean, label: string, Token: TokenConstructor): Token[] {
         const nodes: Token[] = [];
@@ -93,11 +98,10 @@ export function CheckBoxReplacer(md: MarkdownIt.MarkdownIt, userOptions: Partial
         return createTokens(checked, label, Token);
     };
 
-    return function (state) {
-        const blockTokens: Token[] = state.tokens;
-        for (const token of blockTokens) {
+    return function (state: CheckboxReplacerState) {
+        for (const token of state.tokens) {
             if (token.type === "inline") {
-                token.children = ([] as Token[]).concat.apply(this,
+                token.children = ([] as Token[]).concat.apply([],
                     token.children.map(childToken => splitTextToken(childToken, state.Token))
                 );
             }

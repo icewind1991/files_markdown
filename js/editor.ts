@@ -9,4 +9,8 @@ $(document).ready(function () {
     }
 });
 
+// coerce webpack into loading scripts properly
+__webpack_require__.p = OC.filePath('files_markdown', 'js', '../build/');
+__webpack_require__.nc = $('script')[0].getAttribute('nonce');
+
 OC.Plugins.register('OCA.Files.SidebarPreviewManager', new SidebarPreview(previewPlugin));
