@@ -82,11 +82,15 @@ export class Renderer {
             slugify: slugifyHeading
         });
         this.md.use(iterator, 'url_new_win', 'link_open', (tokens: MarkdownIt.Token[], idx: number) => {
-            tokens[idx].attrPush(['target', '_blank']);
-            tokens[idx].attrPush(['rel', 'noopener']);
+            const href = tokens[idx].attrGet('href') as string;
+            if (href[0] !== '#') {
+                tokens[idx].attrPush(['target', '_blank']);
+                tokens[idx].attrPush(['rel', 'noopener']);
+            }
+            tokens[idx].attrSet('href', this.getLinkUrl(href))
         });
         this.md.use(iterator, 'internal_image_link', 'image', (tokens: MarkdownIt.Token[], idx: number) => {
-            tokens[idx].attrSet('src', this.getUrl(tokens[idx].attrGet('src') as string));
+            tokens[idx].attrSet('src', this.getImageUrl(tokens[idx].attrGet('src') as string));
         });
     }
 
@@ -99,7 +103,14 @@ export class Renderer {
         return text;
     }
 
-    getUrl(path: string): string {
+    getLinkUrl(path: string): string {
+        if (path[0] === '#') {
+            return '#' + slugifyHeading(path.substr(1));
+        }
+        return path;
+    }
+
+    getImageUrl(path: string): string {
         if (!path) {
             return path;
         }
