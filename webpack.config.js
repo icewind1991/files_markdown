@@ -17,7 +17,10 @@ module.exports = {
 	plugins: [
 		new CleanWebpackPlugin(['build']),
 		new webpack.NamedModulesPlugin(),
-		new ExtractTextPlugin("styles.css"),
+		new ExtractTextPlugin({
+			filename: "styles.css",
+			allChunks: true
+		}),
 		new UglifyJSPlugin()
 	],
 	module: {

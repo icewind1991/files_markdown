@@ -19,7 +19,6 @@ export class SidebarPreview implements SidebarPreviewPlugin {
             this.getFileContent(model.getFullPath()),
             this.previewPlugin.init()
         ).then(([content]) => {
-            console.log(content);
             $thumbnailDiv.removeClass('icon-loading icon-32');
             $thumbnailContainer.addClass('large');
             $thumbnailContainer.addClass('text');

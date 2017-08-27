@@ -1,6 +1,4 @@
 import * as MarkdownIt from 'markdown-it';
-import * as MathPlugin from 'markdown-it-texmath';
-import * as KaTeX from 'katex';
 import * as iterator from 'markdown-it-for-inline';
 import {CheckboxPlugin} from './CheckboxPlugin';
 import * as AnchorPlugin from 'markdown-it-anchor';
@@ -13,14 +11,67 @@ import 'mermaid/dist/mermaid.forest.min.css';
 
 const slugifyHeading = name => 'editor/' + slugify(name).toLowerCase();
 
+export type PluginChecker = (text: string) => boolean;
+
+export interface PluginMap {
+    [name: string]: {
+        checker: PluginChecker;
+        module: () => Promise<any>;
+        loaded?: boolean
+    }
+}
+
+function loadKaTeX() {
+    const deferred = $.Deferred();
+    require.ensure([
+        'katex',
+        'markdown-it-texmath'
+    ], () => {
+        deferred.resolve(require('markdown-it-texmath').use(require('katex')));
+    }, 'katex');
+    return deferred.promise();
+}
+
+function loadMermaid() {
+    const deferred = $.Deferred();
+    require.ensure([
+        './MermaidPlugin'
+    ], () => {
+        deferred.resolve(require('./MermaidPlugin'));
+    }, 'mermaid');
+    return deferred.promise();
+}
+
+function loadHighlight() {
+    const deferred = $.Deferred();
+    require.ensure([
+        'markdown-it-highlightjs'
+    ], () => {
+        deferred.resolve(require('markdown-it-highlightjs'));
+    }, 'highlight');
+    return deferred.promise();
+}
+
 export class Renderer {
     md: MarkdownIt.MarkdownIt;
-    mermaidLoaded: boolean = false;
-    highlightLoaded: boolean = false;
+
+    plugins: PluginMap = {
+        'mermaid': {
+            checker: text => text.match(/(gantt|sequenceDiagram|graph (?:TB|BT|RL|LR|TD))/) !== null,
+            module: loadMermaid
+        },
+        'highlight.js': {
+            checker: text => text.indexOf('```') !== -1,
+            module: loadHighlight
+        },
+        'katex': {
+            checker: text => text.indexOf('$') !== -1,
+            module: loadKaTeX
+        }
+    };
 
     constructor() {
         this.md = new MarkdownIt();
-        this.md.use(MathPlugin.use(KaTeX));
         this.md.use(CheckboxPlugin, {
             checkboxClass: 'checkbox'
         });
@@ -66,31 +117,22 @@ export class Renderer {
         }
     }
 
-    requiresMermaid(text: string): boolean {
-        return text.match(/(gantt|sequenceDiagram|graph (?:TB|BT|RL|LR|TD))/) !== null;
-    }
-
-    requiresHighlight(text: string): boolean {
-        return text.indexOf('```') !== -1;
-    }
-
     renderText(text: string, element): void {
-        if (this.requiresMermaid(text) && !this.mermaidLoaded) {
-            this.mermaidLoaded = true;
-            require.ensure(['./MermaidPlugin'], () => {
-                const {MermaidPlugin} = require('./MermaidPlugin');
-                this.md.use(MermaidPlugin);
-                this.renderText(text, element);
-            });
-        }
-        if (this.requiresHighlight(text) && !this.highlightLoaded) {
-            this.highlightLoaded = true;
-            require.ensure(['markdown-it-highlightjs'], () => {
-                this.md.use(require('markdown-it-highlightjs'));
-                this.renderText(text, element);
-            });
-        }
-        const html = this.md.render(this.prepareText(text));
-        element.html(html);
+        this.loadPlugins(text).then(() => {
+            const html = this.md.render(this.prepareText(text));
+            element.html(html);
+        });
+    }
+
+    loadPlugins(text: string) {
+        return $.when.apply($, Object.keys(this.plugins)
+            .map(pluginName => {
+                const plugin = this.plugins[pluginName];
+                if (!plugin.loaded && plugin.checker(text)) {
+                    plugin.loaded = true;
+                    return plugin.module().then(this.md.use.bind(this.md));
+                }
+            })
+        );
     }
 }
