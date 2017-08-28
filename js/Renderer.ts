@@ -4,6 +4,7 @@ import {CheckboxPlugin} from './CheckboxPlugin';
 import * as AnchorPlugin from 'markdown-it-anchor';
 import * as slugify from 'slugify';
 import * as TOCPlugin from 'markdown-it-table-of-contents';
+import VideoPlugin from './VideoPlugin';
 
 import 'katex/dist/katex.min.css';
 import 'highlight.js/styles/github.css';
@@ -81,6 +82,7 @@ export class Renderer {
         this.md.use(TOCPlugin, {
             slugify: slugifyHeading
         });
+        this.md.use(VideoPlugin);
         this.md.use(iterator, 'url_new_win', 'link_open', (tokens: MarkdownIt.Token[], idx: number) => {
             const href = tokens[idx].attrGet('href') as string;
             if (href[0] !== '#') {
@@ -111,7 +113,7 @@ export class Renderer {
     }
 
     getImageUrl(path: string): string {
-        if (!path) {
+        if (!path || path.indexOf('.') === -1) {
             return path;
         }
         if (path.substr(0, 7) === 'http://' || path.substr(0, 8) === 'https://' || path.substr(0, 3) === '://') {

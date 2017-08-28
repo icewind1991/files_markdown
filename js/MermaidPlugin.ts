@@ -42,12 +42,12 @@ export const MermaidPlugin = (md: MarkdownIt.MarkdownIt) => {
         const token = tokens[idx];
         const code = token.content.trim();
         if (token.info === 'mermaid') {
-            return mermaidChart(code)
+            return mermaidChart(code);
         }
         const firstLine = code.split(/\n/)[0].trim();
         if (firstLine === 'gantt' || firstLine === 'sequenceDiagram' || firstLine.match(/^graph (?:TB|BT|RL|LR|TD);?$/)) {
-            return mermaidChart(code)
+            return mermaidChart(code);
         }
-        return originalRenderer(tokens, idx, options, env, slf)
+        return originalRenderer(tokens, idx, options, env, slf);
     }
 };
