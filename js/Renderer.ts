@@ -9,6 +9,7 @@ import VideoPlugin from './VideoPlugin';
 import 'katex/dist/katex.min.css';
 import 'highlight.js/styles/github.css';
 import 'mermaid/dist/mermaid.forest.min.css';
+import Thenable = JQuery.Thenable;
 
 const slugifyHeading = name => 'editor/' + slugify(name).toLowerCase();
 
@@ -74,7 +75,8 @@ export class Renderer {
     constructor() {
         this.md = new MarkdownIt();
         this.md.use(CheckboxPlugin, {
-            checkboxClass: 'checkbox'
+            checkboxClass: 'checkbox',
+            readonly: false
         });
         this.md.use(AnchorPlugin, {
             slugify: slugifyHeading
@@ -94,6 +96,20 @@ export class Renderer {
         this.md.use(iterator, 'internal_image_link', 'image', (tokens: MarkdownIt.Token[], idx: number) => {
             tokens[idx].attrSet('src', this.getImageUrl(tokens[idx].attrGet('src') as string));
         });
+
+        function injectLineNumbers(tokens, idx, options, env, slf) {
+            if (tokens[idx].map && tokens[idx].level === 0) {
+                const line = tokens[idx].map[0];
+                tokens[idx].attrJoin('class', 'line');
+                tokens[idx].attrSet('data-line', String(line));
+            }
+            return slf.renderToken(tokens, idx, options, env, slf);
+        }
+
+        this.md.renderer.rules.paragraph_open =
+            this.md.renderer.rules.heading_open =
+                this.md.renderer.rules.heading_open =
+                    injectLineNumbers;
     }
 
     prepareText(text: string): string {
@@ -130,11 +146,12 @@ export class Renderer {
         }
     }
 
-    renderText(text: string, element): void {
-        this.loadPlugins(text).then(() => {
-            const html = this.md.render(this.prepareText(text));
-            element.html(html);
-        });
+    renderText(text: string, element): Thenable<void> {
+        return this.loadPlugins(text).then(() => {
+                const html = this.md.render(this.prepareText(text));
+                element.html(html);
+            }
+        );
     }
 
     loadPlugins(text: string) {

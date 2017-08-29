@@ -1,10 +1,21 @@
-import {PreviewPlugin} from "./PreviewPlugin";
+import {Renderer} from "./Renderer";
 
 export class SidebarPreview implements SidebarPreviewPlugin {
-    private previewPlugin: PreviewPlugin;
+    private renderer: Renderer;
 
-    constructor(previewPlugin: PreviewPlugin) {
-        this.previewPlugin = previewPlugin;
+    private initPromise: JQueryPromise<void> | null = null;
+
+    init() {
+        if (!this.initPromise) {
+            const deferred = $.Deferred();
+            require.ensure(['./Renderer'], () => {
+                const {Renderer} = require('./Renderer');
+                this.renderer = new Renderer();
+                deferred.resolve();
+            });
+            this.initPromise = deferred.promise();
+        }
+        return this.initPromise;
     }
 
     attach(manager) {
@@ -17,13 +28,13 @@ export class SidebarPreview implements SidebarPreviewPlugin {
 
         $.when(
             this.getFileContent(model.getFullPath()),
-            this.previewPlugin.init()
+            this.init()
         ).then(([content]) => {
             $thumbnailDiv.removeClass('icon-loading icon-32');
             $thumbnailContainer.addClass('large');
             $thumbnailContainer.addClass('text');
             const $textPreview = $('<div id="preview" class="text-markdown"/>');
-            this.previewPlugin.preview(content, $textPreview);
+            this.renderer.renderText(content, $textPreview);
             $thumbnailDiv.children('.stretcher').remove();
             $thumbnailDiv.append($textPreview);
             $thumbnailContainer.css("max-height", previewHeight);

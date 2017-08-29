@@ -31,7 +31,7 @@ export function CheckBoxReplacer(md: MarkdownIt.MarkdownIt, userOptions: Partial
     };
     const options = $.extend(defaults, userOptions);
     const pattern = /\[(X|\s|\_|\-)\]\s(.*)/i;
-    const createTokens = function (checked: boolean, label: string, Token: TokenConstructor): Token[] {
+    const createTokens = function (checked: boolean, label: string, Token: TokenConstructor, line: number): Token[] {
         const nodes: Token[] = [];
         let token: Token;
 
@@ -60,6 +60,7 @@ export function CheckBoxReplacer(md: MarkdownIt.MarkdownIt, userOptions: Partial
         if (options.checkboxClass) {
             token.attrs.push(["class", options.checkboxClass]);
         }
+        token.attrs.push(["data-line", String(line)]);
         nodes.push(token);
 
         /**
@@ -86,7 +87,7 @@ export function CheckBoxReplacer(md: MarkdownIt.MarkdownIt, userOptions: Partial
         return nodes;
     };
 
-    const splitTextToken = function (original: Token, Token: TokenConstructor): Token[] {
+    const splitTextToken = function (original: Token, Token: TokenConstructor, line: number): Token[] {
         const text = original.content;
         const matches = text.match(pattern);
         if (matches === null) {
@@ -95,14 +96,14 @@ export function CheckBoxReplacer(md: MarkdownIt.MarkdownIt, userOptions: Partial
         const value = matches[1];
         const label = matches[2];
         const checked = (value === "X" || value === "x");
-        return createTokens(checked, label, Token);
+        return createTokens(checked, label, Token, line);
     };
 
     return function (state: CheckboxReplacerState) {
         for (const token of state.tokens) {
             if (token.type === "inline") {
                 token.children = ([] as Token[]).concat.apply([],
-                    token.children.map(childToken => splitTextToken(childToken, state.Token))
+                    token.children.map(childToken => splitTextToken(childToken, state.Token, token.map ? token.map[0] : 0))
                 );
             }
         }

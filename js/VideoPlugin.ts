@@ -85,7 +85,6 @@ function renderVideo(md: MarkdownIt.MarkdownIt, options: VideoOptions) {
         if (alt && isVideoService(alt)) {
             return renderVideoService(md, options, alt, url);
         }
-        console.log(url, isEmbeddedVideo(url));
         if (isEmbeddedVideo(url)) {
             return renderEmbededVideo(md, options, url);
         }
@@ -141,7 +140,6 @@ export default function VideoPlugin(md: MarkdownIt.MarkdownIt, options: VideoOpt
     const originalRenderer = md.renderer.rules.image;
     md.renderer.rules.image = (tokens: Token[], idx: number, options: VideoOptions, env, slf) => {
         options = $.extend(defaults, options);
-        console.log(JSON.stringify(tokens[idx]));
         const videoResult = renderVideo(md, options)(tokens, idx, env);
         return videoResult || originalRenderer(tokens, idx, options, env, slf)
     };

@@ -21,7 +21,7 @@ module.exports = {
 			filename: "styles.css",
 			allChunks: true
 		}),
-		new UglifyJSPlugin()
+		new UglifyJSPlugin({sourceMap: true})
 	],
 	module: {
 		loaders: [
