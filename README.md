@@ -28,13 +28,8 @@ This requires Nextcloud and the Text Editor app to be installed from Nextcloud 1
 Installation
 ---
 
-- Clone the app into the Nextcloud apps directory:
-
-    ``git clone https://github.com/icewind1991/files_markdown.git``
-
-- Activate the App.
-
-    ``occ app:enable files_markdown``
+- You can get the app from the [Nextcloud app store](https://apps.nextcloud.com/apps/files_markdown)
+or download the latest release from [github](https://github.com/icewind1991/files_markdown/releases).
 
 Development
 ---
