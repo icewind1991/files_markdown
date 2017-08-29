@@ -35,7 +35,8 @@ module.exports = {
 					path.resolve(__dirname, "js"),
 					path.resolve(__dirname, "node_modules/markdown-it-anchor"),
 					path.resolve(__dirname, "node_modules/markdown-it-texmath"),
-					path.resolve(__dirname, "node_modules/markdown-it-highlightjs")
+					path.resolve(__dirname, "node_modules/markdown-it-highlightjs"),
+					path.resolve(__dirname, "node_modules/markdown-it-github-preamble")
 				],
 				use: {
 					loader: 'babel-loader'

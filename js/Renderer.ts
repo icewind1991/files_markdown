@@ -5,6 +5,7 @@ import * as AnchorPlugin from 'markdown-it-anchor';
 import * as slugify from 'slugify';
 import * as TOCPlugin from 'markdown-it-table-of-contents';
 import VideoPlugin from './VideoPlugin';
+import * as PreamblePlugin from 'markdown-it-github-preamble';
 
 import 'katex/dist/katex.min.css';
 import 'highlight.js/styles/github.css';
@@ -84,6 +85,7 @@ export class Renderer {
         this.md.use(TOCPlugin, {
             slugify: slugifyHeading
         });
+        this.md.use(PreamblePlugin);
         this.md.use(VideoPlugin);
         this.md.use(iterator, 'url_new_win', 'link_open', (tokens: MarkdownIt.Token[], idx: number) => {
             const href = tokens[idx].attrGet('href') as string;
@@ -110,15 +112,6 @@ export class Renderer {
             this.md.renderer.rules.heading_open =
                 this.md.renderer.rules.heading_open =
                     injectLineNumbers;
-    }
-
-    prepareText(text: string): string {
-        if (text.substr(0, 3) === '+++') {
-            text = text.substr(3);
-            text = text.substr(text.indexOf('+++') + 3);
-        }
-
-        return text;
     }
 
     getLinkUrl(path: string): string {
@@ -148,7 +141,7 @@ export class Renderer {
 
     renderText(text: string, element): Thenable<void> {
         return this.loadPlugins(text).then(() => {
-                const html = this.md.render(this.prepareText(text));
+                const html = this.md.render(text);
                 element.html(html);
             }
         );

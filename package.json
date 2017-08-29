@@ -5,6 +5,7 @@
     "markdown-it": "^8.4.0",
     "markdown-it-anchor": "^4.0.0",
     "markdown-it-for-inline": "^0.1.1",
+    "markdown-it-github-preamble": "^1.0.0",
     "markdown-it-highlightjs": "^3.0.0",
     "markdown-it-table-of-contents": "^0.3.2",
     "markdown-it-texmath": "^0.4.3",
