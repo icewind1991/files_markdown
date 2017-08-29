@@ -125,7 +125,7 @@ export class Renderer {
         if (!path || path.indexOf('.') === -1) {
             return path;
         }
-        if (path.substr(0, 7) === 'http://' || path.substr(0, 8) === 'https://' || path.substr(0, 3) === '://') {
+        if (path.indexOf('://') !== -1) {
             return path;
         } else {
             if (path.substr(0, 1) !== '/') {

@@ -1,5 +1,7 @@
 import {Renderer} from './Renderer';
 import {UnderscoreStatic} from "underscore";
+import {PasteImage} from './PasteImage';
+import Thenable = JQuery.Thenable;
 
 declare const _: UnderscoreStatic;
 
@@ -34,6 +36,8 @@ export class PreviewPlugin {
             this.Range = window['ace'].require("ace/range").Range;
 
             aceEditor.$blockScrolling = Infinity;
+
+            new PasteImage().listen(this.handleImage);
         }
 
         return this.initPromise;
@@ -119,4 +123,52 @@ export class PreviewPlugin {
             this.scrollMode = null;
         }, 100);
     }, 100);
+
+    handleImage = (image: HTMLImageElement, file) => {
+        console.log(file);
+        OC.dialogs.prompt('Enter the name for the image', 'Upload image', (ok, name) => {
+            if (!ok) {
+                return;
+            }
+            const blob = image.src;
+            const cursorPos = aceEditor.getCursorPosition();
+            const uploadText = `![uploading...](${blob})`;
+            const finalText = `![${name}](${name})`;
+            this.session.insert(cursorPos, uploadText);
+            this.uploadImage(name, file).then(() => {
+                this.session.replace(
+                    new this.Range(cursorPos.row, cursorPos.column, cursorPos.row, cursorPos.column + uploadText.length),
+                    finalText
+                );
+            });
+
+        }, true, 'image name');
+    };
+
+    uploadImage(name: string, file: File): Thenable<void> {
+        const path = `${this.getCurrentPath()}/${name}`.replace(/\/\/+/g, '/');
+        const url = OC.linkToRemote('files' + path);
+        const reader = new FileReader();
+        const deferred = $.Deferred();
+        reader.onloadend = (e) => {
+            $.ajax({
+                url: url,
+                processData: false,
+                data: reader.result,
+                type: 'PUT',
+                success: deferred.resolve.bind(deferred),
+                error: deferred.reject.bind(deferred)
+            });
+        };
+        reader.readAsArrayBuffer(file);
+        return deferred.promise();
+    }
+
+    getCurrentPath() {
+        if (OCA.Files_Texteditor.file && OCA.Files_Texteditor.file.dir) {
+            return OCA.Files_Texteditor.file.dir;
+        } else if (OCA.Files.App && OCA.Files.App.fileList._currentDirectory) {
+            return OCA.Files.App.fileList._currentDirectory;
+        }
+    }
 }

@@ -30,7 +30,7 @@ declare namespace OC {
 
         function confirmHtml(text: string, title: string, callback: (result: boolean) => void, modal?: boolean): void;
 
-        function prompt(text: string, title: string, callback: (result: string) => void, modal?: boolean, name?: string, password?: boolean): void;
+        function prompt(text: string, title: string, callback: (ok: boolean, result: string) => void, modal?: boolean, name?: string, password?: boolean): void;
 
         function filepicker(title: string, callback: (result: string | string[]) => void, multiselect?: boolean, mimetypeFilter?: string, modal?: boolean): void;
     }
