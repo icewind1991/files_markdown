@@ -35,8 +35,6 @@ export class PreviewPlugin {
 
             this.Range = window['ace'].require("ace/range").Range;
 
-            aceEditor.$blockScrolling = Infinity;
-
             new PasteImage().listen(this.handleImage);
         }
 
