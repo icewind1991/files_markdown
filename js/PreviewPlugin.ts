@@ -9,6 +9,8 @@ declare const aceEditor: AceAjax.Editor;
 
 type onPopstate = (this: Window, ev: PopStateEvent) => any;
 
+const scrollOffsetLines = 3;
+
 export class PreviewPlugin {
     private renderer: Renderer;
     private Range: new (startRow: number, startColumn: number, endRow: number, endColumn: number) => AceAjax.Range;
@@ -98,7 +100,7 @@ export class PreviewPlugin {
             return;
         }
         this.scrollMode = 'editor';
-        const line = Math.floor(top / 15);
+        const line = Math.max(0, Math.floor(top / 15) - scrollOffsetLines);
         const previewOffset = this.offsetMap.find((offset, index) => (typeof offset !== 'undefined') && index >= line);
         if (typeof previewOffset !== 'undefined') {
             $('#preview').scrollTop(previewOffset);
@@ -115,7 +117,7 @@ export class PreviewPlugin {
         this.scrollMode = 'preview';
         const top = this.previewElement.scrollTop() as number;
         const previewLine = this.offsetMap.findIndex(offset => offset >= (top - 1));
-        aceEditor.scrollToLine(previewLine, false, true, () => {
+        aceEditor.scrollToLine(Math.max(previewLine - scrollOffsetLines, 0), false, true, () => {
         });
         setTimeout(() => {
             this.scrollMode = null;

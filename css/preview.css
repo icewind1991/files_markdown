@@ -7,6 +7,10 @@
 	zoom: 0.7;
 }
 
+#preview_wrap#preview_wrap {
+	overflow: hidden;
+}
+
 #preview.text-markdown {
 	font-size: 14px;
 }
@@ -246,15 +250,16 @@
 }
 
 #preview.text-markdown table tr th {
+	color: #777;
 	font-weight: bold;
-	border: 1px solid #cccccc;
+	border-bottom: 1px solid #cccccc;
 	text-align: left;
 	margin: 0;
 	padding: 6px 13px;
 }
 
 #preview.text-markdown table tr td {
-	border: 1px solid #cccccc;
+	/*border: 1px solid #cccccc;*/
 	text-align: left;
 	margin: 0;
 	padding: 6px 13px;
