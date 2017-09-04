@@ -4,7 +4,7 @@ build_dir=$(CURDIR)/build/artifacts
 sign_dir=$(build_dir)/sign
 cert_dir=$(HOME)/.nextcloud/certificates
 
-all: js/editor.js
+all: build/editor.js
 
 sources=$(wildcard js/*.ts) $(wildcard js/*/*.ts) tsconfig.json .babelrc webpack.config.js
 
@@ -13,19 +13,19 @@ watch: node_modules
 	node_modules/.bin/webpack --watch
 
 clean:
-	rm -rf $(build_dir)
+	rm -rf $(build_dir) node_modules
 
 node_modules: package.json
 	npm install
 
-js/editor.js: $(sources) node_modules
+build/editor.js: $(sources) node_modules
 	NODE_ENV=production node_modules/.bin/webpack
 
-appstore: clean js/node_modules
+appstore: build/editor.js
 	mkdir -p $(sign_dir)
 	rsync -a \
 	--exclude=.git \
-	--exclude=build \
+	--exclude=build/artifacts \
 	--exclude=.gitignore \
 	--exclude=Makefile \
 	--exclude=node_modules \

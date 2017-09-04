@@ -1,24 +1,38 @@
 Nextcloud Markdown Editor
 =================
 
-Extends the texteditor in Nextcloud with a live preview for markdown files
+Extends the text editor in Nextcloud with a live preview for markdown files
 
 ![Markdown Editor](screenshots/editor.png)
 
 Features
 ---
 
-### Embed images stored on your Nextcloud
+### Embed images and videos stored on your Nextcloud
 
 ![Embed Images](screenshots/embed.png)
+
+![Embed Videos](screenshots/videos.png)
 
 ### Use LaTeX to add math to your documents
 
 ![LaTeX math](screenshots/math.png)
 
+### Keep track of tasks with checkbox lists
+
+![Checkbox lists](screenshots/checkboxes.png)
+
+### Syntax highlighting for your code
+
+![Syntax highlighting](screenshots/syntax.png)
+
+### Create graph using [mermaid.js](https://github.com/knsv/mermaid)
+
+![Mermaid.js graphs](screenshots/graph.png)
+
 ### Fully rendered previews in the sidebar
  
- ![Sidebar previews](screenshots/preview.png)
+![Sidebar previews](screenshots/preview.png)
 
 Requirements
 ---
