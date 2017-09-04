@@ -46,6 +46,7 @@ export class PreviewPlugin {
     initAceHooks() {
         if (this.session !== aceEditor.getSession()) {
             this.session = aceEditor.getSession();
+            aceEditor.$blockScrolling = Infinity;
             this.session.on("changeScrollTop", this.onScrollEditor);
         }
     }
@@ -54,6 +55,7 @@ export class PreviewPlugin {
         if (this.previewElement !== element) {
             this.previewElement = element;
             this.previewElement.scroll(this.onScrollPreview);
+            this.initCheckboxHandler(element);
         }
     }
 
@@ -68,23 +70,26 @@ export class PreviewPlugin {
         this.initAceHooks();
         this.initPreviewHooks(element);
         window.onpopstate = this.onHashChange;
-        const Range = this.Range;
+
         this.renderer.renderText(text, element).then(() => {
-            element.find('input[type=checkbox]').change(function () {
-                const checked = this.checked;
-                const row = this.dataset.line;
-                const session = aceEditor.getSession();
-                const oldText = session.getLine(row);
-                const newText = checked ?
-                    oldText.replace('[ ]', '[x]') :
-                    oldText.replace(/\[(x|X)\]/, '[ ]');
-                session.replace(new Range(row, 0, row, Number.MAX_VALUE), newText);
-            });
             setTimeout(() => {
                 this.buildOffsetMap(element)
             }, 500);
         });
     }, 500);
+
+    initCheckboxHandler(element) {
+        const Range = this.Range;
+        const session = this.session;
+        element.on('change', 'input[type=checkbox]', function () {
+            const checked = this.checked;
+            const row = this.dataset.line;
+            const oldText = session.getLine(row);
+            const index = oldText.indexOf('[') + 1;
+            session.replace(new Range(row, index, row, index + 1), checked ? 'x' : ' ');
+            session['$wrapData'].length = session.doc.getLength();
+        });
+    }
 
     buildOffsetMap = _.throttle((element) => {
         const previewOffset = (element.offset() as { top: number }).top;
