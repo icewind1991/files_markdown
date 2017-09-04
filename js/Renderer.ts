@@ -41,7 +41,7 @@ function loadMermaid() {
     require.ensure([
         './MermaidPlugin'
     ], () => {
-        deferred.resolve(require('./MermaidPlugin'));
+        deferred.resolve(require('./MermaidPlugin').MermaidPlugin);
     }, 'mermaid');
     return deferred.promise();
 }
