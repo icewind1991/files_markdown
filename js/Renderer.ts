@@ -6,6 +6,7 @@ import * as slugify from 'slugify';
 import * as TOCPlugin from 'markdown-it-table-of-contents';
 import VideoPlugin from './VideoPlugin';
 import * as PreamblePlugin from 'markdown-it-github-preamble';
+import * as morphdom from 'morphdom';
 
 import 'katex/dist/katex.min.css';
 import 'highlight.js/styles/github.css';
@@ -142,7 +143,9 @@ export class Renderer {
     renderText(text: string, element): Thenable<void> {
         return this.loadPlugins(text).then(() => {
                 const html = this.md.render(text);
-                element.html(html);
+                morphdom(element[0], `<div>${html}</div>`, {
+                    childrenOnly: true
+                });
             }
         );
     }
