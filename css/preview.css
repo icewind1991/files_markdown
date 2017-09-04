@@ -380,6 +380,7 @@
 	border: 1px solid #eaeaea;
 	background-color: #f8f8f8;
 	border-radius: 3px;
+	font-family: 'Lucida Console', 'Lucida Sans Typewriter', 'DejaVu Sans Mono', monospace;
 }
 
 #preview.text-markdown pre code {
@@ -441,4 +442,8 @@
 
 .oc-dialog-dim.oc-dialog-dim {
 	z-index: 9999;
+}
+
+#preview.text-markdown * {
+	font-family: 'Open Sans', Frutiger, Calibri, 'Myriad Pro', Myriad, sans-serif;
 }
