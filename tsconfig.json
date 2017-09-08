@@ -6,7 +6,7 @@
       "es6",
       "es2015.iterable"
     ],
-    "module": "commonjs",
+    "module": "esnext",
     "moduleResolution": "node",
     "target": "ES5",
     "declaration": true,

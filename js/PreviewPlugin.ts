@@ -13,9 +13,9 @@ const scrollOffsetLines = 3;
 
 export class PreviewPlugin {
     private renderer: Renderer;
-    private Range: new (startRow: number, startColumn: number, endRow: number, endColumn: number) => AceAjax.Range;
+    private rangeConstructor: new (startRow: number, startColumn: number, endRow: number, endColumn: number) => AceAjax.Range;
 
-    private initPromise: JQueryPromise<void> | null = null;
+    private initPromise: Promise<void> | null = null;
     private textEditorOnHashChange: onPopstate | null;
     private offsetMap: number[] = [];
     private session: AceAjax.IEditSession;
@@ -24,18 +24,15 @@ export class PreviewPlugin {
 
     init() {
         if (!this.initPromise) {
-            const deferred = $.Deferred();
-            require.ensure(['./Renderer'], () => {
-                const {Renderer} = require('./Renderer');
+            this.initPromise = import('./Renderer').then(({Renderer}) => {
                 this.renderer = new Renderer();
-                deferred.resolve();
-            });
-            this.initPromise = deferred.promise();
+            }, console.error.bind(console));
             if (!this.textEditorOnHashChange) {
                 this.textEditorOnHashChange = window.onpopstate;
             }
 
-            this.Range = window['ace'].require("ace/range").Range;
+            const aceRequire = window['ace'].acequire || window['ace'].require;
+            this.rangeConstructor = aceRequire("ace/range").Range;
 
             new PasteImage().listen(this.handleImage);
         }
@@ -71,15 +68,17 @@ export class PreviewPlugin {
         this.initPreviewHooks(element);
         window.onpopstate = this.onHashChange;
 
-        this.renderer.renderText(text, element).then(() => {
-            setTimeout(() => {
-                this.buildOffsetMap(element)
-            }, 500);
+        this.init().then(() => {
+            this.renderer.renderText(text, element).then(() => {
+                setTimeout(() => {
+                    this.buildOffsetMap(element)
+                }, 500);
+            });
         });
     }, 500);
 
     initCheckboxHandler(element) {
-        const Range = this.Range;
+        const Range = this.rangeConstructor;
         const session = this.session;
         element.on('change', 'input[type=checkbox]', function () {
             const checked = this.checked;
@@ -142,7 +141,7 @@ export class PreviewPlugin {
             this.session.insert(cursorPos, uploadText);
             this.uploadImage(name, file).then(() => {
                 this.session.replace(
-                    new this.Range(cursorPos.row, cursorPos.column, cursorPos.row, cursorPos.column + uploadText.length),
+                    new this.rangeConstructor(cursorPos.row, cursorPos.column, cursorPos.row, cursorPos.column + uploadText.length),
                     finalText
                 );
             });

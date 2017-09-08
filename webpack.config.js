@@ -9,7 +9,8 @@ module.exports = {
 	entry: "./js/editor.ts",
 	output: {
 		filename: "editor.js",
-		path: path.resolve(__dirname, "build")
+		path: path.resolve(__dirname, "build"),
+		jsonpFunction: 'webpackJsonpMarkdown'
 	},
 	resolve: {
 		extensions: [".ts", ".js"]
