@@ -75,7 +75,9 @@ export class Renderer {
     };
 
     constructor() {
-        this.md = new MarkdownIt();
+        this.md = new MarkdownIt({
+            linkify: true
+        });
         this.md.use(CheckboxPlugin, {
             checkboxClass: 'checkbox',
             readonly: false
