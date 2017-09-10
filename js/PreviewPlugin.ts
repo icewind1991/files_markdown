@@ -109,9 +109,7 @@ export class PreviewPlugin {
         if (typeof previewOffset !== 'undefined') {
             $('#preview').scrollTop(previewOffset);
         }
-        setTimeout(() => {
-            this.scrollMode = null;
-        }, 100);
+        this.resetScrollMode();
     }, 100);
 
     onScrollPreview = _.throttle(() => {
@@ -121,15 +119,18 @@ export class PreviewPlugin {
         this.scrollMode = 'preview';
         const top = this.previewElement.scrollTop() as number;
         const previewLine = this.offsetMap.findIndex(offset => offset >= (top - 1));
-        aceEditor.scrollToLine(Math.max(previewLine - scrollOffsetLines, 0), false, true, () => {
-        });
-        setTimeout(() => {
-            this.scrollMode = null;
-        }, 100);
+        if (previewLine < this.session.getLength()) {
+            aceEditor.scrollToLine(Math.max(previewLine - scrollOffsetLines, 0), false, true, () => {
+            });
+        }
+        this.resetScrollMode();
     }, 100);
 
+    resetScrollMode = _.debounce(() => {
+        this.scrollMode = null;
+    }, 500);
+
     handleImage = (image: HTMLImageElement, file) => {
-        console.log(file);
         OC.dialogs.prompt('Enter the name for the image', 'Upload image', (ok, name) => {
             if (!ok) {
                 return;

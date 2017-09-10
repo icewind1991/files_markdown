@@ -9,12 +9,8 @@ $(document).ready(function () {
     }
 });
 
-// fix editor closing when click on dialog
-
-// OCA.Files_Texteditor._onClickDocument
-
 // coerce webpack into loading scripts properly
 __webpack_require__.p = OC.filePath('files_markdown', 'js', '../build/');
-__webpack_require__.nc = $('script[nonce]')[0].getAttribute('nonce');
+__webpack_require__.nc = $('script[nonce][src]')[0].getAttribute('nonce');
 
 OC.Plugins.register('OCA.Files.SidebarPreviewManager', new SidebarPreview());
