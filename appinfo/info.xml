@@ -10,11 +10,10 @@ A full list of features can be found [in the README](https://github.com/icewind1
 	<licence>AGPL</licence>
 	<author>Robin Appelman</author>
 	<dependencies>
-		<owncloud min-version="9.1" max-version="9.1"/>
-		<nextcloud min-version="10" max-version="13"/>
+		<nextcloud min-version="11" max-version="13"/>
 	</dependencies>
 
-	<version>1.0.1</version>
+	<version>2.0.0</version>
 	<category>office</category>
 	<website>https://github.com/icewind1991/files_markdown</website>
 	<bugs>https://github.com/icewind1991/files_markdown/issues</bugs>
@@ -24,6 +23,18 @@ A full list of features can be found [in the README](https://github.com/icewind1
 	</screenshot>
 	<screenshot>
 		https://raw.githubusercontent.com/icewind1991/files_markdown/master/screenshots/embed.png
+	</screenshot>
+	<screenshot>
+		https://raw.githubusercontent.com/icewind1991/files_markdown/master/screenshots/videos.png
+	</screenshot>
+	<screenshot>
+		https://raw.githubusercontent.com/icewind1991/files_markdown/master/screenshots/graph.png
+	</screenshot>
+	<screenshot>
+		https://raw.githubusercontent.com/icewind1991/files_markdown/master/screenshots/syntax.png
+	</screenshot>
+	<screenshot>
+		https://raw.githubusercontent.com/icewind1991/files_markdown/master/screenshots/checkboxes.png
 	</screenshot>
 	<screenshot>
 		https://raw.githubusercontent.com/icewind1991/files_markdown/master/screenshots/math.png
