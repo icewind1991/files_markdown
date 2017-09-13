@@ -447,3 +447,8 @@
 #preview.text-markdown * {
 	font-family: 'Open Sans', Frutiger, Calibri, 'Myriad Pro', Myriad, sans-serif;
 }
+
+/* fixes opacity of quota in navigation sidebar in the files app*/
+.section {
+	opacity: 1;
+}
