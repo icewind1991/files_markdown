@@ -11,6 +11,7 @@ $(document).ready(function () {
 
 // coerce webpack into loading scripts properly
 __webpack_require__.p = OC.filePath('files_markdown', 'js', '../build/');
-__webpack_require__.nc = $('script[nonce][src]')[0].getAttribute('nonce');
+const script = document.querySelector('[nonce]') as HTMLScriptElement;
+__webpack_require__.nc = script['nonce'] || script.getAttribute('nonce');
 
 OC.Plugins.register('OCA.Files.SidebarPreviewManager', new SidebarPreview());
