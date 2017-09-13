@@ -45,6 +45,8 @@ Installation
 - You can get the app from the [Nextcloud app store](https://apps.nextcloud.com/apps/files_markdown)
 or download the latest release from [github](https://github.com/icewind1991/files_markdown/releases).
 
+If you're installing from git, you'll need to build the project by running `make` in the app directory.
+
 Development
 ---
 
