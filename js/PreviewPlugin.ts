@@ -2,6 +2,7 @@ import {Renderer} from './Renderer';
 import {UnderscoreStatic} from "underscore";
 import {PasteImage} from './PasteImage';
 import Thenable = JQuery.Thenable;
+import TextEditorPreviewPlugin = OCA.Files_Texteditor.TextEditorPreviewPlugin;
 
 declare const _: UnderscoreStatic;
 
@@ -11,7 +12,7 @@ type onPopstate = (this: Window, ev: PopStateEvent) => any;
 
 const scrollOffsetLines = 3;
 
-export class PreviewPlugin {
+export class PreviewPlugin implements TextEditorPreviewPlugin {
     private renderer: Renderer;
     private rangeConstructor: new (startRow: number, startColumn: number, endRow: number, endColumn: number) => AceAjax.Range;
 

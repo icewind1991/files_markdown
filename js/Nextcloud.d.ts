@@ -1,3 +1,5 @@
+import Thenable = JQuery.Thenable;
+
 interface EscapeOptions {
     escape?: boolean;
 }
@@ -14,7 +16,36 @@ interface SidebarPreviewPlugin extends BasePlugin {
     }) => void;
 }
 
-declare const OCA: { [appname: string]: any };
+declare namespace OCA {
+    namespace Files_Texteditor {
+        interface TextEditorPreviewPlugin {
+            init: () => (void | Thenable<void> | Promise<void>);
+            preview: (text: string, $preview: JQuery) => void;
+        }
+
+        function registerPreviewPlugin(mimetype: string, plugin: TextEditorPreviewPlugin);
+
+        const file: {
+            dir: string,
+            edited: boolean,
+            mime: string,
+            mtime: number,
+            name: string,
+            size: number | null,
+            writeable: boolean
+        };
+    }
+
+    namespace Files {
+        interface FileList {
+            _currentDirectory: string
+        }
+
+        namespace App {
+            const fileList: FileList;
+        }
+    }
+}
 
 declare namespace OC {
     namespace Util {
