@@ -45,7 +45,7 @@ export function CheckBoxReplacer(md: MarkdownIt.MarkdownIt, userOptions: Partial
         }
 
         /**
-         * <input type="checkbox" id="checkbox{n}" checked="true">
+         * <input type="checkbox" id="checkbox{n}" checked="true data-line="{n}">
          */
         const id = options.idPrefix + lastId;
         lastId += 1;
@@ -102,9 +102,15 @@ export function CheckBoxReplacer(md: MarkdownIt.MarkdownIt, userOptions: Partial
     return function (state: CheckboxReplacerState) {
         for (const token of state.tokens) {
             if (token.type === "inline") {
-                token.children = ([] as Token[]).concat.apply([],
-                    token.children.map(childToken => splitTextToken(childToken, state.Token, token.map ? token.map[0] : 0))
-                );
+                let currentLine = token.map ? token.map[0] : 0;
+                let newChildren: Token[] = [];
+                for (const childToken of token.children) {
+                    if (childToken.type === 'hardbreak' || childToken.type === 'softbreak') {
+                        currentLine++;
+                    }
+                    newChildren = newChildren.concat(splitTextToken(childToken, state.Token, currentLine))
+                }
+                token.children = newChildren;
             }
         }
     };
