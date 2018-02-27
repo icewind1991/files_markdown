@@ -1,11 +1,24 @@
 import {PreviewPlugin} from "./PreviewPlugin";
 import {SidebarPreview} from "./SidebarPreview";
+import {PublicPreview} from "./PublicPreview";
 
 const previewPlugin = new PreviewPlugin();
 
 $(document).ready(function () {
     if (OCA.Files_Texteditor && OCA.Files_Texteditor.registerPreviewPlugin) {
         OCA.Files_Texteditor.registerPreviewPlugin('text/markdown', previewPlugin);
+    }
+
+    if (
+        $('#isPublic').val() &&
+        $('#mimetype').val() === 'text/markdown'
+    ) {
+        const publicPreview = new PublicPreview();
+        const previewRoot = $('#preview');
+        previewRoot.addClass('text-markdown');
+        const previewFrame = $('<div class="public-preview"/>');
+        previewRoot.prepend(previewFrame);
+        publicPreview.attach(previewFrame, $('#sharingToken').val());
     }
 });
 

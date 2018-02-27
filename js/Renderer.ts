@@ -74,13 +74,13 @@ export class Renderer {
         }
     };
 
-    constructor() {
+    constructor(readonly: boolean = false) {
         this.md = new MarkdownIt({
             linkify: true
         });
         this.md.use(CheckboxPlugin, {
             checkboxClass: 'checkbox',
-            readonly: false
+            readonly: readonly
         });
         this.md.use(AnchorPlugin, {
             slugify: slugifyHeading
