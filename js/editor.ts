@@ -7,6 +7,8 @@ const previewPlugin = new PreviewPlugin();
 $(document).ready(function () {
     if (OCA.Files_Texteditor && OCA.Files_Texteditor.registerPreviewPlugin) {
         OCA.Files_Texteditor.registerPreviewPlugin('text/markdown', previewPlugin);
+    } else if (!OCA.Files_Texteditor) {
+        OCA.Files_Texteditor = {};
     }
 
     if (
