@@ -24,5 +24,6 @@ $eventDispatcher->addListener(
 	'OCA\Files_Sharing::loadAdditionalScripts',
 	function () {
 		OCP\Util::addScript('files_markdown', '../build/editor');
+		OCP\Util::addStyle('files_markdown', '../build/styles');
 		OCP\Util::addStyle('files_markdown', 'preview');
 	});
