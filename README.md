@@ -47,6 +47,12 @@ or download the latest release from [github](https://github.com/icewind1991/file
 
 If you're installing from git, you'll need to build the project by running `make` in the app directory.
 
+
+Usage
+---
+
+To use the markdown editor, simply open a file with a `.md` or `.markdown` extention.
+
 Development
 ---
 
