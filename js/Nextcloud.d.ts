@@ -47,67 +47,85 @@ declare namespace OCA {
     }
 }
 
+interface EscapeOptions {
+	escape?: boolean;
+}
+
 declare namespace OC {
-    namespace Util {
-        function humanFileSize(size: number): string;
+	namespace Util {
+		function humanFileSize(size: number): string;
 
-        function computerFileSize(size: string): number;
-    }
+		function computerFileSize(size: string): number;
+	}
 
-    namespace dialogs {
-        function info(text: string, title: string, callback: () => void, modal?: boolean): void;
+	namespace dialogs {
+		function info(text: string, title: string, callback: () => void, modal?: boolean): void;
 
-        function confirm(text: string, title: string, callback: (result: boolean) => void, modal?: boolean): void;
+		function confirm(text: string, title: string, callback: (result: boolean) => void, modal?: boolean): void;
 
-        function confirmHtml(text: string, title: string, callback: (result: boolean) => void, modal?: boolean): void;
+		function confirmHtml(text: string, title: string, callback: (result: boolean) => void, modal?: boolean): void;
 
-        function prompt(text: string, title: string, callback: (ok: boolean, result: string) => void, modal?: boolean, name?: string, password?: boolean): void;
+		function prompt(text: string, title: string, callback: (result: string) => void, modal?: boolean, name?: string, password?: boolean): void;
 
-        function filepicker(title: string, callback: (result: string | string[]) => void, multiselect?: boolean, mimetypeFilter?: string, modal?: boolean): void;
-    }
+		function filepicket(title: string, callback: (result: string | string[]) => void, multiselect?: boolean, mimetypeFilter?: string, modal?: boolean): void;
+	}
 
-    namespace Plugins {
-        function register(scope: string, plugin: BasePlugin);
-        function register(scope: 'OCA.Files.SidebarPreviewManager', plugin: SidebarPreviewPlugin);
-    }
+	interface Plugin<T> {
+		name?: string;
+		attach: (instance: T, options: any) => void;
+		detach?: (instance: T, options: any) => void;
+	}
 
-    function generateUrl(url: string, parameters?: { [key: string]: string }, options?: EscapeOptions)
+	namespace Plugins {
+		function register<T>(scope: string, plugin: OC.Plugin<T>): void;
+	}
 
-    function linkToOCS(service: string, version: number): string;
+	namespace Search {
+		interface Core {
+			setFilter: (app: string, callback: (query: string) => void) => void;
+		}
+	}
 
-    function imagePath(app: string, file: string): string;
+	function generateUrl(url: string, parameters?: { [key: string]: string }, options?: EscapeOptions)
 
-    function linkToRemote(service: string): string;
+	function linkToOCS(service: string, version: number): string;
 
-    function linkToRemoteBase(service: string): string;
+	function imagePath(app: string, file: string): string;
 
-    function filePath(app: string, type: string, path: string): string;
-
-    function addStyle(app: string, stylesheet: string): void;
-
-    function addScript(app: string, script: string, callback?: Function): JQueryPromise<void>
-
-    const PERMISSION_CREATE = 4;
-    const PERMISSION_READ = 1;
-    const PERMISSION_UPDATE = 2;
-    const PERMISSION_DELETE = 8;
-    const PERMISSION_SHARE = 16;
-    const PERMISSION_ALL = 31;
+	const PERMISSION_CREATE = 4;
+	const PERMISSION_READ = 1;
+	const PERMISSION_UPDATE = 2;
+	const PERMISSION_DELETE = 8;
+	const PERMISSION_SHARE = 16;
+	const PERMISSION_ALL = 31;
 }
 
 declare function t(app: string, string: string, vars?: { [key: string]: string }, count?: number, options?: EscapeOptions): string;
 
+declare const oc_config: {
+	blacklist_files_regex: string;
+	enable_avatars: boolean;
+	last_password_link: string | null;
+	modRewriteWorking: boolean;
+	session_keepalive: boolean;
+	session_lifetime: boolean;
+	"sharing.maxAutocompleteResults": number;
+	"sharing.minSearchStringLength": number;
+	version: string;
+	versionString: string;
+};
+
 declare module 'NC' {
-    export interface OCSResult<T> {
-        ocs: {
-            data: T;
-            meta: {
-                status: 'ok' | 'failure';
-                message: string;
-                statuscode: number;
-                totalitems: number;
-                itemsperpage: number;
-            }
-        }
-    }
+	export interface OCSResult<T> {
+		ocs: {
+			data: T;
+			meta: {
+				status: 'ok' | 'failure';
+				message: string;
+				statuscode: number;
+				totalitems: number;
+				itemsperpage: number;
+			}
+		}
+	}
 }
