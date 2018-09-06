@@ -10,7 +10,7 @@ A full list of features can be found [in the README](https://github.com/icewind1
 	<licence>AGPL</licence>
 	<author>Robin Appelman</author>
 	<dependencies>
-		<nextcloud min-version="11" max-version="14"/>
+		<nextcloud min-version="11" max-version="15"/>
 	</dependencies>
 
 	<version>2.0.4</version>
