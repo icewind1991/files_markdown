@@ -7,17 +7,15 @@
 	<description><![CDATA[Markdown Editor extends the Nextcloud text editor with a live preview for markdown files.
 
 A full list of features can be found [in the README](https://github.com/icewind1991/files_markdown)]]></description>
-	<licence>AGPL</licence>
-	<author>Robin Appelman</author>
-	<dependencies>
-		<nextcloud min-version="11" max-version="16"/>
-	</dependencies>
-
 	<version>2.0.5</version>
+	<licence>agpl</licence>
+	<author>Robin Appelman</author>
+
 	<category>office</category>
 	<website>https://github.com/icewind1991/files_markdown</website>
 	<bugs>https://github.com/icewind1991/files_markdown/issues</bugs>
 	<repository type="git">https://github.com/icewind1991/files_markdown.git</repository>
+
 	<screenshot>
 		https://raw.githubusercontent.com/icewind1991/files_markdown/master/screenshots/editor.png
 	</screenshot>
@@ -42,4 +40,8 @@ A full list of features can be found [in the README](https://github.com/icewind1
 	<screenshot>
 		https://raw.githubusercontent.com/icewind1991/files_markdown/master/screenshots/preview.png
 	</screenshot>
+
+	<dependencies>
+		<nextcloud min-version="11" max-version="16"/>
+	</dependencies>
 </info>
