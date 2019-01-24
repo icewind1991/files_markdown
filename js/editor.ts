@@ -4,24 +4,22 @@ import {PublicPreview} from "./PublicPreview";
 
 const previewPlugin = new PreviewPlugin();
 
-$(document).ready(function () {
-    if (OCA.Files_Texteditor && OCA.Files_Texteditor.registerPreviewPlugin) {
-        OCA.Files_Texteditor.registerPreviewPlugin('text/markdown', previewPlugin);
-    } else if (!OCA.Files_Texteditor) {
-        OCA.Files_Texteditor = {};
-    }
+$(() => {
+	if (OCA.Files_Texteditor && OCA.Files_Texteditor.registerPreviewPlugin) {
+		OCA.Files_Texteditor.registerPreviewPlugin('text/markdown', previewPlugin);
+	}
 
-    if (
-        $('#isPublic').val() &&
-        $('#mimetype').val() === 'text/markdown'
-    ) {
-        const publicPreview = new PublicPreview();
-        const previewRoot = $('#preview');
-        previewRoot.addClass('text-markdown');
-        const previewFrame = $('<div class="public-preview"/>');
-        previewRoot.prepend(previewFrame);
-        publicPreview.attach(previewFrame, $('#sharingToken').val());
-    }
+	if (
+		$('#isPublic').val() &&
+		$('#mimetype').val() === 'text/markdown'
+	) {
+		const publicPreview = new PublicPreview();
+		const previewRoot = $('#preview');
+		previewRoot.addClass('text-markdown');
+		const previewFrame = $('<div class="public-preview"/>');
+		previewRoot.prepend(previewFrame);
+		publicPreview.attach(previewFrame, $('#sharingToken').val() as string);
+	}
 });
 
 // coerce webpack into loading scripts properly

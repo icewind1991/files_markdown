@@ -1,6 +1,7 @@
 // based on https://github.com/brianjgeiger/markdown-it-video
 
-import {default as MarkdownIt, Token} from "markdown-it";
+import MarkdownIt from "markdown-it";
+import Token from 'markdown-it/lib/token';
 
 type VideoService = 'youtube' | 'vimeo' | 'vine' | 'prezi';
 
@@ -72,7 +73,7 @@ function isEmbeddedVideo(url: string) {
     return url.match(/\.(webm|mp4|ogv)/) !== null;
 }
 
-function renderVideo(md: MarkdownIt.MarkdownIt, options: VideoOptions) {
+function renderVideo(md: MarkdownIt, options: VideoOptions) {
     const altTokenizer = md.renderer['renderInlineAsText'];
     return (tokens: Token[], idx: number, env) => {
         const token = tokens[idx];
@@ -93,7 +94,7 @@ function renderVideo(md: MarkdownIt.MarkdownIt, options: VideoOptions) {
     }
 }
 
-function renderVideoService(md: MarkdownIt.MarkdownIt, options: VideoOptions, service: VideoService, url: string): string | false {
+function renderVideoService(md: MarkdownIt, options: VideoOptions, service: VideoService, url: string): string | false {
     const videoID = getVideoId(service, url as string);
     if (!videoID) {
         return false;
@@ -109,7 +110,7 @@ function renderVideoService(md: MarkdownIt.MarkdownIt, options: VideoOptions, se
         '" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div>';
 }
 
-function renderEmbededVideo(md: MarkdownIt.MarkdownIt, options: VideoOptions, url: string) {
+function renderEmbededVideo(md: MarkdownIt, options: VideoOptions, url: string) {
     url = md.utils.escapeHtml(url);
     return `<div class="embed-responsive"><video controls="controls" src="${url}"/></div>`;
 }
@@ -136,7 +137,7 @@ const defaults: VideoOptions = {
     prezi: {width: 550}
 };
 
-export default function VideoPlugin(md: MarkdownIt.MarkdownIt, options: VideoOptions) {
+export default function VideoPlugin(md: MarkdownIt, options: VideoOptions) {
     const originalRenderer = md.renderer.rules.image;
     md.renderer.rules.image = (tokens: Token[], idx: number, options: VideoOptions, env, slf) => {
         options = $.extend(defaults, options);

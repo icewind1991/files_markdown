@@ -10,7 +10,7 @@ sources=$(wildcard js/*.ts) $(wildcard js/*/*.ts) tsconfig.json .babelrc webpack
 
 .PHONY: watch
 watch: node_modules
-	node_modules/.bin/webpack --watch
+	node_modules/.bin/webpack --watch --mode development
 
 clean:
 	rm -rf $(build_dir) node_modules
@@ -19,7 +19,7 @@ node_modules: package.json
 	npm install
 
 build/editor.js: $(sources) node_modules
-	NODE_ENV=production node_modules/.bin/webpack
+	node_modules/.bin/webpack --mode production
 
 appstore: build/editor.js
 	mkdir -p $(sign_dir)

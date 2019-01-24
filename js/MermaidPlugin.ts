@@ -1,7 +1,8 @@
 // based on https://github.com/tylingsoft/markdown-it-mermaid
 
-import MarkdownIt = require("markdown-it");
-import * as mermaid from 'mermaid';
+import MarkdownIt from "markdown-it";
+import Token from 'markdown-it/lib/token';
+import mermaid from 'mermaid';
 
 // workaround missing import in dependency
 // see: https://github.com/tylingsoft/dagre-d3-renderer/pull/1
@@ -11,6 +12,7 @@ window['d3'] = d3;
 mermaid.mermaidAPI.initialize({
     startOnLoad: true,
     logLevel: 3,
+    theme: 'forest'
 });
 
 let chartCounter = 0;
@@ -36,9 +38,9 @@ const mermaidChart = (code: string): string => {
     }
 };
 
-export const MermaidPlugin = (md: MarkdownIt.MarkdownIt) => {
+export const MermaidPlugin = (md: MarkdownIt) => {
     const originalRenderer = md.renderer.rules.fence.bind(md.renderer.rules);
-    md.renderer.rules.fence = (tokens: MarkdownIt.Token[], idx: number, options, env, slf) => {
+    md.renderer.rules.fence = (tokens: Token[], idx: number, options, env, slf) => {
         const token = tokens[idx];
         const code = token.content.trim();
         if (token.info === 'mermaid') {

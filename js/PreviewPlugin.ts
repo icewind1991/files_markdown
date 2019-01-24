@@ -157,14 +157,16 @@ export class PreviewPlugin implements TextEditorPreviewPlugin {
         const reader = new FileReader();
         const deferred = $.Deferred();
         reader.onloadend = (e) => {
-            $.ajax({
-                url: url,
-                processData: false,
-                data: reader.result,
-                type: 'PUT',
-                success: deferred.resolve.bind(deferred),
-                error: deferred.reject.bind(deferred)
-            });
+            if (reader.result) {
+                $.ajax({
+                    url: url,
+                    processData: false,
+                    data: reader.result.toString(),
+                    type: 'PUT',
+                    success: deferred.resolve.bind(deferred),
+                    error: deferred.reject.bind(deferred)
+                });
+            }
         };
         reader.readAsArrayBuffer(file);
         return deferred.promise();

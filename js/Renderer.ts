@@ -1,16 +1,16 @@
-import * as MarkdownIt from 'markdown-it';
-import * as iterator from 'markdown-it-for-inline';
+import MarkdownIt from 'markdown-it';
+import Token from 'markdown-it/lib/token';
+import iterator from 'markdown-it-for-inline';
 import {CheckboxPlugin} from './CheckboxPlugin';
-import * as AnchorPlugin from 'markdown-it-anchor';
-import * as slugify from 'slugify';
-import * as TOCPlugin from 'markdown-it-table-of-contents';
+import AnchorPlugin from 'markdown-it-anchor';
+import slugify from 'slugify';
+import TOCPlugin from 'markdown-it-table-of-contents';
 import VideoPlugin from './VideoPlugin';
-import * as PreamblePlugin from 'markdown-it-github-preamble';
-import * as morphdom from 'morphdom';
+import PreamblePlugin from 'markdown-it-github-preamble';
+import morphdom from 'morphdom';
 
 import 'katex/dist/katex.min.css';
 import 'highlight.js/styles/github.css';
-import 'mermaid/dist/mermaid.forest.min.css';
 import Thenable = JQuery.Thenable;
 
 const slugifyHeading = name => 'editor/' + slugify(name).toLowerCase();
@@ -32,7 +32,7 @@ function loadKaTeX() {
         'markdown-it-texmath'
     ], () => {
         deferred.resolve(require('markdown-it-texmath').use(require('katex')));
-    }, 'katex');
+    });
     return deferred.promise();
 }
 
@@ -42,7 +42,7 @@ function loadMermaid() {
         './MermaidPlugin'
     ], () => {
         deferred.resolve(require('./MermaidPlugin').MermaidPlugin);
-    }, 'mermaid');
+    });
     return deferred.promise();
 }
 
@@ -52,12 +52,12 @@ function loadHighlight() {
         'markdown-it-highlightjs'
     ], () => {
         deferred.resolve(require('markdown-it-highlightjs'));
-    }, 'highlight');
+    });
     return deferred.promise();
 }
 
 export class Renderer {
-    md: MarkdownIt.MarkdownIt;
+    md: MarkdownIt;
 
     plugins: PluginMap = {
         'mermaid': {
@@ -90,7 +90,7 @@ export class Renderer {
         });
         this.md.use(PreamblePlugin);
         this.md.use(VideoPlugin);
-        this.md.use(iterator, 'url_new_win', 'link_open', (tokens: MarkdownIt.Token[], idx: number) => {
+        this.md.use(iterator, 'url_new_win', 'link_open', (tokens: Token[], idx: number) => {
             const href = tokens[idx].attrGet('href') as string;
             if (href[0] !== '#') {
                 tokens[idx].attrPush(['target', '_blank']);
@@ -98,7 +98,7 @@ export class Renderer {
             }
             tokens[idx].attrSet('href', this.getLinkUrl(href))
         });
-        this.md.use(iterator, 'internal_image_link', 'image', (tokens: MarkdownIt.Token[], idx: number) => {
+        this.md.use(iterator, 'internal_image_link', 'image', (tokens: Token[], idx: number) => {
             tokens[idx].attrSet('src', this.getImageUrl(tokens[idx].attrGet('src') as string));
         });
 
