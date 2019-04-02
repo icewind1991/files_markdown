@@ -9,7 +9,6 @@
     "module": "esnext",
     "moduleResolution": "node",
     "target": "ES5",
-    "declaration": true,
     "strictNullChecks": true,
     "sourceMap": true,
     "allowSyntheticDefaultImports": true

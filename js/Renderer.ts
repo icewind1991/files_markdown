@@ -11,7 +11,6 @@ import morphdom from 'morphdom';
 
 import 'katex/dist/katex.min.css';
 import 'highlight.js/styles/github.css';
-import Thenable = JQuery.Thenable;
 
 const slugifyHeading = name => 'editor/' + slugify(name).toLowerCase();
 
@@ -26,34 +25,21 @@ export interface PluginMap {
 }
 
 function loadKaTeX() {
-    const deferred = $.Deferred();
-    require.ensure([
-        'katex',
-        'markdown-it-texmath'
-    ], () => {
-        deferred.resolve(require('markdown-it-texmath').use(require('katex')));
+    return Promise.all([
+        import('katex'),
+        import('markdown-it-texmath'),
+    ]).then(([katex, {default: texmath}]) => {
+        texmath.use(katex);
+        return texmath;
     });
-    return deferred.promise();
 }
 
 function loadMermaid() {
-    const deferred = $.Deferred();
-    require.ensure([
-        './MermaidPlugin'
-    ], () => {
-        deferred.resolve(require('./MermaidPlugin').MermaidPlugin);
-    });
-    return deferred.promise();
+    return import('./MermaidPlugin').then(module => module.MermaidPlugin);
 }
 
 function loadHighlight() {
-    const deferred = $.Deferred();
-    require.ensure([
-        'markdown-it-highlightjs'
-    ], () => {
-        deferred.resolve(require('markdown-it-highlightjs'));
-    });
-    return deferred.promise();
+    return import('markdown-it-highlightjs').then(module => module.default);
 }
 
 export class Renderer {
@@ -142,7 +128,7 @@ export class Renderer {
         }
     }
 
-    renderText(text: string, element): Thenable<void> {
+    renderText(text: string, element): Promise<void> {
         return this.loadPlugins(text).then(() => {
                 const html = this.md.render(text);
                 morphdom(element[0], `<div>${html}</div>`, {
@@ -153,12 +139,14 @@ export class Renderer {
     }
 
     loadPlugins(text: string) {
-        return $.when.apply($, Object.keys(this.plugins)
+        return Promise.all(Object.keys(this.plugins)
             .map(pluginName => {
                 const plugin = this.plugins[pluginName];
                 if (!plugin.loaded && plugin.checker(text)) {
                     plugin.loaded = true;
-                    return plugin.module().then(this.md.use.bind(this.md));
+                    return plugin.module().then(plugin => {
+                        this.md.use(plugin);
+                    });
                 }
             })
         );

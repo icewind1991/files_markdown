@@ -8,13 +8,13 @@ module.exports = (env, argv) => ({
 	output: {
 		filename: "editor.js",
 		path: path.resolve(__dirname, "build"),
-		jsonpFunction: 'webpackJsonpMarkdown'
+		jsonpFunction: 'webpackJsonpMarkdown2'
 	},
 	resolve: {
 		extensions: [".ts", ".js"]
 	},
 	plugins: [
-		new CleanWebpackPlugin(['build']),
+		new CleanWebpackPlugin(),
 		new ExtractTextPlugin({
 			filename: "styles.css",
 			allChunks: true

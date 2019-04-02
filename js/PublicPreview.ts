@@ -3,17 +3,13 @@ import {Renderer} from "./Renderer";
 export class PublicPreview {
     private renderer: Renderer;
 
-    private initPromise: JQueryPromise<void> | null = null;
+    private initPromise: Promise<void> | null = null;
 
     init() {
         if (!this.initPromise) {
-            const deferred = $.Deferred();
-            require.ensure(['./Renderer'], () => {
-                const {Renderer} = require('./Renderer');
+            this.initPromise = import('./Renderer').then(({Renderer}) => {
                 this.renderer = new Renderer(true);
-                deferred.resolve();
             });
-            this.initPromise = deferred.promise();
         }
         return this.initPromise;
     }

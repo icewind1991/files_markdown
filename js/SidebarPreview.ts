@@ -3,17 +3,13 @@ import {Renderer} from "./Renderer";
 export class SidebarPreview implements SidebarPreviewPlugin {
     private renderer: Renderer;
 
-    private initPromise: JQueryPromise<void> | null = null;
+    private initPromise: Promise<void> | null = null;
 
     init() {
         if (!this.initPromise) {
-            const deferred = $.Deferred();
-            require.ensure(['./Renderer'], () => {
-                const {Renderer} = require('./Renderer');
-                this.renderer = new Renderer();
-                deferred.resolve();
+            this.initPromise = import('./Renderer').then(({Renderer}) => {
+                this.renderer = new Renderer(true);
             });
-            this.initPromise = deferred.promise();
         }
         return this.initPromise;
     }

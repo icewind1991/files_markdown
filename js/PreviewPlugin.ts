@@ -1,10 +1,8 @@
 import {Renderer} from './Renderer';
-import {UnderscoreStatic} from "underscore";
+import {throttle, debounce} from 'throttle-debounce';
 import {PasteImage} from './PasteImage';
 import Thenable = JQuery.Thenable;
 import TextEditorPreviewPlugin = OCA.Files_Texteditor.TextEditorPreviewPlugin;
-
-declare const _: UnderscoreStatic;
 
 declare const aceEditor: AceAjax.Editor;
 
@@ -64,7 +62,7 @@ export class PreviewPlugin implements TextEditorPreviewPlugin {
         }
     }
 
-    preview = _.throttle((text: string, element) => {
+    preview = throttle(500, (text: string, element) => {
         this.initAceHooks();
         this.initPreviewHooks(element);
         window.onpopstate = this.onHashChange;
@@ -76,7 +74,7 @@ export class PreviewPlugin implements TextEditorPreviewPlugin {
                 }, 500);
             });
         });
-    }, 500);
+    });
 
     initCheckboxHandler(element) {
         const Range = this.rangeConstructor;
@@ -91,16 +89,16 @@ export class PreviewPlugin implements TextEditorPreviewPlugin {
         });
     }
 
-    buildOffsetMap = _.throttle((element) => {
+    buildOffsetMap = throttle(1000, (element) => {
         const previewOffset = (element.offset() as { top: number }).top;
         const offsetMap: number[] = [];
         element.find('[data-line]').each(function () {
             offsetMap[parseInt(this.dataset.line, 10)] = ($(this).offset() as { top: number }).top - previewOffset;
         });
         this.offsetMap = offsetMap;
-    }, 1000);
+    });
 
-    onScrollEditor = _.throttle((top: number) => {
+    onScrollEditor = throttle(100, (top: number) => {
         if (this.scrollMode === 'preview') {
             return;
         }
@@ -111,9 +109,9 @@ export class PreviewPlugin implements TextEditorPreviewPlugin {
             $('#preview').scrollTop(previewOffset);
         }
         this.resetScrollMode();
-    }, 100);
+    });
 
-    onScrollPreview = _.throttle(() => {
+    onScrollPreview = throttle(100, () => {
         if (this.scrollMode === 'editor') {
             return;
         }
@@ -125,11 +123,11 @@ export class PreviewPlugin implements TextEditorPreviewPlugin {
             });
         }
         this.resetScrollMode();
-    }, 100);
+    });
 
-    resetScrollMode = _.debounce(() => {
+    resetScrollMode = debounce(500, () => {
         this.scrollMode = null;
-    }, 500);
+    });
 
     handleImage = (image: HTMLImageElement, file) => {
         OC.dialogs.prompt('Enter the name for the image', 'Upload image', (ok, name) => {
