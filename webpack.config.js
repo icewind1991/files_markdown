@@ -1,6 +1,5 @@
 const path = require('path');
 const ExtractTextPlugin = require("mini-css-extract-plugin");
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = (env, argv) => ({
 	devtool: 'source-map',
@@ -14,7 +13,6 @@ module.exports = (env, argv) => ({
 		extensions: [".ts", ".js"]
 	},
 	plugins: [
-		new CleanWebpackPlugin(),
 		new ExtractTextPlugin({
 			filename: "styles.css",
 			allChunks: true

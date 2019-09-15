@@ -30,7 +30,7 @@ export class PreviewPlugin implements TextEditorPreviewPlugin {
                 this.textEditorOnHashChange = window.onpopstate;
             }
 
-            const aceRequire = window['ace'].acequire || window['ace'].require;
+            const aceRequire = window['ace']['acequire'] || window['ace'].require;
             this.rangeConstructor = aceRequire("ace/range").Range;
 
             new PasteImage().listen(this.handleImage);
