@@ -42,6 +42,6 @@ A full list of features can be found [in the README](https://github.com/icewind1
 	</screenshot>
 
 	<dependencies>
-		<nextcloud min-version="15" max-version="17"/>
+		<nextcloud min-version="16" max-version="18"/>
 	</dependencies>
 </info>
