@@ -18,10 +18,13 @@ clean:
 node_modules: package.json
 	npm install
 
+CHANGELOG.md: node_modules
+	node_modules/.bin/changelog
+
 build/editor.js: $(sources) node_modules
 	node_modules/.bin/webpack --mode production
 
-appstore: build/editor.js
+appstore: build/editor.js CHANGELOG.md
 	mkdir -p $(sign_dir)
 	rsync -a \
 	--exclude=.git \
