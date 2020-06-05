@@ -1,7 +1,10 @@
 # Changelog
 
+## 2.3.0
+- Compatible with Nextcloud 19
+
 ## v2.2.0
-Compatible with Nextcloud 18
+- Compatible with Nextcloud 18
 
 ## v2.1.0
 - Compatible with Nextcloud 17
