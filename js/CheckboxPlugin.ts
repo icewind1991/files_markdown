@@ -2,6 +2,7 @@
 
 import MarkdownIt from "markdown-it";
 import Token from 'markdown-it/lib/token';
+import {RuleCore} from 'markdown-it/lib/parser_core';
 import StateCore from "markdown-it/lib/rules_core/state_core";
 
 export interface CheckboxPluginOptions {
@@ -20,7 +21,7 @@ interface CheckboxReplacerState extends StateCore {
 	Token: TokenConstructor;
 }
 
-export function CheckBoxReplacer(md: MarkdownIt, userOptions: Partial<CheckboxPluginOptions>): MarkdownIt.Rule {
+export function CheckBoxReplacer(md: MarkdownIt, userOptions: Partial<CheckboxPluginOptions>): RuleCore {
 	let lastId = 0;
 	const defaults: CheckboxPluginOptions = {
 		divWrap: false,
@@ -101,7 +102,7 @@ export function CheckBoxReplacer(md: MarkdownIt, userOptions: Partial<CheckboxPl
 
 	return function (state: CheckboxReplacerState) {
 		for (const token of state.tokens) {
-			if (token.type === "inline") {
+			if (token.type === "inline" && token.children) {
 				let currentLine = token.map ? token.map[0] : 0;
 				let newChildren: Token[] = [];
 				for (const childToken of token.children) {
@@ -113,6 +114,8 @@ export function CheckBoxReplacer(md: MarkdownIt, userOptions: Partial<CheckboxPl
 				token.children = newChildren;
 			}
 		}
+
+		return false;
 	};
 }
 

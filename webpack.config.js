@@ -2,6 +2,18 @@ const path = require('path');
 const ExtractTextPlugin = require("mini-css-extract-plugin");
 
 module.exports = (env, argv) => ({
+	optimization: {
+		splitChunks: {
+			cacheGroups: {
+				styles: {
+					name: 'styles',
+					test: /\.css$/,
+					chunks: 'all',
+					enforce: true,
+				},
+			},
+		},
+	},
 	devtool: 'source-map',
 	entry: "./js/editor.ts",
 	output: {
@@ -14,8 +26,7 @@ module.exports = (env, argv) => ({
 	},
 	plugins: [
 		new ExtractTextPlugin({
-			filename: "styles.css",
-			allChunks: true
+			filename: "[name].css",
 		}),
 	],
 	module: {

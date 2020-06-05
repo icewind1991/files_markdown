@@ -11,6 +11,8 @@ A full list of features can be found [in the README](https://github.com/icewind1
 	<licence>agpl</licence>
 	<author>Robin Appelman</author>
 
+	<namespace>FilesMarkdown</namespace>
+
 	<category>office</category>
 	<website>https://github.com/icewind1991/files_markdown</website>
 	<bugs>https://github.com/icewind1991/files_markdown/issues</bugs>

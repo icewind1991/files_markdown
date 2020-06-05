@@ -39,17 +39,19 @@ const mermaidChart = (code: string): string => {
 };
 
 export const MermaidPlugin = (md: MarkdownIt) => {
-    const originalRenderer = md.renderer.rules.fence.bind(md.renderer.rules);
-    md.renderer.rules.fence = (tokens: Token[], idx: number, options, env, slf) => {
-        const token = tokens[idx];
-        const code = token.content.trim();
-        if (token.info === 'mermaid') {
-            return mermaidChart(code);
+    if (md.renderer.rules.fence) {
+        const originalRenderer = md.renderer.rules.fence.bind(md.renderer.rules);
+        md.renderer.rules.fence = (tokens: Token[], idx: number, options, env, slf) => {
+            const token = tokens[idx];
+            const code = token.content.trim();
+            if (token.info === 'mermaid') {
+                return mermaidChart(code);
+            }
+            const firstLine = code.split(/\n/)[0].trim();
+            if (firstLine === 'gantt' || firstLine === 'sequenceDiagram' || firstLine.match(/^graph (?:TB|BT|RL|LR|TD);?$/)) {
+                return mermaidChart(code);
+            }
+            return originalRenderer(tokens, idx, options, env, slf);
         }
-        const firstLine = code.split(/\n/)[0].trim();
-        if (firstLine === 'gantt' || firstLine === 'sequenceDiagram' || firstLine.match(/^graph (?:TB|BT|RL|LR|TD);?$/)) {
-            return mermaidChart(code);
-        }
-        return originalRenderer(tokens, idx, options, env, slf);
     }
 };

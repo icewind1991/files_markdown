@@ -78,7 +78,7 @@ function renderVideo(md: MarkdownIt, options: VideoOptions) {
     return (tokens: Token[], idx: number, env) => {
         const token = tokens[idx];
         const url = token.attrGet('src');
-        if (!url) {
+        if (!url || !token.attrs || !token.children) {
             return false;
         }
         token.attrs[token.attrIndex('alt')][1] = altTokenizer(token.children, options, env);
@@ -123,7 +123,7 @@ export interface VineOptions extends VideoServiceOptions {
     embed: string;
 }
 
-export interface VideoOptions {
+export interface VideoOptions extends MarkdownIt.Options {
     youtube: VideoServiceOptions;
     vimeo: VideoServiceOptions;
     vine: VineOptions;
@@ -139,9 +139,11 @@ const defaults: VideoOptions = {
 
 export default function VideoPlugin(md: MarkdownIt, options: VideoOptions) {
     const originalRenderer = md.renderer.rules.image;
-    md.renderer.rules.image = (tokens: Token[], idx: number, options: VideoOptions, env, slf) => {
-        options = $.extend(defaults, options);
-        const videoResult = renderVideo(md, options)(tokens, idx, env);
-        return videoResult || originalRenderer(tokens, idx, options, env, slf)
-    };
+    if (originalRenderer) {
+        md.renderer.rules.image = (tokens: Token[], idx: number, options: VideoOptions, env, slf) => {
+            options = $.extend(defaults, options);
+            const videoResult = renderVideo(md, options)(tokens, idx, env);
+            return videoResult || originalRenderer(tokens, idx, options, env, slf)
+        };
+    }
 }
