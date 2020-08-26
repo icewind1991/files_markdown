@@ -5,6 +5,15 @@ Extends the text editor in Nextcloud with a live preview for markdown files
 
 ![Markdown Editor](screenshots/editor.png)
 
+Usage
+---
+
+Starting with Nextcloud 17, the "Plain text editor" app has been replaced with the [Text](github.com/nextcloud/text/),
+in order to use this app you'll first need to install both the "Plain text editor" and this app.
+
+You can than either disable the Text app to use the "Plain text editor" app by default,
+or use the three dot menu and choose "Edit in plain text editor". 
+
 Features
 ---
 
