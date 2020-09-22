@@ -104,6 +104,8 @@ declare namespace OC {
 	const PERMISSION_DELETE = 8;
 	const PERMISSION_SHARE = 16;
 	const PERMISSION_ALL = 31;
+
+	export const requestToken: string;
 }
 
 declare function t(app: string, string: string, vars?: { [key: string]: string }, count?: number, options?: EscapeOptions): string;
