@@ -46,7 +46,7 @@ Features
 Requirements
 ---
 
-This requires Nextcloud and the Text Editor app to be installed from Nextcloud 10 or higher.
+This app requires the [Plain text editor app](https://apps.nextcloud.com/apps/files_texteditor) to be installed from Nextcloud 10 or higher.
 
 Installation
 ---
