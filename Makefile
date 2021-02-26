@@ -23,18 +23,3 @@ CHANGELOG.md: node_modules
 
 build/editor.js: $(sources) node_modules
 	node_modules/.bin/webpack --mode production
-
-appstore: build/editor.js CHANGELOG.md
-	mkdir -p $(sign_dir)
-	rsync -a \
-	--exclude=.git \
-	--exclude=build/artifacts \
-	--exclude=.gitignore \
-	--exclude=Makefile \
-	--exclude=node_modules \
-	--exclude=screenshots \
-	--exclude=phpunit*xml \
-	$(project_dir) $(sign_dir)
-	tar -czf $(build_dir)/$(app_name).tar.gz \
-		-C $(sign_dir) $(app_name)
-	openssl dgst -sha512 -sign $(cert_dir)/$(app_name).key $(build_dir)/$(app_name).tar.gz | openssl base64
