@@ -18,8 +18,7 @@ module.exports = (env, argv) => ({
 	entry: "./js/editor.ts",
 	output: {
 		filename: "editor.js",
-		path: path.resolve(__dirname, "build"),
-		jsonpFunction: 'webpackJsonpMarkdown2'
+		path: path.resolve(__dirname, "build")
 	},
 	resolve: {
 		extensions: [".ts", ".js"]
@@ -67,8 +66,5 @@ module.exports = (env, argv) => ({
 				]
 			}
 		]
-	},
-	node: {
-		fs: 'empty'
 	}
 });
