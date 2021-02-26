@@ -13,11 +13,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - uses: c-hive/gha-npm-cache@v1
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: npm install, build
-      run: |
-        npm ci
-        npm run build
+    - name: npm install
+      run: npm ci
+    - name: npm build
+      run: npm run build
