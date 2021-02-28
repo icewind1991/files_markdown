@@ -1,7 +1,7 @@
 Nextcloud Markdown Editor
 =================
 
-Extends the text editor in Nextcloud with a live preview for markdown files
+Extends Nextcloud text editing with a live preview for markdown files
 
 ![Markdown Editor](screenshots/editor.png)
 
