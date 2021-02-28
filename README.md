@@ -70,7 +70,7 @@ This app requires the [Plain text editor](https://apps.nextcloud.com/apps/files_
 Installation
 ---
 
-- Get **Markdown Editor** from the [Nextcloud app store](https://apps.nextcloud.com/apps/files_markdown)
+- Get ***Markdown Editor*** from the [Nextcloud app store](https://apps.nextcloud.com/apps/files_markdown)
 or download the latest release from [github](https://github.com/icewind1991/files_markdown/releases).
 
 - If you’re installing from git, build the project by running `make` in Nextcloud’s app directory.
@@ -78,6 +78,6 @@ or download the latest release from [github](https://github.com/icewind1991/file
 Development
 ---
 
-**Markdown Editor** is written in [typescript](https://www.typescriptlang.org/). It requires [nodejs](https://nodejs.org/en/) and [npm](https://www.npmjs.com/) to build.
+***Markdown Editor*** is written in [typescript](https://www.typescriptlang.org/). It requires [nodejs](https://nodejs.org/en/) and [npm](https://www.npmjs.com/) to build.
 
 For development you can automatically build the project every time the source changes by running `make watch`.
