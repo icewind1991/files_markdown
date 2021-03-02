@@ -1,18 +1,37 @@
 Nextcloud Markdown Editor
 =================
 
-Extends the text editor in Nextcloud with a live preview for markdown files
+Extends Nextcloud text editing with a live preview for markdown files
 
 ![Markdown Editor](screenshots/editor.png)
 
 Usage
 ---
 
-Starting with Nextcloud 17, the "Plain text editor" app has been replaced with the [Text](github.com/nextcloud/text/),
-in order to use this app you'll first need to install both the "Plain text editor" and this app.
+Starting with Nextcloud 17, the **[Text](github.com/nextcloud/text/)** app replaced the **[Plain text editor](https://apps.nextcloud.com/apps/files_texteditor)** app. In order to use ***Markdown Editor***, you must install and enable both it and **[Plain text editor](https://apps.nextcloud.com/apps/files_texteditor)**.
 
-You can than either disable the Text app to use the "Plain text editor" app by default,
-or use the three dot menu and choose "Edit in plain text editor". 
+To use ***Markdown Editor***, simply open any file with an `.md` or `.markdown` extension.
+
+Behaviors
+---
+
+![dots](https://user-images.githubusercontent.com/37463152/109408156-52e2c200-794c-11eb-93e4-e99ff97f8ae9.png)
+
+
+### SCENARIO ONE
+
+_WITH **MARKDOWN EDITOR**, **PLAIN TEXT EDITOR**, AND **TEXT** APPS ALL ENABLED:_
+
+The **[Text](github.com/nextcloud/text/)** app will still, by default, open `.txt`, `.md`, and `.markdown` files. However, you can override that behavior by clicking the three-dot dropdown menu for any `.txt`, `.md`, or `.markdown` file and choosing “Edit in plain text editor.” Using this method, ***Markdown Editor*** will open `.md`, and `.markdown` files while ***Plain text editor*** will open `.txt` files.
+
+### SCENARIO TWO
+
+_WITH **MARKDOWN EDITOR** AND **PLAIN TEXT EDITOR** ENABLED, BUT **TEXT** DISABLED:_
+
+***Markdown Editor*** will open `.md`, and `.markdown` files while ***Plain text editor*** will open `.txt` files. It’s unnecessary to use the three-dot dropdown menu to invoke either.
+
+>_Be aware: Disabling the **Text** app will also disable (but not delete) any **Rich Workspace** notes you may have created. These are the styled notes that appear above and before file lists. Re-enabling **Text** makes them visible again._
+
 
 Features
 ---
@@ -46,28 +65,19 @@ Features
 Requirements
 ---
 
-This app requires the [Plain text editor app](https://apps.nextcloud.com/apps/files_texteditor) to be installed from Nextcloud 10 or higher.
+This app requires the [Plain text editor](https://apps.nextcloud.com/apps/files_texteditor) app to be installed on Nextcloud 10 or higher.
 
 Installation
 ---
 
-- You can get the app from the [Nextcloud app store](https://apps.nextcloud.com/apps/files_markdown)
+- Get ***Markdown Editor*** from the [Nextcloud app store](https://apps.nextcloud.com/apps/files_markdown)
 or download the latest release from [github](https://github.com/icewind1991/files_markdown/releases).
 
-If you're installing from git, you'll need to build the project by running `make` in the app directory.
-
-
-Usage
----
-
-To use the markdown editor, simply open a file with a `.md` or `.markdown` extention.
+- If you’re installing from git, build the project by running `make` in Nextcloud’s app directory.
 
 Development
 ---
 
-This app is written in typescript and requires nodejs and npm to build.
+***Markdown Editor*** is written in [typescript](https://www.typescriptlang.org/). It requires [nodejs](https://nodejs.org/en/) and [npm](https://www.npmjs.com/) to build.
 
-To build the project run `make` from the app directory.
-
-For development you can automatically build the project every time
-the source changes by running `make watch`.
+For development you can automatically build the project every time the source changes by running `make watch`.
