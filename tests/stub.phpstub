@@ -21,26 +21,18 @@ declare(strict_types=1);
  *
  */
 
-namespace OCA\FilesMarkdown\Listener;
+namespace  OCA\Files\Event {
+	use OCP\EventDispatcher\Event;
 
-use OCP\AppFramework\Http\ContentSecurityPolicy;
-use OCP\EventDispatcher\Event;
-use OCP\EventDispatcher\IEventListener;
-use OCP\Security\CSP\AddContentSecurityPolicyEvent;
+	abstract class LoadAdditionalScriptsEvent extends Event {
+		abstract public function addHiddenField(string $name, string $value): void;
+		abstract public function getHiddenFields(): array;
+	}
+}
 
-class CSPListener implements IEventListener {
-	public function handle(Event $event): void {
-		if (!($event instanceof AddContentSecurityPolicyEvent)) {
-			return;
-		}
+namespace OCA\Files_Sharing\Event {
+	use OCP\EventDispatcher\Event;
 
-		$policy = new ContentSecurityPolicy();
-		$policy->addAllowedImageDomain('*');
-		$policy->addAllowedFrameDomain('prezi.com');
-		$policy->addAllowedFrameDomain('player.vimeo.com');
-		$policy->addAllowedFrameDomain('vine.co');
-		$policy->addAllowedFrameDomain('www.youtube.com');
-
-		$event->addPolicy($policy);
+	abstract class BeforeTemplateRenderedEvent extends Event {
 	}
 }

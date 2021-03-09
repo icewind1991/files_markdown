@@ -11,3 +11,6 @@ screenshots
 Makefile
 screenshots
 node_modules
+composer.*
+package.*
+.php_cs*
