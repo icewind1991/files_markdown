@@ -12,5 +12,9 @@ Makefile
 screenshots
 node_modules
 composer.*
-package.*
+package*
 .php_cs*
+tests
+tsconfig.json
+webpack.*
+psalm.xml
