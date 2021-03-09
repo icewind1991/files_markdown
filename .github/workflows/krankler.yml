@@ -1,0 +1,29 @@
+name: Release
+
+on:
+  release:
+    types: [created]
+
+env:
+  APP_NAME: files_markdown
+
+jobs:
+  release:
+    name: Build release
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup krankler
+        run: |
+          wget https://github.com/ChristophWurst/krankerl/releases/download/v0.13.0/krankerl
+          chmod +x krankerl
+      - name: Package app
+        run: ./krankerl package
+      - name: Upload binary to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: build/artifacts/${{ env.APP_NAME }}.tar.gz
+          asset_name: ${{ env.APP_NAME }}.tar.gz
+          tag: ${{ github.ref }}
