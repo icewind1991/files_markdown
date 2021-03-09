@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.3.3
+- Remove usage of deprecated methods
+
 ## 2.3.2
 - Compatible with Nextcloud 21
 

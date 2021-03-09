@@ -29,44 +29,30 @@ namespace OCA\FilesMarkdown\AppInfo;
 
 use OC\Security\CSP\ContentSecurityPolicy;
 use OCA\Files\Event\LoadAdditionalScriptsEvent;
+use OCA\Files_Sharing\Event\BeforeTemplateRenderedEvent;
+use OCA\FilesMarkdown\Listener\CSPListener;
+use OCA\FilesMarkdown\Listener\ScriptListener;
 use OCP\AppFramework\App;
+use OCP\AppFramework\Bootstrap\IBootContext;
+use OCP\AppFramework\Bootstrap\IBootstrap;
+use OCP\AppFramework\Bootstrap\IRegistrationContext;
 use OCP\EventDispatcher\IEventDispatcher;
+use OCP\Security\CSP\AddContentSecurityPolicyEvent;
 use OCP\Util;
 
-class Application extends App {
+class Application extends App implements IBootstrap {
 	public const APP_ID = 'files_markdown';
 
 	public function __construct(array $urlParams = []) {
 		parent::__construct(self::APP_ID, $urlParams);
 	}
 
-	public function register() {
-		$server = $this->getContainer()->getServer();
+	public function register(IRegistrationContext $context): void {
+		$context->registerEventListener(LoadAdditionalScriptsEvent::class, ScriptListener::class);
+		$context->registerEventListener(AddContentSecurityPolicyEvent::class, CSPListener::class);
+		$context->registerEventListener(BeforeTemplateRenderedEvent::class, CSPListener::class);
+	}
 
-		/** @var IEventDispatcher $dispatcher */
-		$dispatcher = $server->query(IEventDispatcher::class);
-
-		$dispatcher->addListener(LoadAdditionalScriptsEvent::class, function () use ($server) {
-			$policy = new ContentSecurityPolicy();
-			$policy->setAllowedImageDomains(['*']);
-			$frameDomains = $policy->getAllowedFrameDomains();
-			$frameDomains[] = 'www.youtube.com';
-			$frameDomains[] = 'prezi.com';
-			$frameDomains[] = 'player.vimeo.com';
-			$frameDomains[] = 'vine.co';
-			$policy->setAllowedFrameDomains($frameDomains);
-			$server->getContentSecurityPolicyManager()->addDefaultPolicy($policy);
-
-			//load the required files
-			Util::addscript('files_markdown', '../build/editor');
-			Util::addStyle('files_markdown', '../build/styles');
-			Util::addStyle('files_markdown', 'preview');
-		});
-
-		$dispatcher->addListener('OCA\Files_Sharing::loadAdditionalScripts', function () {
-			Util::addScript('files_markdown', '../build/editor');
-			Util::addStyle('files_markdown', '../build/styles');
-			Util::addStyle('files_markdown', 'preview');
-		});
+	public function boot(IBootContext $context): void {
 	}
 }
