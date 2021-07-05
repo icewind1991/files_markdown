@@ -1,5 +1,6 @@
 const path = require('path');
 const ExtractTextPlugin = require("mini-css-extract-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = (env, argv) => ({
 	optimization: {
@@ -13,6 +14,8 @@ module.exports = (env, argv) => ({
 				},
 			},
 		},
+		minimize: true,
+		minimizer: [new TerserPlugin()],
 	},
 	devtool: 'source-map',
 	entry: "./js/editor.ts",
