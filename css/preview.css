@@ -468,7 +468,7 @@
 	z-index: 9999;
 }
 
-#preview.text-markdown * {
+#preview.text-markdown {
 	font-family: 'Open Sans', Frutiger, Calibri, 'Myriad Pro', Myriad, sans-serif;
 }
 
