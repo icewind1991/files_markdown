@@ -1,4 +1,5 @@
 import MarkdownIt from 'markdown-it';
+import MarkdownItPlantUML from "markdown-it-plantuml";
 import Token from 'markdown-it/lib/token';
 import iterator from 'markdown-it-for-inline';
 import {CheckboxPlugin} from './CheckboxPlugin';
@@ -64,6 +65,7 @@ export class Renderer {
         this.md = new MarkdownIt({
             linkify: true
         });
+        this.md.use(MarkdownItPlantUML);
         this.md.use(CheckboxPlugin, {
             checkboxClass: 'checkbox',
             readonly: readonly
