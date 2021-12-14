@@ -58,6 +58,10 @@ Features
 
 ![Mermaid.js graphs](screenshots/graph.png)
 
+### Creating diagrams using a simple, intuitive language [plantuml](https://github.com/plantuml/plantuml)
+
+![plantuml diagrams](screenshots/plantuml.png)
+
 ### Fully rendered previews in the sidebar
  
 ![Sidebar previews](screenshots/preview.png)
