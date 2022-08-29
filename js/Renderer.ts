@@ -30,7 +30,8 @@ function loadKaTeX() {
         import('katex'),
         import('markdown-it-texmath'),
     ]).then(([katex, {default: texmath}]) => {
-        texmath.use(katex);
+		console.warn(katex);
+        texmath.use(katex.default);
         return texmath;
     });
 }
