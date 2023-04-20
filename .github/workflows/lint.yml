@@ -1,12 +1,19 @@
 name: Php Lint
-on: [push, pull_request]
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - master
+      - stable*
 
 jobs:
   php-linters:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-versions: ['7.3', '7.4', '8.0']
+        php-versions: ['8.0', '8.1', '8.2']
     name: php${{ matrix.php-versions }} lint
     steps:
     - name: Checkout
@@ -30,7 +37,7 @@ jobs:
       - name: Set up php${{ matrix.php-versions }}
         uses: shivammathur/setup-php@master
         with:
-          php-version: 7.4
+          php-version: 8.0
           tools: composer:v1
           coverage: none
       - name: Install dependencies

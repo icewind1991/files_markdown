@@ -1,5 +1,12 @@
 name: Php Static analysis
-on: [push, pull_request]
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - master
+      - stable*
 
 jobs:
   static-psalm-analysis:
@@ -14,13 +21,13 @@ jobs:
           - name: Set up php
             uses: shivammathur/setup-php@master
             with:
-                php-version: 7.4
+                php-version: 8.0
                 tools: composer:v1
                 coverage: none
                 extensions: redis
           - name: Install dependencies
             run: composer i
           - name: Install dependencies
-            run: composer require --dev christophwurst/nextcloud:${{ matrix.ocp-version }}
+            run: composer require --dev nextcloud/ocp:${{ matrix.ocp-version }}
           - name: Run coding standards check
             run: composer run psalm
