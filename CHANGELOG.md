@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
+### Changed
+- Updated changelog style, added missing releases and release dates.
+  [#211](https://github.com/icewind1991/files_markdown/pull/211) @SimJoSt
 
 ## [2.4.0] - 2023-04-20
 ### Added
