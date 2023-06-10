@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [2.4.0]
+### Added
+- Compatible with Nextcloud 25 and 26.
+
+## [2.3.6]
+### Added
+- Compatible with Nextcloud 24.
+### Fixed
+- Fix latex rendering.
+
+## [2.3.5]
+### Added
+- Compatible with Nextcloud 23.
+
+## [2.3.4]
+### Added
+- Compatible with Nextcloud 22.
+
 ## [2.3.3]
 ### Removed
 - Remove usage of deprecated methods.
