@@ -75,6 +75,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Enable automatic linking of links.
 ### Fixed
 - Fix styling conflict with core.
+  [#64](https://github.com/icewind1991/files_markdown/pull/64) @MorrisJobke
 - Fix load markdown renderer in some chrome versions.
 
 ## [2.0.0] - 2017-09-04
